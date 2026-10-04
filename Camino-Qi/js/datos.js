@@ -27,4 +27,36 @@ const ENEMIGOS={
  wang:{n:'Wang, Discípulo Arrogante',hp:80,a:13,xp:50,o:40,l:{pildora_qi:1,pildora_salud:1}}};
 const TIENDAS={botica:{n:'Mercader Gong Gong · «¡Precios justos, es decir, míos!»',stock:['pildora_salud','pildora_qi','hierba_qi','lirio_fuego','mineral_hierro','cuero','espada_madera']}};
 const FORJA=[{r:'espada_acero',mat:{mineral_hierro:3},oro:60},{r:'tunica_cuero',mat:{cuero:3},oro:30}];
-const ALQ=[{r:'pildora_qi',ing:{hierba_qi:2}},{r:'pildora_salud',ing:{hierba_qi:1,lirio_fuego:1}}];
+
+Object.assign(TECNICAS,{
+ vendaval:{n:'Danza del Bambú',c:7,d:[14,22],s:'cu'},
+ aliento:{n:'Aliento del Dragón',c:8,d:[18,26],s:'es'}});
+const M=(n,pr,d)=>({n,tipo:'material',pr,d}),P=(n,pr,d,ef)=>({n,tipo:'consumible',pr,d,ef});
+Object.assign(OBJ,{
+ ginseng_sangre:M('Ginseng de Sangre',25,'Raíz roja que late sola.'),
+ raiz_dragon:M('Raíz de Dragón Dormido',45,'Rara. Huele a trueno antiguo.'),
+ hongo_niebla:M('Hongo de la Niebla',18,'Brota en los valles húmedos.'),
+ musgo_trueno:M('Musgo del Trueno',14,'Chispea al tocarlo.'),
+ flor_loto_lunar:M('Flor de Loto Lunar',35,'Solo abre bajo la luna.'),
+ jade_bruto:M('Jade en Bruto',30,'Piedra con Qi dormido.'),
+ jade_azul:M('Jade Azul Puro',90,'Muy rico en Qi.'),
+ polvo_jade:M('Polvo de Jade',22,'Jade molido para elixires.'),
+ cinabrio:M('Cinabrio Rojo',28,'Mineral de alquimia.'),
+ cristal_frio:M('Cristal de Escarcha',32,'Frío que no se derrite.'),
+ pildora_vigor:P('Píldora de Vigor',120,'+1 Cuerpo permanente.',{st:{cu:1}}),
+ pildora_mente:P('Píldora de Claridad',120,'+1 Mente permanente.',{st:{me:1}}),
+ pildora_suerte:P('Píldora del Azar',120,'+1 Suerte permanente.',{st:{su:1}}),
+ pildora_nucleo:P('Píldora del Núcleo',220,'+20 Vida y +10 Qi máximos.',{mhp:20,mqi:10}),
+ elixir_vida:P('Elixir de Vida',90,'Restaura 150 de Vida.',{hp:150}),
+ elixir_qi:P('Elixir de Qi Puro',70,'Restaura 50 de Qi.',{qi:50}),
+ elixir_cultivo:P('Elixir de Cultivo',150,'+60 de experiencia.',{xp:60})});
+TIENDAS.herbolario={n:'Viejo Mu, herbolario · «Las plantas no mienten; yo sí, pero poco.»',stock:['hierba_qi','lirio_fuego','musgo_trueno','hongo_niebla','ginseng_sangre','polvo_jade','cinabrio','pildora_salud']};
+const AL=(r,c,ing)=>({r,c,ing});
+const ALQ=[AL('pildora_qi','Píldoras',{hierba_qi:2}),AL('pildora_salud','Píldoras',{hierba_qi:1,lirio_fuego:1}),
+ AL('pildora_vigor','Píldoras',{ginseng_sangre:2,raiz_dragon:1}),AL('pildora_mente','Píldoras',{flor_loto_lunar:2,hongo_niebla:1}),
+ AL('pildora_suerte','Píldoras',{musgo_trueno:2,polvo_jade:1}),AL('pildora_nucleo','Píldoras',{jade_azul:1,raiz_dragon:2,cinabrio:1}),
+ AL('elixir_vida','Elixires',{ginseng_sangre:1,lirio_fuego:2,cristal_frio:1}),AL('elixir_qi','Elixires',{hierba_qi:3,polvo_jade:1}),
+ AL('elixir_cultivo','Elixires',{flor_loto_lunar:1,jade_azul:1,hongo_niebla:2}),AL('polvo_jade','Refinados',{jade_bruto:1})];
+Object.assign(ENEMIGOS.rata.l,{musgo_trueno:.3});Object.assign(ENEMIGOS.mono.l,{hongo_niebla:.4});
+Object.assign(ENEMIGOS.lobo.l,{raiz_dragon:.3,ginseng_sangre:.3});Object.assign(ENEMIGOS.bandido.l,{jade_bruto:.5,cristal_frio:.3,cinabrio:.3});
+Object.assign(ENEMIGOS.wang.l,{jade_azul:.5,flor_loto_lunar:.4});
