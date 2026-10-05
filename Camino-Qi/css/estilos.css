@@ -28,3 +28,14 @@ button.on{border-color:var(--jade);color:var(--jade)}
 .log{font-size:.88rem;color:var(--dim);min-height:3.4em;margin:8px 0}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 b.t{display:block;margin:16px 0 4px;color:var(--oro)}
+button.k-main{border-color:var(--oro);background:linear-gradient(90deg,rgba(212,169,74,.2),transparent);font-weight:700}
+button.k-main::before{content:'★ ';color:var(--oro)}
+button.k-shop{border-left:4px solid var(--oro)}button.k-hunt{border-left:4px solid var(--red)}
+button.k-social{border-left:4px solid var(--jade)}button.k-side{border-left:4px solid #6d9ad6}
+.leyenda span{display:inline-block;padding:1px 8px;margin:0 4px 4px 0;border-left:4px solid;border-radius:4px;font-size:.72rem;background:var(--p)}
+.leyenda .k-main{border-color:var(--oro);color:var(--oro)}.leyenda .k-shop{border-color:var(--oro)}.leyenda .k-hunt{border-color:var(--red)}.leyenda .k-social{border-color:var(--jade)}.leyenda .k-side{border-color:#6d9ad6}
+.mision{border:1px solid var(--oro);border-radius:8px;padding:8px 12px;margin:8px 0;font-size:.9rem;background:rgba(212,169,74,.08)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
+.stats span{background:var(--p);border:1px solid var(--ln);border-radius:7px;padding:6px;text-align:center;font-size:.72rem;color:var(--dim)}
+.stats b{display:block;font-size:1.1rem;color:var(--ink)}.qty{margin:8px 0;font-size:.8rem;color:var(--dim)}
+textarea{background:var(--p);color:var(--ink);border:1px solid var(--ln);border-radius:7px;padding:8px;font:inherit;font-size:.7rem}
