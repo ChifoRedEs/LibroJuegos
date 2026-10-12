@@ -10,14 +10,16 @@ LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80
 
 | Capítulo | Parte | Título | Estado |
 |---|---|---|---|
-| 1 · La Muerte de Paja | 1 | El trato de la Valquiria | ✅ Hecha (43 escenas, 7 de combate) |
-| | 2 | El salón del jarl | Pendiente |
+| 1 · La Muerte de Paja | 1 | El trato de la Valquiria | ✅ Hecha (42 escenas, 7 de combate) |
+| | 2 | El salón del jarl | ✅ Hecha (37 escenas, 5 de combate) |
 | | 3 | El túmulo del rey draug | Pendiente |
 | 2 · Bajo las Raíces | 1–3 | | Pendiente |
 | 3 · El Invierno sin Fin | 1–3 | | Pendiente |
 | 4 · El Crepúsculo | 1–3 | | Pendiente |
 
-La escena `c1_p2` es un enlace provisional al final de la Parte 1. Hay que sustituirla al escribir la Parte 2.
+La escena `c1_p3` es un enlace provisional al final de la Parte 2. Hay que sustituirla al escribir la Parte 3.
+
+**Pendiente para la Parte 3:** el juramento `rolf` (traer Muerdetumbas) vence al final del día 9; hay que cumplirlo con `cumple:'rolf'`. Las marcas `siri_aprendiz`/`siri_no`, `jur_siri`, `lobo_libre`, `marca_jarl`, `torgil_vencido`/`torgil_gana` y `draug_visto` están disponibles para variar el texto.
 
 ---
 
@@ -96,8 +98,8 @@ Los nombres están simplificados para que se pronuncien con facilidad en castell
 ### Parte 1 · El trato de la Valquiria ✅
 El protagonista agoniza. Skuld le ofrece el trato, y si lo rechaza llega el primer final: «La muerte de paja». Despierta curado y con una runa en la palma, mientras nieva en pleno verano: es la primera señal del Fimbul. Conoce a Kraka. El jarl Hakon sospecha que es un draug y le exige una prueba (de hierro, de fuerza o mostrando la marca). La völva Groa reconoce la marca de Skuld y le enseña **Fehu**. Primer juramento opcional: acabar con la amenaza del Bosque Gris en tres días. En el bosque descubre que los lobos los guían unos saqueadores con magia rúnica. Groa le enseña **Thurisaz** «con sangre». En el barranco del norte se enfrenta a Grim el Tuerto, y aquí está la primera decisión moral: matar al Lobo Ceniza o romper el hechizo y dejarlo libre. Hakon le da un sitio en su mesa y anuncia un banquete de Yule adelantado. Esa noche, las colinas de los túmulos brillan con luz azul.
 
-### Parte 2 · El salón del jarl
-Es la base de vida diaria del capítulo, como el patio de Camino-Qi: el salón, la herrería de Vindvik (forja), el puesto de la vieja Hild (tienda), la cabaña de Groa (caldero y taller de runas), el muelle, el bosque y el tablón de peticiones de los aldeanos. Ulf o Astrid aprende **Uruz, Raidho y Kenaz** con misiones de Groa. En el banquete de Yule se hacen los juramentos ante todo el salón y hay un **duelo de injurias** contra Torgil. Siri quiere ser aprendiz de la völva. El jarl recibe noticias de muertos que caminan.
+### Parte 2 · El salón del jarl ✅
+Es la base de vida diaria del capítulo, como el patio de Camino-Qi: el salón de día (el escaldo Eyvind cuenta la leyenda del rey Rolf y su espada Muerdetumbas; Torgil provoca), la herrería de Gunnar (forja), el puesto de la vieja Hild (tienda), la cabaña de Groa (caldero y taller de runas), las turberas (hierro de pantano), el muelle (duelo de injurias de práctica con Orm el Arenque) y el tablón de peticiones (la red de la viuda Ingrid, el zorro de Ulla y el hierro para Gunnar). Groa enseña **Uruz** (aguantar en el fiordo helado), **Raidho** (salvar a la pastora Asa de un oso en los pastos altos) y **Kenaz** (el primer draug, un ahogado de la tormenta en la que murió el hermano del protagonista). Siri pide ser aprendiz de la völva y el protagonista decide si responde por ella. En el banquete de Yule, la noche del día 5, se hacen los juramentos: bajar al túmulo del rey Rolf, hacer callar a Torgil o proteger a Siri. Después llega el **duelo de injurias** contra Torgil. Al final, el jinete Bersi trae la noticia: los muertos del rey Rolf han salido de las colinas.
 
 ### Parte 3 · El túmulo del rey draug
 Los muertos se levantan en las colinas. El protagonista baja al túmulo del rey Rolf, con sus trampas, acertijos rúnicos y draugs menores, y se enfrenta al rey draug para arrebatarle la espada **Muerdetumbas**. Aprende **Ansuz, Gebo y Wunjo**. Llega la **prueba de Tyr**: renunciar a algo valioso (la espada, el amuleto de Siri o un año de vida prestada) a cambio de su Favor. Al final, el salón del jarl arde atacado por draugs, aparece el primer cuervo de Odín y Kraka guía al protagonista hacia la raíz de Yggdrasil.
@@ -173,7 +175,9 @@ Senda-Valhalla/
 │   ├── datos.js            ← protagonistas, runas, favores, objetos, enemigos, tiendas, forja, caldero
 │   └── motor.js            ← motor del juego
 └── capitulos/
-    └── c1/parte1.js        ← escenas c1_*
+    └── c1/
+        ├── parte1.js       ← escenas c1_* de la Parte 1
+        └── parte2.js       ← Parte 2 (amplía c1_aldea, c1_casa y c1_groa2 con SC.<escena>.c.push)
 ```
 
 ### Cómo escribir una parte nueva

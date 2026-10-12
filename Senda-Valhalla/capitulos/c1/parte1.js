@@ -1,7 +1,7 @@
 /* =====================================================================
    Capítulo 1 · La Muerte de Paja
    Parte 1 · «El trato de la Valquiria»
-   Escenas c1_*  ·  Escena de enlace provisional: c1_p2 (la sustituirá la Parte 2)
+   Escenas c1_*  ·  Continúa en parte2.js (c1_colinas)
    Marcas de texto: {N} nombre · {o|a} masculino|femenino
    ===================================================================== */
 (()=>{
@@ -289,13 +289,7 @@ c1_salon_noche:{h:'Un sitio en la mesa',cp:1,t:[
   '«Dentro de tres noches celebraremos el banquete de Yule, aunque sea verano», anuncia el jarl. «Si el invierno ha venido antes, que venga antes también la fiesta.» El salón ruge de aprobación.',
   'Entonces Kraka te tira de la oreja con el pico. Por la puerta abierta se ven las colinas de los túmulos, donde descansan los reyes antiguos. Están brillando con una luz azul y fría. «Eso, {N}», susurra el cuervo, «no es una aurora.»'],
   fx:{fl:{salon_noche:1},gl:10,saga:'El jarl Hakon le dio un sitio a su derecha en el salón de Vindvik.'},
-  c:[{x:'Mirar las colinas',to:'c1_p2',k:'main'}]},
-
-/* Escena de enlace provisional: la sustituirá la Parte 2 */
-c1_p2:{h:'Continuará',t:[
-  'Las colinas de los túmulos siguen brillando mientras el salón canta. Nadie más parece haberse dado cuenta.',
-  '<span class=tag>Aquí termina la Parte 1 del Capítulo 1. La historia continúa en la Parte 2: «El salón del jarl».</span>'],
-  c:[{x:'Volver a Vindvik',to:'c1_aldea'}]}
+  c:[{x:'Mirar las colinas',to:'c1_colinas',k:'main'}]}
 
 }});
 })();

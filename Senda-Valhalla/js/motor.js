@@ -52,6 +52,7 @@ function ok(r){if(!r)return true;
   if(r.rg&&S.rg<r.rg)return false;
   if(r.runa&&!S.ru.includes(r.runa))return false;
   if(r.hmax!=null&&S.hora>r.hmax)return false;
+  if(r.hmin!=null&&S.hora<r.hmin)return false;
   return true}
 
 /* ---------- Tiempo, Gloria y juramentos ---------- */
@@ -86,6 +87,7 @@ function apply(f){if(!f)return;
       S.saga.push(`Cumplió su juramento: ${j.txt.charAt(0).toLowerCase()+j.txt.slice(1)}.`)}}
   if(f.saga)S.saga.push(f.saga);
   if(f.t)avanza(f.t);
+  if(f.hasta!=null)avanza((f.hasta-S.hora+24)%24);
   if(f.dormir){S.hp=S.mhp;S.fu=0}
   if(f.gl){ganaGloria(f.gl);if(f.gl<0)nota(`<span class=warn>Las valquirias apartan la mirada: ${f.gl} de Gloria.</span>`)}}
 function aprendeRuna(k){if(S.ru.includes(k))return;S.ru.push(k);if(S.rue.length<MAX_RUNAS)S.rue.push(k);
