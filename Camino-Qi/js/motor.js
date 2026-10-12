@@ -146,9 +146,9 @@ function misionBox(){return S.sc=='patio'?`<div class=mision><b>★ Misión prin
 function expo(){const s=load();app.innerHTML=`<h2>Exportar partida</h2><p class=tag>Copia este código y guárdalo.</p><textarea id=cod rows=8 style="width:100%">${s?btoa(unescape(encodeURIComponent(JSON.stringify(s)))):''}</textarea><button onclick="menu()">Volver</button>`}
 function impo(){app.innerHTML=`<h2>Importar partida</h2><textarea id=cod rows=8 style="width:100%"></textarea><button onclick="aplicaImp()">Cargar</button><button onclick="menu()">Volver</button>`}
 function aplicaImp(){try{S=JSON.parse(decodeURIComponent(escape(atob($('#cod').value.trim()))));save();show()}catch(e){alert('Código no válido')}}
-function menu(){window.scrollTo(0,0);const sv=load();app.innerHTML=`<h1>El Camino del Qi Silente</h1><p class=sub>Temporada 1 · El Aspirante del Dragón Azur</p>
+function menu(){window.scrollTo(0,0);const sv=load();app.innerHTML=`<a class=volver href="../index.html">Biblioteca de LibroJuegos</a><h1>El Camino del Qi Silente</h1><p class=sub>Temporada 1 · El Aspirante del Dragón Azur</p>
  <button onclick="S=nuevo();go('inicio')">Nueva partida</button><button ${sv?'':'disabled'} onclick="S=load();show()">Continuar</button>
- <button ${sv?'':'disabled'} onclick="trampa()">Trampa: +5000 monedas a la partida guardada</button><button onclick="valid()">Comprobar la historia</button><button onclick="expo()">Exportar partida</button><button onclick="impo()">Importar partida</button>
+ <button onclick="valid()">Comprobar la historia</button><button onclick="expo()">Exportar partida</button><button onclick="impo()">Importar partida</button>
  <p class=tag>Capítulos cargados: ${CAPS.length} · Escenas: ${Object.keys(SC).length}</p>`}
 function tg(s){const o=[];(s.c||[]).forEach(c=>{if(c.to)o.push(c.to);if(c.chk)o.push(c.chk.ok,c.chk.ko)});if(s.f)o.push(s.f.win,s.f.lose,s.f.flee);if(s.back)o.push(s.back);if(s.gt)o.push(...s.gt);return o}
 function valid(){const bad=[],seen=new Set(['inicio']),q=['inicio'];

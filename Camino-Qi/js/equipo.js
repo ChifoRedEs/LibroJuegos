@@ -1,6 +1,6 @@
 /* Equipo: armas, escudos y armaduras por rangos de rareza, con estadísticas */
 const EQT=['arma','escudo','armadura'];
-const RAR=[{k:'comun',n:'Común',m:1,col:'#a8b2ad',pre:'de Hierro',pr:1},{k:'raro',n:'Muy Raro',m:1.7,col:'#5aa9e6',pre:'de Acero Frío',pr:4},{k:'epico',n:'Épico',m:2.6,col:'#b57edc',pre:'de Jade Azul',pr:12},{k:'leg',n:'Legendario',m:4,col:'#e8a53a',pre:'Celestial',pr:40}];
+const RAR=[{k:'comun',n:'Común',m:1,col:'var(--rar-comun,#a8b2ad)',pre:'de Hierro',pr:1},{k:'raro',n:'Muy Raro',m:1.7,col:'var(--rar-raro,#5aa9e6)',pre:'de Acero Frío',pr:4},{k:'epico',n:'Épico',m:2.6,col:'var(--rar-epico,#b57edc)',pre:'de Jade Azul',pr:12},{k:'leg',n:'Legendario',m:4,col:'var(--rar-leg,#e8a53a)',pre:'Celestial',pr:40}];
 /* [nombre, tipo, ataque, defensa%, crítico%, poder Qi, velocidad, armadura] */
 const BASES={espada:['Espada','arma',8,0,15,3,2,0],hacha:['Hacha','arma',11,0,25,1,-2,0],martillo:['Martillo','arma',14,0,10,2,-4,0],lanza:['Lanza','arma',9,0,12,2,3,0],
  escudo:['Escudo','escudo',1,6,0,1,-3,3],tunica:['Túnica','armadura',0,6,0,1,6,2],coraza:['Coraza','armadura',0,10,0,0,-4,6]};
