@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Alegreya+Sans:wght@400;500;700&family=Ma+Shan+Zheng&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Alegreya+Sans:wght@400;500;700&family=Ma+Shan+Zheng&family=Uncial+Antiqua&family=Noto+Sans+Runic&display=swap">
 <style>
 :root{
   --fondo:#141a2e;      /* noche índigo */
@@ -113,7 +113,7 @@ h1{
   text-align:center;padding:10% 8%;gap:8%;
 }
 .emblema{
-  font:400 clamp(3rem,9vw,4.4rem)/1 "Ma Shan Zheng","Cormorant Garamond",serif;
+  font:400 clamp(3rem,9vw,4.4rem)/1 "Ma Shan Zheng","Noto Sans Runic","Cormorant Garamond",serif;
   color:#e2c27a;text-shadow:0 2px 0 rgba(0,0,0,.25);
 }
 .t-titulo{
@@ -210,6 +210,18 @@ const LIBROS = [
     color: '#24564a',
     guardado: 'qi-silente-v2',
     progreso: s => s && s.dia ? `Partida en curso: día ${s.dia}` : 'Partida en curso'
+  },
+  {
+    carpeta: 'Senda-Valhalla',
+    titulo: 'La Senda al Valhalla',
+    subtitulo: 'Capítulo 1',
+    genero: 'Mitología nórdica',
+    resumen: 'Ibas a morir en la cama, lejos del salón de Odín. Una valquiria te ofrece un invierno para ganarte el Valhalla antes del Ragnarok: runas, forja enana y las pruebas de los dioses.',
+    emblema: 'ᛉ',
+    color: '#2b4458',
+    guardado: 'senda-valhalla-v1',
+    progreso: s => s && s.nom ? `Partida en curso: ${s.nom}, día ${s.dia}` : 'Partida en curso',
+    proximamente: true   // ← cambia a false (o borra la línea) cuando publiques el Capítulo 1
   },
   // {
   //   carpeta: 'Otra-Historia',
