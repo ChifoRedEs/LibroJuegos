@@ -1,48 +1,55 @@
-:root{--bg:#0e1517;--p:#18232a;--ink:#e8e2d0;--dim:#8fa197;--jade:#7fc4a8;--red:#c4372c;--oro:#d4a94a;--ln:#2b3c42;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:light){:root{--bg:#ece6d4;--p:#e0d9c3;--ink:#1c2326;--dim:#56635c;--jade:#2b7560;--red:#a02b24;--oro:#8c6a1c;--ln:#c2bb9f}}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;color:var(--ink);font:17px/1.7 Lora,Georgia,serif;background:radial-gradient(1000px 480px at 85% -10%,rgba(127,196,168,.13),transparent),radial-gradient(800px 480px at -10% 105%,rgba(196,55,44,.11),transparent),var(--bg);background-attachment:fixed}
-#app{max-width:700px;margin:0 auto;padding:0 14px 48px}
-h1,h2{font-family:"Ma Shan Zheng","Songti SC",serif;font-weight:400;margin:.2em 0}
-h1{font-size:3rem;text-align:center;margin-top:12vh;letter-spacing:.04em}
-h2{font-size:1.8rem;color:var(--jade)}
-.sub{text-align:center;color:var(--dim);font-style:italic;margin-bottom:2rem}
-.hud{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--ln);padding:8px 0;margin-bottom:12px;font-size:.78rem;color:var(--dim)}
-.rw{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:3px 0}
-.bw{flex:1}.bar{height:8px;background:var(--p);border:1px solid var(--ln);border-radius:5px;overflow:hidden}
-.bar i{display:block;height:100%;transition:width .4s}.hp{background:var(--red)}.qi{background:var(--jade)}
-.rn{color:var(--jade);font-family:"Ma Shan Zheng",serif;font-size:1.1rem;font-weight:400}.oro{color:var(--oro);font-weight:700}
-.sc{animation:f .45s}@keyframes f{from{opacity:0;transform:translateY(4px)}}
-@media(prefers-reduced-motion:reduce){.sc{animation:none}}
-.sc p{margin:.8em 0}
-.sello{display:inline-block;border:2px solid var(--red);color:var(--red);padding:0 10px;border-radius:3px;font-size:.8rem;transform:rotate(-2deg)}
-button{font:inherit;color:var(--ink);background:var(--p);border:1px solid var(--ln);border-radius:7px;padding:12px 14px;margin:5px 0;width:100%;text-align:left;cursor:pointer;display:block}
-button:hover:not(:disabled){border-color:var(--jade)}button:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
-button:disabled{opacity:.4;cursor:default}
-button.sm{display:inline-block;width:auto;padding:4px 10px;margin:0;font-size:.78rem}
-button.on{border-color:var(--jade);color:var(--jade)}
-.pr{float:right;color:var(--oro);font-weight:700}
-.tag{color:var(--dim);font-size:.84rem}.ok{color:var(--jade)}.warn{color:var(--red)}
-.dice{border:1px dashed var(--jade);border-radius:7px;padding:12px;margin:12px 0}
-.fight{border:1px solid var(--red);border-radius:9px;padding:12px;margin-top:14px;background:rgba(196,55,44,.06)}
-.log{font-size:.88rem;color:var(--dim);min-height:3.4em;margin:8px 0}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-b.t{display:block;margin:16px 0 4px;color:var(--oro)}
-button.k-main{border-color:var(--oro);background:linear-gradient(90deg,rgba(212,169,74,.2),transparent);font-weight:700}
-button.k-main::before{content:'★ ';color:var(--oro)}
-button.k-shop{border-left:4px solid var(--oro)}button.k-hunt{border-left:4px solid var(--red)}
-button.k-social{border-left:4px solid var(--jade)}button.k-side{border-left:4px solid #6d9ad6}
-.leyenda span{display:inline-block;padding:1px 8px;margin:0 4px 4px 0;border-left:4px solid;border-radius:4px;font-size:.72rem;background:var(--p)}
-.leyenda .k-main{border-color:var(--oro);color:var(--oro)}.leyenda .k-shop{border-color:var(--oro)}.leyenda .k-hunt{border-color:var(--red)}.leyenda .k-social{border-color:var(--jade)}.leyenda .k-side{border-color:#6d9ad6}
-.mision{border:1px solid var(--oro);border-radius:8px;padding:8px 12px;margin:8px 0;font-size:.9rem;background:rgba(212,169,74,.08)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
-.stats span{background:var(--p);border:1px solid var(--ln);border-radius:7px;padding:6px;text-align:center;font-size:.72rem;color:var(--dim)}
-.stats b{display:block;font-size:1.1rem;color:var(--ink)}.qty{margin:8px 0;font-size:.8rem;color:var(--dim)}
-textarea{background:var(--p);color:var(--ink);border:1px solid var(--ln);border-radius:7px;padding:8px;font:inherit;font-size:.7rem}
-.stk{position:sticky;top:0;z-index:6;background:var(--bg);padding-bottom:4px;border-bottom:1px solid var(--ln);margin-bottom:8px}
-.stk .hud{position:static;margin:0;padding:4px 0;border:0}
-.stats.mini{grid-template-columns:repeat(6,1fr);gap:3px;margin:2px 0}
-.stats.mini span{padding:1px 2px;font-size:.58rem}.stats.mini b{font-size:.82rem}
-.lst button,.qty~button{padding:8px 12px;margin:3px 0;font-size:.92rem}
-.tec{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:6px 8px;border:1px solid var(--ln);border-radius:7px;margin:3px 0;background:var(--p);font-size:.9rem}
-b.t.g-main{color:var(--oro)}b.t.g-hunt{color:var(--red)}b.t.g-social{color:var(--jade)}b.t.g-side{color:#6d9ad6}
+/* =====================================================================
+   TEMA · El Camino del Qi Silente
+   Se carga después de ../comun/libro.css y solo redefine variables
+   y los detalles propios de esta historia.
+   ===================================================================== */
+:root{
+  --mesa:#0c1413;
+  --mesa-luz:rgba(127,196,168,.14);
+  --papel:#1d1c18;
+  --papel-2:#26251f;
+  --canto:#33322a;
+  --tinta:#ebe3cf;
+  --tenue:#a39c88;
+  --linea:#433f33;
+  --acento:#82c6a9;          /* jade */
+  --oro:#d6ae55;
+  --peligro:#d9594c;         /* bermellón de sello */
+  --exito:#82c6a9;
+  --azul:#86a9dc;
+  --sobre-acento:#10201a;
+  --f-titulo:"Ma Shan Zheng","Songti SC","STKaiti",serif;
+  --emblema:"氣";
+  --orn:"◇ ◆ ◇";
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --mesa:#c9d1c6;
+    --mesa-luz:rgba(255,255,255,.55);
+    --papel:#f7f1e2;
+    --papel-2:#ede5d0;
+    --canto:#ddd3ba;
+    --tinta:#26241e;
+    --tenue:#6b6556;
+    --linea:#d2c7aa;
+    --acento:#2b7560;
+    --oro:#8c6a1c;
+    --peligro:#a62f27;
+    --exito:#2b7560;
+    --azul:#3d6aa8;
+    --sobre-acento:#f7f1e2;
+  }
+}
+
+/* El emblema de la portada es un sello de bermellón */
+#app>h1::before{
+  width:1.45em;height:1.45em;line-height:1.45em;
+  font-size:.62em;color:#f6ead2;background:var(--peligro);
+  border-radius:4px;transform:rotate(-4deg);
+  box-shadow:inset 0 0 0 3px var(--peligro),inset 0 0 0 4px rgba(246,234,210,.55);
+}
+/* La caligrafía necesita algo más de cuerpo y aire */
+#app>h1{letter-spacing:.02em}
+.sc>h2,#app>h2{letter-spacing:.03em}
+.sc>h2::after,#app>h2::after,#app>.sub::after{letter-spacing:.15em;font-size:.8rem}
+.sc>h2+p:not([class])::first-letter{font-size:3.1em;line-height:.9}
