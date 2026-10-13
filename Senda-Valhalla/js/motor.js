@@ -27,7 +27,7 @@ const pinta=h=>{app.innerHTML=gx(h)};
 /* ---------- Estado ---------- */
 const nuevo=g=>({sc:INICIO,g,nom:PROTAS[g].nom,hp:100,mhp:100,fu:0,gl:0,rg:0,plata:10,dia:1,hora:22,
   st:{...PROTAS[g].st},hilos:3,inv:{},eq:{arma:null,esc:null,arm:null},mej:{},ru:[],rue:[],rn:{},
-  fl:{},jur:[],fav:{},saga:[],fin:[],nid:0,f:null,cb:null,cp:null});
+  fl:{},jur:[],fav:{},saga:[],fin:[],nid:0,grab:{},f:null,cb:null,cp:null});
 function save(){const s=JSON.stringify(S);try{localStorage.setItem(KEY,s)}catch(e){mem=s}}
 function load(){let s=null;try{s=localStorage.getItem(KEY)}catch(e){}s=s||mem;try{return s?JSON.parse(s):null}catch(e){return null}}
 function snap(){const c=S.cp;S.cp=null;const s=JSON.stringify(S);S.cp=c;return s}
@@ -50,6 +50,8 @@ function ok(r){if(!r)return true;
   if(r.dia&&S.dia<r.dia)return false;
   if(r.gl&&S.gl<r.gl)return false;
   if(r.hilos&&S.hilos<r.hilos)return false;
+  if(r.min&&Object.entries(r.min).some(([k,n])=>(S.fl[k]||0)<n))return false;
+  if(r.max&&Object.entries(r.max).some(([k,n])=>(S.fl[k]||0)>n))return false;
   if(r.rg&&S.rg<r.rg)return false;
   if(r.runa&&!S.ru.includes(r.runa))return false;
   if(r.hmax!=null&&S.hora>r.hmax)return false;
@@ -76,6 +78,7 @@ function apply(f){if(!f)return;
   if(f.equipa)S.eq[SLOT[OBJ[f.equipa].tipo]]=f.equipa;
   if(f.runa)aprendeRuna(f.runa);
   if(f.fl)Object.assign(S.fl,f.fl);
+  if(f.suma)for(const k in f.suma)S.fl[k]=(S.fl[k]||0)+f.suma[k];
   if(f.st)for(const k in f.st)S.st[k]+=f.st[k];
   if(f.mhp){S.mhp+=f.mhp;S.hp+=f.mhp}
   if(f.hilo)S.hilos+=f.hilo;
@@ -100,8 +103,10 @@ function ST(){const T={atq:S.st.fue*2+S.rg*3,def:0,arm:0,crit:5+S.st.sue,vel:S.s
   for(const s of ['arma','esc','arm']){const k=S.eq[s];if(!k)continue;const o=OBJ[k],m=S.mej[k]||0;
     for(const x of ['atq','def','arm','crit','vel','am'])T[x]+=o[x]||0;
     if(m){if(o.tipo=='arma')T.atq+=3*m;else{T.arm+=2*m;T.def+=m}}}
+  const G=grabado();for(const x of ['atq','def','arm','crit','vel','am'])T[x]+=G[x]||0;
   for(const f in S.fav)for(const x of ['atq','crit','vel'])T[x]+=FAV[f][x]||0;
   return T}
+function grabado(){const k=S.eq&&S.eq.arma,r=k&&S.grab&&S.grab[k];return r&&GRABADO[r]?GRABADO[r]:{}}
 
 /* ---------- Cabecera ---------- */
 const bar=(v,m,c,l)=>`<div class=bw><span>${l} ${v}/${m}</span><div class=bar><i class=${c} style="width:${Math.max(0,Math.min(100,v/m*100))}%"></i></div></div>`;
@@ -120,7 +125,7 @@ function go(id){if(!SC[id]){pinta(`<div class=sc><p class=warn>Escena no encontr
   if(sc.cp)S.cp=snap();
   S.f=null;S.cb=null;if(sc.f)empiezaCombate(sc.f.e);
   save();show()}
-function show(){UI.stat=false;const sc=cur();let h=hud()+misionBox(sc)+'<div class=sc>';
+function show(){UI.stat=false;if(!S.grab)S.grab={};const sc=cur();let h=hud()+misionBox(sc)+'<div class=sc>';
   if(UI.nota){h+=`<p class=ok>${UI.nota}</p>`;UI.nota=null}
   if(sc.h)h+=`<h2>${sc.h}</h2>`;
   h+=sc.t.map(p=>`<p>${p}</p>`).join('');
@@ -134,6 +139,7 @@ function show(){UI.stat=false;const sc=cur();let h=hud()+misionBox(sc)+'<div cla
   else if(sc.forja)h+=pForja()+mas();
   else if(sc.caldero)h+=pCaldero()+mas();
   else if(sc.taller)h+=pTaller()+mas();
+  else if(sc.grabado)h+=pGrabado()+mas();
   else if(sc.end)h+=pFinal(sc);
   else h+=mas();
   const y=window.scrollY;pinta(h+'</div>');window.scrollTo(0,UI.top?0:y);UI.top=false}
@@ -202,7 +208,11 @@ function usaRuna(k){const r=RUNAS[k],F=S.f,C=S.cb,E=ENEMIGOS[F.id],m=mult(k),v=x
 function turno(a){const F=S.f,E=ENEMIGOS[F.id],C=S.cb,fs=cur().f,T=ST();let lg='',g=false;
   if(a=='_b'){if(S.fu<100||C.ber)return;C.ber=3;S.fu=0;F.lg='¡La furia berserker te inunda! Durante tres turnos tus golpes harán el doble de daño.';save();return show()}
   if(a=='_a'){let d=R(4,8)+T.atq+(esMuerto(E)?T.am:0);if(T.am&&esMuerto(E))lg+='Tu arma muerde la carne muerta. ';if(C.crit||Math.random()*100<T.crit){d=Math.round(d*1.6);C.crit=0;lg+='¡Crítico! '}
-    if(C.ber)d*=2;F.hp-=d;S.fu=Math.min(100,S.fu+8);lg+=`Golpeas: ${d} de daño. `}
+    if(C.ber)d*=2;F.hp-=d;S.fu=Math.min(100,S.fu+8);lg+=`Golpeas: ${d} de daño. `;
+    const G=grabado();if(G.fuG)S.fu=Math.min(100,S.fu+G.fuG);
+    if(G.roba)lg+=`La runa de tu arma te devuelve ${curar(Math.max(1,Math.round(d*G.roba/100)))} de Vida. `;
+    if(G.aturde&&F.hp>0&&Math.random()*100<G.aturde){F.at=1;lg+=`La runa de tu arma aturde a ${E.n}. `}
+    if(G.quema&&F.hp>0&&!F.qm&&Math.random()*100<G.quema){F.qm=3;lg+=`La runa de tu arma prende fuego a ${E.n}. `}}
   else if(RUNAS[a]){if(S.fu<RUNAS[a].c)return;S.fu-=RUNAS[a].c;lg+=usaRuna(a)}
   else if(a=='_g'){if(C.ber)return;g=true;S.fu=Math.min(100,S.fu+6);lg+='Te cubres tras la guardia. '}
   else if(a=='_h'){if(C.ber||!fs.flee)return;const t=R(1,6)+R(1,6)+S.st.ast+Math.floor(T.vel/5);
@@ -229,6 +239,7 @@ function victoria(){const F=S.f,E=ENEMIGOS[F.id],fs=cur().f;S.f=null;S.cb=null;
   let gl=E.gl;if(S.fav.tyr)gl=Math.round(gl*1.25);if(S.fav.loki)gl=Math.round(gl*.8);
   S.plata+=E.o||0;
   nota(`Victoria sobre ${E.n}: +${gl} de Gloria${E.o?`, +${E.o} 🪙`:''}${lt.length?', botín: '+lt.map(([k,n])=>n+'× '+OBJ[k].n).join(', '):''}.`);
+  const G=grabado();if(G.curaV){const c=curar(G.curaV);if(c)nota(`La runa de tu arma te devuelve ${c} de Vida.`)}
   ganaGloria(gl);save();go(fs.win)}
 
 /* ---------- Tienda ---------- */
@@ -271,6 +282,18 @@ function pTaller(){if(!S.ru.length)return '<p class=tag>Aún no conoces ninguna 
   return `<p class=tag>Cada nivel aumenta un 12 % el efecto de la runa (máximo +5). Cuesta 1 hora.</p>${bolsa()}<div class=lst>`+S.ru.map(k=>{const r=RUNAS[k],l=S.rn[k]||0,c=costeRuna(k);
     return `<button ${l>=5||S.plata<c?'disabled':''} onclick="mejoraRuna('${k}')"><span class=runa>${r.sym}</span> ${r.n} +${l}${l<5?coste(c):' (máx.)'}<br><span class=tag>${resumenRuna(k)}</span></button>`}).join('')+'</div>'}
 function mejoraRuna(k){const c=costeRuna(k);if((S.rn[k]||0)>=5||S.plata<c)return;S.plata-=c;S.rn[k]=(S.rn[k]||0)+1;avanza(1);save();show()}
+
+/* ---------- Grabado de runas en el arma ---------- */
+const COSTE_GRABADO={plata:80,mat:{savia_raiz:2}};
+function pGrabado(){const k=S.eq.arma;if(!k)return '<p class=tag>Necesitas llevar un arma equipada.</p>';
+  const gratis=S.fl.grabado_gratis&&!S.fl.grabado_usado,act=S.grab[k],C=COSTE_GRABADO;
+  const puede=gratis||(S.plata>=C.plata&&Object.entries(C.mat).every(([m,n])=>has(m)>=n));
+  let h=`<p class=tag>Arma: <b>${nm(k)}</b>. ${act?`Lleva grabada <span class=runa>${RUNAS[act].sym}</span> ${RUNAS[act].n}: ${GRABADO[act].d}`:'Aún no lleva ninguna runa.'}<br>Un arma solo admite una runa: grabar otra borra la anterior. Cuesta 2 horas.</p>`;
+  h+=gratis?'<p class=ok>Brok te debe un grabado: este no te costará nada.</p>':`<p class=tag>Coste: ${coste(C.plata).replace('class=pr','')} y ${reqs(C.mat)}</p>`;
+  return h+'<div class=lst>'+S.ru.map(r=>{const R0=RUNAS[r];return `<button ${!puede||act==r?'disabled':''} onclick="grabar('${r}')"><span class=runa>${R0.sym}</span> ${R0.n}${act==r?' (grabada)':''}<br><span class=tag>${GRABADO[r].d}</span></button>`}).join('')+'</div>'}
+function grabar(r){const k=S.eq.arma;if(!k||S.grab[k]==r)return;const gratis=S.fl.grabado_gratis&&!S.fl.grabado_usado,C=COSTE_GRABADO;
+  if(gratis)S.fl.grabado_usado=1;else{if(S.plata<C.plata||Object.entries(C.mat).some(([m,n])=>has(m)<n))return;S.plata-=C.plata;for(const m in C.mat)add(m,-C.mat[m])}
+  S.grab[k]=r;nota(`Grabas <span class=runa>${RUNAS[r].sym}</span> ${RUNAS[r].n} en ${OBJ[k].n}: ${GRABADO[r].d}`);avanza(2);save();show()}
 
 /* ---------- Acertijos ---------- */
 function pRid(sc){const A=ACERT[sc.acertijo],id=sc.acertijo;
@@ -318,7 +341,7 @@ function statR(){UI.stat=true;const T=ST(),sv=UI.sv||'b',inv=Object.keys(S.inv);
   if(sv=='b'){
     body+=`<p>${Object.keys(NM).map(k=>NM[k]+' '+S.st[k]).join(' · ')}<br>Gloria ${S.gl}${S.rg<RANGOS.length-1?' / '+RANGOS[S.rg+1].gl+' para '+RANGOS[S.rg+1].n:''}</p>`;
     body+='<b class=t>Equipo</b><div class=lst>'+[['arma','Arma'],['esc','Escudo'],['arm','Armadura']].map(([s,l])=>{const k=S.eq[s];
-      return `<div class=rw><span>${l}: ${k?nm(k)+(S.mej[k]?' +'+S.mej[k]:''):'—'}${k?`<br><span class=tag>${OBJ[k].d}${statsObj(OBJ[k])}</span>`:''}</span>${k?`<button class=sm onclick="desequipar('${s}')">Quitar</button>`:''}</div>`}).join('')+'</div>';
+      return `<div class=rw><span>${l}: ${k?nm(k)+(S.mej[k]?' +'+S.mej[k]:''):'—'}${k?`<br><span class=tag>${OBJ[k].d}${statsObj(OBJ[k])}${S.grab&&S.grab[k]?`<br>Runa grabada: <span class=runa>${RUNAS[S.grab[k]].sym}</span> ${RUNAS[S.grab[k]].n} · ${GRABADO[S.grab[k]].d}`:''}</span>`:''}</span>${k?`<button class=sm onclick="desequipar('${s}')">Quitar</button>`:''}</div>`}).join('')+'</div>';
     body+='<b class=t>Bolsa</b><div class=lst>'+(inv.map(k=>{const o=OBJ[k],e=Object.values(S.eq).includes(k);
       return `<div class=rw><span>${has(k)}× ${nm(k)}${S.mej[k]?' +'+S.mej[k]:''}${e?' <span class=ok>(equipado)</span>':''}<br><span class=tag>${o.d}${statsObj(o)}</span></span>${EQT.includes(o.tipo)&&!e?`<button class=sm onclick="equipar('${k}')">Equipar</button>`:''}${o.tipo=='consumible'?`<button class=sm onclick="usar('${k}')">Usar</button>`:''}${o.tipo=='piedra'?`<button class=sm onclick="usar('${k}')">Aprender</button>`:''}</div>`}).join('')||'<p class=tag>Bolsa vacía.</p>')+'</div>'}
   else if(sv=='r'){

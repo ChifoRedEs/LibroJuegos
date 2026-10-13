@@ -133,3 +133,34 @@ const CALDERO=[
   {c:'Remedios',r:'pocion_serbal',ing:{serbal:4,miel:1}},
   {c:'Bebidas',r:'hidromiel',ing:{miel:2}}
 ];
+
+/* ---------- Runas grabadas en el arma (forja de Brok, Capítulo 2) ----------
+   atq, crit, def, arm, vel, am: bonificaciones fijas
+   aturde / quema: % de probabilidad por golpe · roba: % del daño del golpe que te cura
+   fuG: Furor extra por golpe · curaV: Vida que recuperas al ganar un combate */
+const GRABADO={
+  fehu:{crit:8,d:'+8 % de crítico.'},
+  uruz:{curaV:15,d:'Recuperas 15 de Vida al ganar un combate.'},
+  thurisaz:{atq:5,d:'+5 de ataque.'},
+  ansuz:{aturde:10,d:'10 % de aturdir al golpear.'},
+  raidho:{vel:6,d:'+6 de velocidad.'},
+  kenaz:{quema:20,d:'20 % de prender fuego al golpear.'},
+  gebo:{roba:15,d:'Cada golpe te cura un 15 % del daño.'},
+  wunjo:{fuG:5,d:'+5 de Furor extra por golpe.'},
+  hagalaz:{atq:8,d:'+8 de ataque.'},
+  nauthiz:{atq:4,crit:6,d:'+4 de ataque y +6 % de crítico.'},
+  isa:{aturde:15,d:'15 % de congelar al enemigo al golpear.'},
+  jera:{curaV:25,d:'Recuperas 25 de Vida al ganar un combate.'},
+  eihwaz:{def:6,arm:1,d:'+6 % de defensa y +1 de armadura.'},
+  perthro:{crit:12,d:'+12 % de crítico.'},
+  algiz:{def:8,arm:2,d:'+8 % de defensa y +2 de armadura.'},
+  sowilo:{am:10,curaV:10,d:'+10 contra no muertos y 10 de Vida al vencer.'},
+  tiwaz:{atq:6,crit:6,d:'+6 de ataque y +6 % de crítico.'},
+  berkano:{roba:10,curaV:15,d:'Roba un 10 % de vida y recuperas 15 al vencer.'},
+  ehwaz:{vel:10,d:'+10 de velocidad.'},
+  mannaz:{roba:25,d:'Cada golpe te cura un 25 % del daño.'},
+  laguz:{aturde:20,d:'20 % de aturdir al golpear.'},
+  ingwaz:{fuG:8,d:'+8 de Furor extra por golpe.'},
+  dagaz:{atq:12,d:'+12 de ataque.'},
+  othala:{def:6,arm:3,curaV:10,d:'+6 % de defensa, +3 de armadura y 10 de Vida al vencer.'}
+};

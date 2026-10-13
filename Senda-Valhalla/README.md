@@ -14,14 +14,16 @@ LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80
 | | 2 | El salón del jarl | ✅ Hecha (37 escenas, 5 de combate) |
 | | 3 | El túmulo del rey draug | ✅ Hecha (48 escenas, 9 de combate) |
 | 2 · Bajo las Raíces | 1 | El descenso | ✅ Hecha (46 escenas, 5 de combate) |
-| | 2 | La forja de los hermanos | Pendiente |
+| | 2 | La forja de los hermanos | ✅ Hecha (60 escenas, 5 de combate) |
 | | 3 | El gusano de la veta de oro | Pendiente |
 | 3 · El Invierno sin Fin | 1–3 | | Pendiente |
 | 4 · El Crepúsculo | 1–3 | | Pendiente |
 
 **El Capítulo 1 está completo (128 escenas).** Su última escena, `c1_fin`, enlaza ahora con `c2_inicio`.
 
-La escena `c2_p2` es un enlace provisional al final de la Parte 1 del Capítulo 2. Hay que sustituirla al escribir la Parte 2.
+La escena `c2_p3` es un enlace provisional al final de la Parte 2 del Capítulo 2. Hay que sustituirla al escribir la Parte 3.
+
+**Pendiente para la Parte 3 del Capítulo 2:** el juramento `fafnir` (traer el oro de la veta para el tercer tesoro de Brok) vence cuatro días después de la Gran Forja; hay que cumplirlo con `cumple:'fafnir'`. Regin acompaña al protagonista: Fafnir es su hermano. Marcas útiles: `hreidmar_charla`, `veta_vista`, `alvis_piedra`, `kraka_perdona`/`kraka_ofendido`, `mosca_ok` (0 a 3: calidad de los tesoros), `lopt_apuesta`, `rey_enano`, `dain_salvado`/`dain_muerto`, `loki_visto`.
 
 **Marcas del Capítulo 1 que el Capítulo 2 puede usar:** `lobo_libre` (el Lobo Ceniza es aliado), `siri_aprendiz`/`siri_no`, `jur_siri`, `torgil_vencido`/`torgil_gana`/`torgil_ayuda`, `copa_dev` y `rolf_paz` (Rolf descansó en paz) o `saqueo` (se saqueó su tumba), `einar_paz`/`einar_cae`, `dar` (ayudó a Gudrun), `marca_jarl` y el favor `tyr`.
 
@@ -132,8 +134,16 @@ El centro de la parte es **el cruce de las raíces**: Nali, el buhonero enano (t
 
 La puerta de Nidavellir se abre con el aval de Regin, adivinando la contraseña o pagando 150 de plata.
 
-### Parte 2 · La forja de los hermanos
-Es el corazón mecánico del juego. Incluye la ciudad enana, la forja de Brok y Eitri, contratos con gremios enanos y expediciones a las minas para buscar materiales. Se desbloquea el **grabado de runas** en las armas. Una mosca molesta los fuelles durante la forja (guiño al mito de Mjolnir); es Loki disfrazado. Hay un **duelo de acertijos con Alvis**, y si el jugador lo alarga hasta el amanecer, el enano se convierte en piedra. Aprende **Jera, Eihwaz y Perthro**.
+### Parte 2 · La forja de los hermanos ✅
+**Nidavellir** es la base de esta parte, una ciudad en anillos dentro de una montaña:
+- **La casa de Hreidmar**, el padre de Regin: cuenta la historia de sus hijos Otr (al que mató un viajero pelirrojo) y Fafnir (que se llevó el oro maldito de Andvari a la veta de oro y se convirtió en dragón). Si Regin no fue rescatado, hay una posada en su lugar, y Brok no abre su forja hasta que vuelva su aprendiz.
+- **La forja de Brok y Eitri:** forja con materiales de la Parte 1 (hacha de escama negra, escudo del ciervo, cota enana) y el **grabado de runas**. El primer grabado es gratis.
+- **El Salón de las Runas de Dvalin:** enseña **Jera** tras cumplir tres encargos de los gremios, y **Eihwaz** tras dar descanso a Durin el Primero, un rey enano que se ha levantado de su tumba.
+- **El Salón de los Gremios** (cuatro encargos): el gusano del pozo siete (mineros), hongos de lava (cerveceros), escoltar a la joyera Sindri por el puente de lava (joyeros) y vender una escama de Nidhogg (herreros).
+- **Las minas profundas:** hierro, hongos de lava, gusanos de roca y la reja de la veta de oro, donde algo susurra «mío».
+- **El mercado y la taberna del Yunque Sediento:** concurso de hidromiel, reconciliación con Kraka (si se ofendió en la Parte 1) y el **duelo de acertijos con Alvis**. Ganar da **Perthro**; o se le puede entretener con preguntas hasta que la luz del Pozo del Alba lo convierta en piedra, como hizo Thor.
+
+**La Gran Forja:** Lopt, convertido en mosca, pica al protagonista tres veces mientras maneja el fuelle (guiño al mito de Mjolnir). Se resiste con tiradas, con las runas Isa o Ansuz o pidiendo a Kraka que se trague la mosca (sabe a manzana asada). Los aciertos deciden la calidad del jabalí de oro y del gemelo de Draupnir. Al final, Lopt se revela: la apuesta era de **tres tesoros**, y el tercero necesita el oro de la veta donde duerme **Fafnir**. Si no está en cuatro días, se llevará la cabeza de Brok. El protagonista puede jurar que traerá el oro. Brok le regala la cota enana, y Regin decide acompañarle.
 
 ### Parte 3 · El gusano de la veta de oro
 Un descendiente de Nidhogg custodia la veta que necesitan los enanos. El protagonista forja su arma definitiva, y elegir qué runa grabar en ella cambia su estilo de combate. Llega la **prueba de Thor**. Aprende **Hagalaz, Nauthiz y Sowilo**. Al final canta **Fialar**, el primer gallo del fin del mundo.
@@ -199,7 +209,8 @@ Senda-Valhalla/
     │   ├── parte2.js       ← Parte 2 (amplía c1_aldea, c1_casa y c1_groa2 con SC.<escena>.c.push)
     │   └── parte3.js       ← Parte 3 y final del capítulo (c1_fin)
     └── c2/
-        └── parte1.js       ← escenas c2_* de la Parte 1 (convierte c1_fin en enlace)
+        ├── parte1.js       ← escenas c2_* de la Parte 1 (convierte c1_fin en enlace)
+        └── parte2.js       ← Parte 2 (Nidavellir, forja y grabado, la Gran Forja)
 ```
 
 ### Cómo escribir una parte nueva
@@ -227,6 +238,7 @@ Cada parte es un archivo que llama a `registrarCapitulo({capitulo, parte, titulo
 | `forja` | Forja |
 | `caldero` | Caldero |
 | `taller` | Taller de runas |
+| `grabado` | Grabado de una runa en el arma equipada |
 | `acertijo` | Acertijo |
 | `senna` | Duelo de injurias |
 | `end` | Final |
@@ -245,9 +257,11 @@ Cada parte es un archivo que llama a `registrarCapitulo({capitulo, parte, titulo
 | `fx` | Efectos |
 | `chk` | Tirada: `{s, dc, ok, ko, fxok, fxko}` |
 
-**Efectos (`fx`):** `hp`, `fu`, `plata`, `item`, `quita`, `equipa`, `runa`, `fl`, `st`, `mhp`, `hilo`, `gl`, `favor`, `jura:{id, txt, dias, gl}`, `cumple:'id'`, `saga:'texto'`, `fin:'texto'` (anota un final o capítulo completado), `t` (horas), `hasta` (avanza hasta esa hora), `dormir`.
+**Efectos (`fx`):** `hp`, `fu`, `plata`, `item`, `quita`, `equipa`, `runa`, `fl`, `st`, `mhp`, `hilo`, `gl`, `favor`, `jura:{id, txt, dias, gl}`, `cumple:'id'`, `saga:'texto'`, `suma:{marca:n}` (suma n a un contador), `fin:'texto'` (anota un final o capítulo completado), `t` (horas), `hasta` (avanza hasta esa hora), `dormir`.
 
-**Requisitos (`req`):** `item`, `fl`, `no`, `st:[atributo, valor]`, `plata`, `dia`, `gl`, `rg`, `hilos`, `runa`, `hmin`, `hmax`.
+**Requisitos (`req`):** `item`, `fl`, `no`, `min:{marca:n}` y `max:{marca:n}` (contadores), `st:[atributo, valor]`, `plata`, `dia`, `gl`, `rg`, `hilos`, `runa`, `hmin`, `hmax`.
+
+**Runas grabadas (`GRABADO` en `datos.js`):** cada runa da al arma un efecto pasivo: bonificaciones fijas (`atq`, `crit`, `def`, `arm`, `vel`, `am`) o efectos al golpear (`aturde` y `quema` en %, `roba` en % del daño, `fuG` Furor extra, `curaV` Vida al vencer).
 
 **Objetos:** además de `atq`, `def`, `arm`, `crit` y `vel`, un arma puede tener `am` (daño extra contra no muertos y draugs).
 
