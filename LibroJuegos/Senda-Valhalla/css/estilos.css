@@ -1,0 +1,70 @@
+/* =====================================================================
+   TEMA · La Senda al Valhalla
+   Se carga después de ../comun/libro.css y solo redefine variables
+   y los detalles propios de esta historia.
+   ===================================================================== */
+:root{
+  --mesa:#0d1217;
+  --mesa-luz:rgba(143,184,214,.13);
+  --papel:#1c1d1e;
+  --papel-2:#252729;
+  --canto:#323538;
+  --tinta:#e6e2d8;
+  --tenue:#9a9e9f;
+  --linea:#3d4246;
+  --acento:#94bcd9;          /* hielo */
+  --oro:#d6aa4e;             /* Gloria y plata */
+  --peligro:#d0503f;         /* sangre */
+  --exito:#8cc4a0;
+  --azul:#9aa8e0;
+  --sobre-acento:#0f1a22;
+  --f-titulo:"Uncial Antiqua","Cormorant Garamond",Georgia,serif;
+  --f-runa:"Noto Sans Runic","Segoe UI Historic","Segoe UI Symbol",sans-serif;
+  --emblema:"ᛉ";
+  --orn:"ᛟ ᛝ ᛟ";
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --mesa:#c6ccd2;
+    --mesa-luz:rgba(255,255,255,.55);
+    --papel:#f6f2e9;
+    --papel-2:#ece6d9;
+    --canto:#dcd4c3;
+    --tinta:#232527;
+    --tenue:#646a6e;
+    --linea:#cfc8b7;
+    --acento:#2c5f86;
+    --oro:#8a6418;
+    --peligro:#a32f24;
+    --exito:#2f7458;
+    --azul:#4253a3;
+    --sobre-acento:#f6f2e9;
+  }
+}
+
+/* Runas: siempre con su tipografía para que se vean en cualquier dispositivo */
+.runa,.sc>h2::after,#app>h2::after,#app>.sub::after,#app>h1::before,.k-n::before{font-family:var(--f-runa)}
+.runa{color:var(--acento);font-style:normal;font-size:1.15em}
+
+/* El emblema de la portada es un sello de hierro con la runa Algiz */
+#app>h1::before{
+  width:1.5em;height:1.5em;line-height:1.5em;
+  font-size:.6em;color:var(--acento);background:var(--papel-2);
+  border:2px solid var(--acento);border-radius:3px;transform:rotate(-3deg);
+  box-shadow:inset 0 0 0 3px var(--papel-2),inset 0 0 0 4px color-mix(in srgb,var(--acento) 45%,transparent);
+}
+#app>h1{letter-spacing:.01em}
+.sc>h2::after,#app>h2::after,#app>.sub::after{letter-spacing:.35em;font-size:.85rem}
+.sc>h2+p:not([class])::first-letter{font-size:3.2em;line-height:.86}
+
+/* Marcador de decisión por defecto: una runa */
+.k-n{--m:"ᚱ"}
+
+/* Barra de Furor y botón berserker */
+.bar .fu{background:var(--oro)}
+.fight .row button.ber{border-color:var(--oro);color:var(--oro);font-weight:700;background:color-mix(in srgb,var(--oro) 10%,var(--papel))}
+
+.fight .row button.ber .tag{font-weight:400;color:inherit}
+
+/* Elección de protagonista */
+.sc>button.prota b{font-family:var(--f-titulo);font-weight:400;font-size:1.35rem;color:var(--acento)}
