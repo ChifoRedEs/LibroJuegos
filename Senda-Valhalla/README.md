@@ -15,15 +15,15 @@ LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80
 | | 3 | El túmulo del rey draug | ✅ Hecha (48 escenas, 9 de combate) |
 | 2 · Bajo las Raíces | 1 | El descenso | ✅ Hecha (46 escenas, 5 de combate) |
 | | 2 | La forja de los hermanos | ✅ Hecha (60 escenas, 5 de combate) |
-| | 3 | El gusano de la veta de oro | Pendiente |
+| | 3 | El gusano de la veta de oro | ✅ Hecha (48 escenas, 6 de combate) |
 | 3 · El Invierno sin Fin | 1–3 | | Pendiente |
 | 4 · El Crepúsculo | 1–3 | | Pendiente |
 
 **El Capítulo 1 está completo (128 escenas).** Su última escena, `c1_fin`, enlaza ahora con `c2_inicio`.
 
-La escena `c2_p3` es un enlace provisional al final de la Parte 2 del Capítulo 2. Hay que sustituirla al escribir la Parte 3.
+**El Capítulo 2 está completo (154 escenas).** Termina en la escena `c2_fin` (`end:'Capítulo 2 completado'`). Al escribir el Capítulo 3, convierte `c2_fin` en una escena normal que enlace con `c3_inicio`, como hace `c2/parte1.js` con `c1_fin`.
 
-**Pendiente para la Parte 3 del Capítulo 2:** el juramento `fafnir` (traer el oro de la veta para el tercer tesoro de Brok) vence cuatro días después de la Gran Forja; hay que cumplirlo con `cumple:'fafnir'`. Regin acompaña al protagonista: Fafnir es su hermano. Marcas útiles: `hreidmar_charla`, `veta_vista`, `alvis_piedra`, `kraka_perdona`/`kraka_ofendido`, `mosca_ok` (0 a 3: calidad de los tesoros), `lopt_apuesta`, `rey_enano`, `dain_salvado`/`dain_muerto`, `loki_visto`.
+**Marcas del Capítulo 2 que el Capítulo 3 puede usar:** `thor_cabra` (Thor conoce a Kraka) y el favor `thor`; `regin_anillo` (Regin se quedó el anillo maldito: puede volver como amenaza), `anillo_tuyo` (lo tiene el protagonista) o `andvari_libre` (maldición rota); `maldito` (cogió oro maldito); `nombre_oculto` (Fafnir no pudo maldecirle); `arma_final` (`hacha`, `espada`, `lanza` o `muerdetumbas`); `lopt_derrotado` y `plazo` (si `S.dia > S.fl.plazo` al volver, llegó tarde y Brok se salvó por el truco del cuello; si no, Lopt tiene la boca cosida); `loki_visto`, `regin_charla` (Lopt arma a los gigantes); `dain_salvado`/`dain_muerto`; `kraka_perdona`/`kraka_ofendido`; `sangre_fafnir`.
 
 **Marcas del Capítulo 1 que el Capítulo 2 puede usar:** `lobo_libre` (el Lobo Ceniza es aliado), `siri_aprendiz`/`siri_no`, `jur_siri`, `torgil_vencido`/`torgil_gana`/`torgil_ayuda`, `copa_dev` y `rolf_paz` (Rolf descansó en paz) o `saqueo` (se saqueó su tumba), `einar_paz`/`einar_cae`, `dar` (ayudó a Gudrun), `marca_jarl` y el favor `tyr`.
 
@@ -83,7 +83,7 @@ Los nombres están simplificados para que se pronuncien con facilidad en castell
 
 - **Vida y Furor.** El Furor va de 0 a 100. Se gana golpeando (+8), cubriéndose (+6) y recibiendo heridas (+10), y se gasta en runas. Cada combate empieza con al menos 20 de Furor.
 - **Furia berserker.** Con el Furor al 100 % puedes desatarla: daño doble durante 3 turnos, sin poder cubrirte ni huir.
-- **Gloria y rangos.** Bóndi (0) → Drengr (100) → Hersir (350) → Jarl (800) → Elegido o Elegida (1500). Cada rango sube la Vida máxima en 25. Los actos deshonrosos restan Gloria.
+- **Gloria y rangos.** Bóndi (0) → Drengr (100) → Hersir (350) → Jarl (800) → Campeón (1400) → Elegido o Elegida (2400). Cada rango sube la Vida máxima en 25. Los actos deshonrosos restan Gloria.
 - **Runas.** Son las 24 runas del Futhark antiguo, repartidas en sus tres ættir (familias de 8). Cada capítulo desbloquea un ætt. Puedes llevar 4 preparadas en combate. La völva las mejora hasta +5, con un 12 % más de efecto por nivel. También se aprenden con **piedras rúnicas**.
 - **Juramentos.** Juras una hazaña con un plazo en días. Si la cumples, ganas Gloria. Si la rompes, pierdes la mitad de esa Gloria y el nombre queda manchado (niding).
 - **Hilos de las Nornas.** Empiezas con 3. Cada hilo permite repetir una tirada de dados fallida.
@@ -145,8 +145,24 @@ La puerta de Nidavellir se abre con el aval de Regin, adivinando la contraseña 
 
 **La Gran Forja:** Lopt, convertido en mosca, pica al protagonista tres veces mientras maneja el fuelle (guiño al mito de Mjolnir). Se resiste con tiradas, con las runas Isa o Ansuz o pidiendo a Kraka que se trague la mosca (sabe a manzana asada). Los aciertos deciden la calidad del jabalí de oro y del gemelo de Draupnir. Al final, Lopt se revela: la apuesta era de **tres tesoros**, y el tercero necesita el oro de la veta donde duerme **Fafnir**. Si no está en cuatro días, se llevará la cabeza de Brok. El protagonista puede jurar que traerá el oro. Brok le regala la cota enana, y Regin decide acompañarle.
 
-### Parte 3 · El gusano de la veta de oro
-Un descendiente de Nidhogg custodia la veta que necesitan los enanos. El protagonista forja su arma definitiva, y elegir qué runa grabar en ella cambia su estilo de combate. Llega la **prueba de Thor**. Aprende **Hagalaz, Nauthiz y Sowilo**. Al final canta **Fialar**, el primer gallo del fin del mundo.
+### Parte 3 · El gusano de la veta de oro ✅
+**Thor** llega a Nidavellir en su carro tirado por los machos cabríos Rechinadientes y Crujedientes, y reconoce a Kraka: era él quien contaba el chisme de la cabra. Thor acaba riéndose porque es verdad. Después llega la **prueba de Thor**: aguantar sin moverse en un puente sobre la lava mientras Thor lanza a Mjolnir contra el protagonista. Superarla da su favor (+5 de ataque). Thor le enseña **Hagalaz** y le da un consejo para luchar contra el dragón: un foso en el camino al agua, porque la panza es blanda.
+
+**Bajada a la veta con Regin:**
+- **Las galerías doradas:** la tentación de llenarse la bolsa con oro maldito.
+- **Los buscadores:** mineros enanos enloquecidos por el oro, a los que se puede vencer o convencer para que vuelvan a casa.
+- **El derrumbe:** atrapados en la oscuridad, el protagonista enciende el fuego de la necesidad y aprende **Nauthiz**.
+- **El lago negro:** **Andvari**, convertido en lucio, cuenta la historia de su oro y de su anillo **Andvaranaut**, y pide que se lo devuelvan.
+- **La piedra solar:** la primera piedra del sol de los enanos enseña **Sowilo**.
+
+**Fafnir** pregunta el nombre del protagonista (como en el mito de Sigurd): ocultarlo evita su maldición final. Hay tres formas de luchar:
+- **Desde el foso:** el dragón empieza el combate herido.
+- **Después de que Regin hable con su hermano:** el dragón duda y lucha peor.
+- **De frente:** el combate más duro.
+
+**El anillo:** devolvérselo a Andvari rompe la maldición, y Fafnir vuelve a ser enano al morir. También puede quedárselo Regin, que cae bajo su hechizo, o el propio protagonista. Probar la sangre del dragón permite oír por un instante lo que piensa Kraka.
+
+**El final del capítulo:** el tercer tesoro es un mango nuevo para Mjolnir, que salió corto por culpa de la mosca en el mito original. Con el oro sobrante, Brok forja el **arma definitiva**: un hacha, una espada, una lanza o Muerdetumbas reforjada. Eitri graba gratis su runa. Lopt pierde la apuesta: si el protagonista llega a tiempo, Brok le cose la boca; si llega tarde, Brok se salva con el truco del cuello. Al final canta **Fialar**, el primer gallo del fin del mundo, y Thor se lleva al protagonista a Jotunheim en su carro.
 
 ---
 
@@ -210,7 +226,8 @@ Senda-Valhalla/
     │   └── parte3.js       ← Parte 3 y final del capítulo (c1_fin)
     └── c2/
         ├── parte1.js       ← escenas c2_* de la Parte 1 (convierte c1_fin en enlace)
-        └── parte2.js       ← Parte 2 (Nidavellir, forja y grabado, la Gran Forja)
+        ├── parte2.js       ← Parte 2 (Nidavellir, forja y grabado, la Gran Forja)
+        └── parte3.js       ← Parte 3 y final del capítulo (c2_fin)
 ```
 
 ### Cómo escribir una parte nueva
@@ -233,6 +250,7 @@ Cada parte es un archivo que llama a `registrarCapitulo({capitulo, parte, titulo
 | `mision` | Muestra el recuadro de misión |
 | `sort` | Agrupa las decisiones por tipo |
 | `back` | Escena a la que lleva «Volver» |
+| `backx` | Texto del botón de `back` (por defecto «Volver») |
 | `f` | Combate: `{e, win, lose, flee}` |
 | `shop` | Tienda |
 | `forja` | Forja |

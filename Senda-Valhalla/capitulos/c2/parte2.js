@@ -6,7 +6,7 @@
    (Jera y Eihwaz), las minas profundas, la taberna (Alvis y Perthro)
    y la Gran Forja con la mosca. Termina con la apuesta de Lopt.
    Sustituye la escena provisional c2_p2 de la Parte 1.
-   Escena de enlace provisional: c2_p3 (la sustituirá la Parte 3)
+   Continúa en parte3.js (c2_p3)
    ===================================================================== */
 (()=>{
 const pelea=(e,win,flee,t)=>({t:[t],f:{e,win,lose:'muerte',flee}});
@@ -452,13 +452,7 @@ c2_brok_gracias:{h:'Antes de la veta',cp:1,t:[
   'Regin se acerca, muy serio. «Voy contigo. Fafnir es mi hermano. Si alguien tiene que mirarlo a los ojos, soy yo.» Hreidmar, en la puerta de la forja, no dice nada, pero tampoco se lo impide.',
   'Kraka suspira en tu hombro. «Un dragón», dice. «Claro. ¿Por qué no? Ya puestos.»'],
   fx:{fl:{c2p2fin:1},item:'cota_enana',gl:15},
-  c:[{x:'Prepararte para bajar a la veta de oro',to:'c2_p3',k:'main'}]},
-
-/* Escena de enlace provisional: la sustituirá la Parte 3 */
-c2_p3:{h:'Continuará',t:[
-  'En lo más hondo de la montaña, algo enorme se remueve sobre un lecho de oro.',
-  '<span class=tag>Aquí termina la Parte 2 del Capítulo 2. La historia continúa en la Parte 3: «El gusano de la veta de oro».</span>'],
-  c:[{x:'Volver a Nidavellir',to:'c2_ciudad'}]}
+  c:[{x:'Prepararte para bajar a la veta de oro',to:'c2_p3',k:'main'}]}
 
 }});
 })();

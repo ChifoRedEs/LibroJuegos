@@ -18,7 +18,8 @@ const RANGOS=[
   {n:'Drengr',gl:100},        // guerrero de honor
   {n:'Hersir',gl:350},       // caudillo
   {n:'Jarl',gl:800},
-  {n:'Elegid{o|a}',gl:1500}   // digno del Valhalla
+  {n:'Campeón',gl:1400},     // campeón de los dioses
+  {n:'Elegid{o|a}',gl:2400}   // digno del Valhalla
 ];
 
 /* ---------- Runas: las 24 del Futhark antiguo en sus tres ættir ----------

@@ -129,7 +129,7 @@ function show(){UI.stat=false;if(!S.grab)S.grab={};const sc=cur();let h=hud()+mi
   if(UI.nota){h+=`<p class=ok>${UI.nota}</p>`;UI.nota=null}
   if(sc.h)h+=`<h2>${sc.h}</h2>`;
   h+=sc.t.map(p=>`<p>${p}</p>`).join('');
-  const back=sc.back?`<button onclick="go('${sc.back}')">Volver</button>`:'';
+  const back=sc.back?`<button onclick="go('${sc.back}')">${sc.backx||'Volver'}</button>`:'';
   const mas=()=>(sc.c?opts(sc):'')+back;
   if(UI.res)h+=UI.res;
   else if(S.f)h+=pFight();
