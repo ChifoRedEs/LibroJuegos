@@ -1,0 +1,55 @@
+/* =====================================================================
+   TEMA · El Camino del Dao
+   Se carga después de ../comun/libro.css y solo redefine variables
+   y los detalles propios de esta historia.
+   ===================================================================== */
+:root{
+  --mesa:#0c1413;
+  --mesa-luz:rgba(127,196,168,.14);
+  --papel:#1d1c18;
+  --papel-2:#26251f;
+  --canto:#33322a;
+  --tinta:#ebe3cf;
+  --tenue:#a39c88;
+  --linea:#433f33;
+  --acento:#82c6a9;          /* jade */
+  --oro:#d6ae55;
+  --peligro:#d9594c;         /* bermellón de sello */
+  --exito:#82c6a9;
+  --azul:#86a9dc;
+  --sobre-acento:#10201a;
+  --f-titulo:"Ma Shan Zheng","Songti SC","STKaiti",serif;
+  --emblema:"氣";
+  --orn:"◇ ◆ ◇";
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --mesa:#c9d1c6;
+    --mesa-luz:rgba(255,255,255,.55);
+    --papel:#f7f1e2;
+    --papel-2:#ede5d0;
+    --canto:#ddd3ba;
+    --tinta:#26241e;
+    --tenue:#6b6556;
+    --linea:#d2c7aa;
+    --acento:#2b7560;
+    --oro:#8c6a1c;
+    --peligro:#a62f27;
+    --exito:#2b7560;
+    --azul:#3d6aa8;
+    --sobre-acento:#f7f1e2;
+  }
+}
+
+/* El emblema de la portada es un sello de bermellón */
+#app>h1::before{
+  width:1.45em;height:1.45em;line-height:1.45em;
+  font-size:.62em;color:#f6ead2;background:var(--peligro);
+  border-radius:4px;transform:rotate(-4deg);
+  box-shadow:inset 0 0 0 3px var(--peligro),inset 0 0 0 4px rgba(246,234,210,.55);
+}
+/* La caligrafía necesita algo más de cuerpo y aire */
+#app>h1{letter-spacing:.02em}
+.sc>h2,#app>h2{letter-spacing:.03em}
+.sc>h2::after,#app>h2::after,#app>.sub::after{letter-spacing:.15em;font-size:.8rem}
+.sc>h2+p:not([class])::first-letter{font-size:3.1em;line-height:.9}

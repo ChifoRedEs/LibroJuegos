@@ -17,7 +17,7 @@ LibroJuegos/
 
 ## Crear una historia nueva
 
-1. Copia la carpeta de una historia existente o crea una nueva junto a `Camino-Qi`.
+1. Copia la carpeta de una historia existente o crea una nueva junto a `Camino-Dao`.
 2. En su `index.html`, carga las fuentes del estándar más la fuente de títulos que quieras. Después enlaza el estándar y, a continuación, el tema, en este orden:
 
 ```html
