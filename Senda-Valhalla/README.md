@@ -12,14 +12,14 @@ LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80
 |---|---|---|---|
 | 1 · La Muerte de Paja | 1 | El trato de la Valquiria | ✅ Hecha (42 escenas, 7 de combate) |
 | | 2 | El salón del jarl | ✅ Hecha (37 escenas, 5 de combate) |
-| | 3 | El túmulo del rey draug | Pendiente |
+| | 3 | El túmulo del rey draug | ✅ Hecha (48 escenas, 9 de combate) |
 | 2 · Bajo las Raíces | 1–3 | | Pendiente |
 | 3 · El Invierno sin Fin | 1–3 | | Pendiente |
 | 4 · El Crepúsculo | 1–3 | | Pendiente |
 
-La escena `c1_p3` es un enlace provisional al final de la Parte 2. Hay que sustituirla al escribir la Parte 3.
+**El Capítulo 1 está completo (128 escenas).** Termina en la escena `c1_fin` (`end:'Capítulo 1 completado'`). Al escribir el Capítulo 2, convierte `c1_fin` en una escena normal con una decisión que lleve a la primera escena del Capítulo 2.
 
-**Pendiente para la Parte 3:** el juramento `rolf` (traer Muerdetumbas) vence al final del día 9; hay que cumplirlo con `cumple:'rolf'`. Las marcas `siri_aprendiz`/`siri_no`, `jur_siri`, `lobo_libre`, `marca_jarl`, `torgil_vencido`/`torgil_gana` y `draug_visto` están disponibles para variar el texto.
+**Marcas del Capítulo 1 que el Capítulo 2 puede usar:** `lobo_libre` (el Lobo Ceniza es aliado), `siri_aprendiz`/`siri_no`, `jur_siri`, `torgil_vencido`/`torgil_gana`/`torgil_ayuda`, `copa_dev` y `rolf_paz` (Rolf descansó en paz) o `saqueo` (se saqueó su tumba), `einar_paz`/`einar_cae`, `dar` (ayudó a Gudrun), `marca_jarl` y el favor `tyr`.
 
 ---
 
@@ -101,8 +101,16 @@ El protagonista agoniza. Skuld le ofrece el trato, y si lo rechaza llega el prim
 ### Parte 2 · El salón del jarl ✅
 Es la base de vida diaria del capítulo, como el patio de Camino-Qi: el salón de día (el escaldo Eyvind cuenta la leyenda del rey Rolf y su espada Muerdetumbas; Torgil provoca), la herrería de Gunnar (forja), el puesto de la vieja Hild (tienda), la cabaña de Groa (caldero y taller de runas), las turberas (hierro de pantano), el muelle (duelo de injurias de práctica con Orm el Arenque) y el tablón de peticiones (la red de la viuda Ingrid, el zorro de Ulla y el hierro para Gunnar). Groa enseña **Uruz** (aguantar en el fiordo helado), **Raidho** (salvar a la pastora Asa de un oso en los pastos altos) y **Kenaz** (el primer draug, un ahogado de la tormenta en la que murió el hermano del protagonista). Siri pide ser aprendiz de la völva y el protagonista decide si responde por ella. En el banquete de Yule, la noche del día 5, se hacen los juramentos: bajar al túmulo del rey Rolf, hacer callar a Torgil o proteger a Siri. Después llega el **duelo de injurias** contra Torgil. Al final, el jinete Bersi trae la noticia: los muertos del rey Rolf han salido de las colinas.
 
-### Parte 3 · El túmulo del rey draug
-Los muertos se levantan en las colinas. El protagonista baja al túmulo del rey Rolf, con sus trampas, acertijos rúnicos y draugs menores, y se enfrenta al rey draug para arrebatarle la espada **Muerdetumbas**. Aprende **Ansuz, Gebo y Wunjo**. Llega la **prueba de Tyr**: renunciar a algo valioso (la espada, el amuleto de Siri o un año de vida prestada) a cambio de su Favor. Al final, el salón del jarl arde atacado por draugs, aparece el primer cuervo de Odín y Kraka guía al protagonista hacia la raíz de Yggdrasil.
+### Parte 3 · El túmulo del rey draug ✅
+Los draugs del rey Rolf atacan la granja de Bersi. El protagonista rescata a Gudrun y a la pequeña Thora (entrando a la fuerza o sin ser visto) y vence a un capitán draug, que antes de deshacerse revela la causa: alguien robó la copa del rey de su tumba. Si ayuda a Gudrun con plata o comida, Groa le enseña **Gebo**, la runa del regalo. Los chismes de la vieja Hild apuntan a Ketil, el padre de Torgil, que se hizo rico hace diez años. La copa se recupera por la fuerza, con astucia o, si Torgil fue humillado en Yule, con su ayuda. Groa enseña **Ansuz** con un acertijo.
+
+En el túmulo hay un pasillo con trampa (leer las runas y pagar el peaje), la sala de la guardia (combate, sigilo o deslumbrar al guardián con Kenaz) y la puerta del rey (acertijo o fuerza bruta). En la cámara del barco, el jugador puede saquear la plata (pierde Gloria). Ante el rey Rolf hay dos caminos:
+- **Con la copa y sin saquear:** combate de honor; Rolf entrega **Muerdetumbas** y descansa en paz.
+- **Sin la copa, o habiendo saqueado:** combate a muerte contra un Rolf más fuerte.
+
+Muerdetumbas hace daño extra a los no muertos. Al salir llega la **prueba de Tyr**: entregar el amuleto de Siri, un hilo de las Nornas o 15 de Vida máxima a cambio de su Favor, o no entregar nada.
+
+De vuelta en Vindvik, Siri (si es aprendiz) o Groa le enseña **Wunjo**. Durante la celebración, los ahogados de la gran tormenta suben por el fiordo helado; si el jugador liberó al Lobo Ceniza, este vuelve para luchar a su lado. Al frente de los ahogados está **Einar**, el hermano del protagonista y padre de Siri: si Siri es aprendiz, puede cantarle el descanso; si no, hay que vencerlo. El salón del jarl arde (Torgil salva niños o huye, según el duelo de Yule). Al amanecer aparece Hugin, el cuervo de Odín, que envía al protagonista bajo las raíces de Yggdrasil. Skuld le regala un hilo, y llega la despedida de Siri y Groa.
 
 ---
 
@@ -177,7 +185,8 @@ Senda-Valhalla/
 └── capitulos/
     └── c1/
         ├── parte1.js       ← escenas c1_* de la Parte 1
-        └── parte2.js       ← Parte 2 (amplía c1_aldea, c1_casa y c1_groa2 con SC.<escena>.c.push)
+        ├── parte2.js       ← Parte 2 (amplía c1_aldea, c1_casa y c1_groa2 con SC.<escena>.c.push)
+        └── parte3.js       ← Parte 3 y final del capítulo (c1_fin)
 ```
 
 ### Cómo escribir una parte nueva
@@ -209,6 +218,7 @@ Cada parte es un archivo que llama a `registrarCapitulo({capitulo, parte, titulo
 | `senna` | Duelo de injurias |
 | `end` | Final |
 | `saga` | Recita la saga en el final |
+| `gen` | Nombre de una función de `GEN` que devuelve `{t:[…]}`: textos que cambian según lo que hizo el jugador |
 
 **Campos de una decisión:**
 

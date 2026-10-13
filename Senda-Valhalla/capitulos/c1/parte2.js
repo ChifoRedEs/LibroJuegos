@@ -3,7 +3,7 @@
    Parte 2 · «El salón del jarl»
    Vida diaria en Vindvik hasta el banquete de Yule (noche del día 5).
    Amplía escenas de la Parte 1 (c1_aldea, c1_casa, c1_groa2).
-   Escena de enlace provisional: c1_p3 (la sustituirá la Parte 3)
+   Continúa en parte3.js (c1_p3)
    ===================================================================== */
 (()=>{
 const pelea=(e,win,flee,t)=>({t:[t],f:{e,win,lose:'muerte',flee}});
@@ -320,13 +320,7 @@ c1_jinete:{h:'El jinete',cp:1,t:[
   'El salón se vacía detrás de ti. Hakon llega con la espada desenvainada y la borrachera de golpe evaporada. Mira las colinas, te mira a ti, y no tiene que decir nada.',
   'Kraka se posa en tu hombro. Por una vez, no hace ningún chiste. «Mañana», dice. «Al túmulo. Y que Skuld nos ayude.»'],
   fx:{fl:{p2fin:1},saga:'La noche de Yule, los muertos del rey Rolf salieron de las colinas.'},
-  c:[{x:'Prepararte para lo que viene',to:'c1_p3',k:'main',fx:{hasta:8,dormir:1}}]},
-
-/* Escena de enlace provisional: la sustituirá la Parte 3 */
-c1_p3:{h:'Continuará',t:[
-  'Amanece sobre Vindvik. En las colinas, la luz azul se ha apagado, pero nadie cree que sea buena señal.',
-  '<span class=tag>Aquí termina la Parte 2 del Capítulo 1. La historia continúa en la Parte 3: «El túmulo del rey draug».</span>'],
-  c:[{x:'Volver a Vindvik',to:'c1_aldea'}]}
+  c:[{x:'Prepararte para lo que viene',to:'c1_p3',k:'main',fx:{hasta:8,dormir:1}}]}
 
 }});
 })();

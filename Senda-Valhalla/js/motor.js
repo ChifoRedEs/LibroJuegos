@@ -49,6 +49,7 @@ function ok(r){if(!r)return true;
   if(r.plata&&S.plata<r.plata)return false;
   if(r.dia&&S.dia<r.dia)return false;
   if(r.gl&&S.gl<r.gl)return false;
+  if(r.hilos&&S.hilos<r.hilos)return false;
   if(r.rg&&S.rg<r.rg)return false;
   if(r.runa&&!S.ru.includes(r.runa))return false;
   if(r.hmax!=null&&S.hora>r.hmax)return false;
@@ -94,9 +95,9 @@ function aprendeRuna(k){if(S.ru.includes(k))return;S.ru.push(k);if(S.rue.length<
   nota(`Aprendes la runa <span class=runa>${RUNAS[k].sym}</span> <b>${RUNAS[k].n}</b>: ${RUNAS[k].d}`)}
 
 /* ---------- Estadísticas de combate ---------- */
-function ST(){const T={atq:S.st.fue*2+S.rg*3,def:0,arm:0,crit:5+S.st.sue,vel:S.st.ast};
+function ST(){const T={atq:S.st.fue*2+S.rg*3,def:0,arm:0,crit:5+S.st.sue,vel:S.st.ast,am:0};
   for(const s of ['arma','esc','arm']){const k=S.eq[s];if(!k)continue;const o=OBJ[k],m=S.mej[k]||0;
-    for(const x of ['atq','def','arm','crit','vel'])T[x]+=o[x]||0;
+    for(const x of ['atq','def','arm','crit','vel','am'])T[x]+=o[x]||0;
     if(m){if(o.tipo=='arma')T.atq+=3*m;else{T.arm+=2*m;T.def+=m}}}
   for(const f in S.fav)for(const x of ['atq','crit','vel'])T[x]+=FAV[f][x]||0;
   return T}
@@ -159,6 +160,7 @@ function finTirada(g){const k=UI.tk;if(!k)return;UI.tk=null;apply(g?k.fxok:k.fxk
 
 /* ---------- Combate: Furor, runas y furia berserker ---------- */
 const intento=()=>Math.random()<.3?'carga':'atq';
+const esMuerto=E=>/muert|draug/i.test(E.cat||'');
 function empiezaCombate(e){const E=ENEMIGOS[e];
   S.f={id:e,hp:E.hp,mhp:E.hp,it:intento(),lg:'Comienza el combate.',at:0,qm:0};
   S.cb={esc:0,crit:0,esq:0,ber:0,regen:0,rgv:[0,0]};S.fu=Math.max(S.fu,20)}
@@ -181,7 +183,7 @@ ${S.fu>=100&&!C.ber?`<button class=ber onclick="turno('_b')">¡Furia berserker!<
 <button ${C.ber?'disabled':''} onclick="turno('_g')">Guardia<br><span class=tag>Reduce el daño · +6 Furor</span></button>
 ${fs.flee?`<button ${C.ber?'disabled':''} onclick="turno('_h')">Huir<br><span class=tag>2d6 + Astucia contra 9</span></button>`:''}${cons}</div></div>`}
 function usaRuna(k){const r=RUNAS[k],F=S.f,C=S.cb,E=ENEMIGOS[F.id],m=mult(k),v=x=>Math.round(R(x[0],x[1])*m);let lg=`<span class=runa>${r.sym}</span> ${r.n}: `;
-  if(r.dmg){let d=v(r.dmg)+S.st[r.s||'fue']*2+S.rg*3;
+  if(r.dmg){let d=v(r.dmg)+S.st[r.s||'fue']*2+S.rg*3+(esMuerto(E)&&r.s!='esp'?ST().am:0);
     if(r.desesp)d=Math.round(d*(2-S.hp/S.mhp));
     if(r.azar){const f=[.5,1,1,2][R(0,3)];d=Math.round(d*f);lg+=f>1?'¡la suerte sonríe! ':f<1?'la suerte te esquiva. ':''}
     if(r.crit||C.crit){d=Math.round(d*1.6);C.crit=0;lg+='¡Crítico! '}
@@ -198,7 +200,7 @@ function usaRuna(k){const r=RUNAS[k],F=S.f,C=S.cb,E=ENEMIGOS[F.id],m=mult(k),v=x
   return lg}
 function turno(a){const F=S.f,E=ENEMIGOS[F.id],C=S.cb,fs=cur().f,T=ST();let lg='',g=false;
   if(a=='_b'){if(S.fu<100||C.ber)return;C.ber=3;S.fu=0;F.lg='¡La furia berserker te inunda! Durante tres turnos tus golpes harán el doble de daño.';save();return show()}
-  if(a=='_a'){let d=R(4,8)+T.atq;if(C.crit||Math.random()*100<T.crit){d=Math.round(d*1.6);C.crit=0;lg+='¡Crítico! '}
+  if(a=='_a'){let d=R(4,8)+T.atq+(esMuerto(E)?T.am:0);if(T.am&&esMuerto(E))lg+='Tu arma muerde la carne muerta. ';if(C.crit||Math.random()*100<T.crit){d=Math.round(d*1.6);C.crit=0;lg+='¡Crítico! '}
     if(C.ber)d*=2;F.hp-=d;S.fu=Math.min(100,S.fu+8);lg+=`Golpeas: ${d} de daño. `}
   else if(RUNAS[a]){if(S.fu<RUNAS[a].c)return;S.fu-=RUNAS[a].c;lg+=usaRuna(a)}
   else if(a=='_g'){if(C.ber)return;g=true;S.fu=Math.min(100,S.fu+6);lg+='Te cubres tras la guardia. '}
@@ -239,7 +241,7 @@ function pShop(sc){const T=TIENDAS[sc.shop],v=UI.tab=='v';const L=v?Object.keys(
 function comprar(k){const n=qn(k,0);if(n<1)return;S.plata-=n*precio(k,0);add(k,n);save();show()}
 function vender(k){const n=qn(k,1);if(n<1)return;S.plata+=n*precio(k,1);add(k,-n);for(const s in S.eq)if(S.eq[s]==k&&!has(k))S.eq[s]=null;save();show()}
 const statsObj=o=>{const p=[];if(o.atq)p.push('Ataque +'+o.atq);if(o.def)p.push('Defensa '+o.def+' %');if(o.arm)p.push('Armadura +'+o.arm);
-  if(o.crit)p.push('Crítico +'+o.crit+' %');if(o.vel)p.push('Velocidad '+(o.vel>0?'+':'')+o.vel);return p.length?'<br>'+p.join(' · '):''};
+  if(o.crit)p.push('Crítico +'+o.crit+' %');if(o.am)p.push('+'+o.am+' contra no muertos');if(o.vel)p.push('Velocidad '+(o.vel>0?'+':'')+o.vel);return p.length?'<br>'+p.join(' · '):''};
 const reqs=o=>Object.entries(o).map(([k,n])=>`<span class=${has(k)>=n?'ok':'warn'}>${n}× ${OBJ[k].n} (tienes ${has(k)})</span>`).join(', ');
 const coste=c=>`<span class=pr><span class=${S.plata>=c?'oro':'warn'}>🪙 ${c}</span></span>`;
 
@@ -295,7 +297,7 @@ function replica(i){const sc=cur(),id=sc.senna,D=SENNA[id],U=UI.sn;if(!U)return;
 
 /* ---------- Finales y saga ---------- */
 function pFinal(sc){const muerte=sc.end.includes('Muerte');
-  return `<p><span class=sello>Final: ${sc.end}</span></p>${sc.saga?sagaHTML():''}`+
+  return `<p><span class=sello>${/^Cap/.test(sc.end)?'':'Final: '}${sc.end}</span></p>${sc.saga?sagaHTML():''}`+
     (muerte?`<button onclick="retry()">Volver al último punto seguro</button>`:'')+`<button onclick="menu()">Menú principal</button>`}
 const sagaHTML=()=>S.saga.length?`<b class=t>La saga de {N}</b>`+S.saga.map(x=>`<p class=tag>${x}</p>`).join(''):'<p class=tag>Ningún escaldo ha cantado aún tus hazañas.</p>';
 
