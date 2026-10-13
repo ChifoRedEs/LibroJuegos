@@ -87,6 +87,7 @@ function apply(f){if(!f)return;
     if(j){j.est='cumplido';nota(`Juramento cumplido: «${j.txt}». +${j.gl} de Gloria.`);ganaGloria(j.gl);
       S.saga.push(`Cumplió su juramento: ${j.txt.charAt(0).toLowerCase()+j.txt.slice(1)}.`)}}
   if(f.saga)S.saga.push(f.saga);
+  if(f.fin&&!S.fin.includes(f.fin))S.fin.push(f.fin);
   if(f.t)avanza(f.t);
   if(f.hasta!=null)avanza((f.hasta-S.hora+24)%24);
   if(f.dormir){S.hp=S.mhp;S.fu=0}

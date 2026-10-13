@@ -55,7 +55,7 @@ registrarMision(S=>{
   if(!S.fl.rolf_fin)return 'Entra en el túmulo del rey Rolf y trae Muerdetumbas.'+pl;
   if(!S.fl.regreso)return 'Vuelve a Vindvik y preséntate ante el jarl Hakon.';
   if(!S.fl.c1fin)return 'Esta noche, Vindvik celebra tu regreso.';
-  return 'Capítulo 1 completado. La senda continúa bajo las raíces de Yggdrasil.';
+  return S.fl.c2?null:'Capítulo 1 completado. La senda continúa bajo las raíces de Yggdrasil.';
 });
 
 /* ---------- Ampliaciones de escenas anteriores ---------- */

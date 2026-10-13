@@ -13,11 +13,15 @@ LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80
 | 1 · La Muerte de Paja | 1 | El trato de la Valquiria | ✅ Hecha (42 escenas, 7 de combate) |
 | | 2 | El salón del jarl | ✅ Hecha (37 escenas, 5 de combate) |
 | | 3 | El túmulo del rey draug | ✅ Hecha (48 escenas, 9 de combate) |
-| 2 · Bajo las Raíces | 1–3 | | Pendiente |
+| 2 · Bajo las Raíces | 1 | El descenso | ✅ Hecha (46 escenas, 5 de combate) |
+| | 2 | La forja de los hermanos | Pendiente |
+| | 3 | El gusano de la veta de oro | Pendiente |
 | 3 · El Invierno sin Fin | 1–3 | | Pendiente |
 | 4 · El Crepúsculo | 1–3 | | Pendiente |
 
-**El Capítulo 1 está completo (128 escenas).** Termina en la escena `c1_fin` (`end:'Capítulo 1 completado'`). Al escribir el Capítulo 2, convierte `c1_fin` en una escena normal con una decisión que lleve a la primera escena del Capítulo 2.
+**El Capítulo 1 está completo (128 escenas).** Su última escena, `c1_fin`, enlaza ahora con `c2_inicio`.
+
+La escena `c2_p2` es un enlace provisional al final de la Parte 1 del Capítulo 2. Hay que sustituirla al escribir la Parte 2.
 
 **Marcas del Capítulo 1 que el Capítulo 2 puede usar:** `lobo_libre` (el Lobo Ceniza es aliado), `siri_aprendiz`/`siri_no`, `jur_siri`, `torgil_vencido`/`torgil_gana`/`torgil_ayuda`, `copa_dev` y `rolf_paz` (Rolf descansó en paz) o `saqueo` (se saqueó su tumba), `einar_paz`/`einar_cae`, `dar` (ayudó a Gudrun), `marca_jarl` y el favor `tyr`.
 
@@ -118,8 +122,15 @@ De vuelta en Vindvik, Siri (si es aprendiz) o Groa le enseña **Wunjo**. Durante
 **Escenario:** Las raíces de Yggdrasil y Nidavellir, la tierra de los enanos.
 **Runas:** Ætt de Hagal (Hagalaz, Nauthiz, Isa, Jera, Eihwaz, Perthro, Algiz, Sowilo).
 
-### Parte 1 · El descenso
-El protagonista baja por las raíces del Árbol del Mundo. Ratatosk, la ardilla mensajera, es el alivio cómico que lleva y trae chismes. Hay emboscadas de elfos oscuros, y en la sombra aparece Nidhogg, el dragón que roe las raíces. Aprende **Isa y Algiz**.
+### Parte 1 · El descenso ✅
+El protagonista baja por el pozo seco del Bosque Gris (con cuerda o de un salto) hasta las raíces de Yggdrasil. Ratatosk, la ardilla mensajera, solo ayuda a cambio de chismes: contarle el de Kraka, Thor y la cabra le encanta (y ofende a Kraka), el de Ketil le parece regular y un chisme inventado sobre Odín puede colar o no. A cambio da un mapa.
+
+El centro de la parte es **el cruce de las raíces**: Nali, el buhonero enano (tienda con pan enano, setas de luz y la piedra rúnica de Eihwaz), caza de ratas, savia de Yggdrasil, un campamento para dormir, una charla nocturna con Kraka y la primera aparición de **Loki** disfrazado como «Lopt», un viajero pelirrojo. Desde el cruce salen tres caminos:
+- **El manantial helado de Hvergelmir:** el protagonista arranca la runa **Isa** del hielo y se encuentra con **Nidhogg**. Puede sostenerle la mirada, huir o entregarle un insulto del águila por encargo de Ratatosk; el dragón suelta escamas y Ratatosk paga la respuesta con la piedra rúnica de Perthro.
+- **El bosque de los ciervos:** Dain, el ciervo más viejo de Yggdrasil, está herido por una flecha élfica. Curarlo da la runa **Algiz** y un asta; cazarlo da carne curativa y astas, pero cuesta 30 de Gloria.
+- **Las cuevas de los hongos:** un hongo dorado que puede subir la Vida máxima o provocar alucinaciones. Los elfos oscuros de **Kol el Pálido** tienen enjaulados a herreros enanos. Tras vencer a Kol (con sigilo, con Ansuz o en combate abierto) el protagonista rescata a **Regin**, aprendiz de Brok, que revela que un pelirrojo está armando a los gigantes para el Ragnarok.
+
+La puerta de Nidavellir se abre con el aval de Regin, adivinando la contraseña o pagando 150 de plata.
 
 ### Parte 2 · La forja de los hermanos
 Es el corazón mecánico del juego. Incluye la ciudad enana, la forja de Brok y Eitri, contratos con gremios enanos y expediciones a las minas para buscar materiales. Se desbloquea el **grabado de runas** en las armas. Una mosca molesta los fuelles durante la forja (guiño al mito de Mjolnir); es Loki disfrazado. Hay un **duelo de acertijos con Alvis**, y si el jugador lo alarga hasta el amanecer, el enano se convierte en piedra. Aprende **Jera, Eihwaz y Perthro**.
@@ -183,10 +194,12 @@ Senda-Valhalla/
 │   ├── datos.js            ← protagonistas, runas, favores, objetos, enemigos, tiendas, forja, caldero
 │   └── motor.js            ← motor del juego
 └── capitulos/
-    └── c1/
-        ├── parte1.js       ← escenas c1_* de la Parte 1
-        ├── parte2.js       ← Parte 2 (amplía c1_aldea, c1_casa y c1_groa2 con SC.<escena>.c.push)
-        └── parte3.js       ← Parte 3 y final del capítulo (c1_fin)
+    ├── c1/
+    │   ├── parte1.js       ← escenas c1_* de la Parte 1
+    │   ├── parte2.js       ← Parte 2 (amplía c1_aldea, c1_casa y c1_groa2 con SC.<escena>.c.push)
+    │   └── parte3.js       ← Parte 3 y final del capítulo (c1_fin)
+    └── c2/
+        └── parte1.js       ← escenas c2_* de la Parte 1 (convierte c1_fin en enlace)
 ```
 
 ### Cómo escribir una parte nueva
@@ -232,6 +245,10 @@ Cada parte es un archivo que llama a `registrarCapitulo({capitulo, parte, titulo
 | `fx` | Efectos |
 | `chk` | Tirada: `{s, dc, ok, ko, fxok, fxko}` |
 
-**Efectos (`fx`):** `hp`, `fu`, `plata`, `item`, `quita`, `equipa`, `runa`, `fl`, `st`, `mhp`, `hilo`, `gl`, `favor`, `jura:{id, txt, dias, gl}`, `cumple:'id'`, `saga:'texto'`, `t` (horas), `dormir`.
+**Efectos (`fx`):** `hp`, `fu`, `plata`, `item`, `quita`, `equipa`, `runa`, `fl`, `st`, `mhp`, `hilo`, `gl`, `favor`, `jura:{id, txt, dias, gl}`, `cumple:'id'`, `saga:'texto'`, `fin:'texto'` (anota un final o capítulo completado), `t` (horas), `hasta` (avanza hasta esa hora), `dormir`.
+
+**Requisitos (`req`):** `item`, `fl`, `no`, `st:[atributo, valor]`, `plata`, `dia`, `gl`, `rg`, `hilos`, `runa`, `hmin`, `hmax`.
+
+**Objetos:** además de `atq`, `def`, `arm`, `crit` y `vel`, un arma puede tener `am` (daño extra contra no muertos y draugs).
 
 Antes de dar una parte por terminada, usa **«Comprobar la historia»** en el menú. Revisa enlaces rotos, escenas inalcanzables y datos que falten.
