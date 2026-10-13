@@ -61,7 +61,7 @@ registrarSenna({
 registrarSenales({
   14:'Hasta en Nidavellir se nota: las forjas tardan más en calentarse. Los enanos dicen que el frío de arriba baja por las raíces.',
   16:'Una noticia corre por las forjas: allá arriba, el lobo Hati ha mordido la luna.'
-});
+},S=>S.fl.c2&&!S.fl.c3);
 
 registrarMision(S=>{
   if(!S.fl.c2p1fin)return null;

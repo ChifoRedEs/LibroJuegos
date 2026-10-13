@@ -11,7 +11,7 @@ registrarSenales({
   3:'Un aullido rueda desde el Bosque Gris al amanecer, tan largo que parece que el bosque entero tuviera hambre.',
   4:'El sol sale pálido como una moneda gastada. Los viejos dicen que algo lo persigue por el cielo.',
   5:'El mar amanece con hielo en la orilla. En pleno verano.'
-});
+},S=>!S.fl.c2);
 
 registrarMision(S=>{
   if(!S.fl.trato)return 'Sobrevive a la noche.';

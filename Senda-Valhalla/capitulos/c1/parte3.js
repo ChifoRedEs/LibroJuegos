@@ -43,7 +43,7 @@ registrarSenales({
   7:'Los perros de Vindvik han aullado toda la noche mirando hacia las colinas.',
   8:'Al amanecer, el fiordo está helado de orilla a orilla. Los ancianos no recuerdan nada igual.',
   9:'Hoy el sol apenas ha salido. Un resplandor gris, y vuelta a la oscuridad.'
-});
+},S=>!S.fl.c2);
 
 registrarMision(S=>{
   if(!S.fl.p2fin)return null;

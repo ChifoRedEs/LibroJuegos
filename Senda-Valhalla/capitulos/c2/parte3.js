@@ -30,7 +30,7 @@ Object.assign(ENEMIGOS,{
 
 registrarSenales({
   18:'Todo Nidavellir se detiene un instante: muy lejos, en Jotunheim, ha cantado un gallo. Los enanos viejos se tapan los oídos.'
-});
+},S=>S.fl.c2&&!S.fl.c3);
 
 registrarMision(S=>{
   if(!S.fl.c2p2fin)return null;

@@ -42,7 +42,7 @@ registrarAcertijos({
 registrarSenales({
   10:'Un temblor recorre las raíces. Ratatosk dice que allá arriba el lobo Skoll ha mordido el sol, y que el sol sangra.',
   12:'Las raíces gimen como un barco en la tormenta. Ratatosk jura que Nidhogg roe más deprisa que nunca.'
-});
+},S=>S.fl.c2&&!S.fl.c3);
 
 registrarMision(S=>{
   if(!S.fl.c2)return null;

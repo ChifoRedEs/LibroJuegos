@@ -8,7 +8,7 @@
    ===================================================================== */
 const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),app=$('#app');
 const KEY='senda-valhalla-v1',INICIO='c1_inicio';
-const SC={},CAPS=[],GEN={},ACERT={},SENNA={},MISIONES=[],SENALES={};
+const SC={},CAPS=[],GEN={},ACERT={},SENNA={},MISIONES=[],SENALES=[];
 let S=null,UI={},mem=null;
 
 /* ---------- Registro de contenido (lo usan los archivos de capítulo) ---------- */
@@ -16,7 +16,8 @@ function registrarCapitulo(c){CAPS.push(c);Object.assign(SC,c.escenas)}
 const registrarAcertijos=o=>Object.assign(ACERT,o);
 const registrarSenna=o=>Object.assign(SENNA,o);
 const registrarMision=f=>MISIONES.push(f);
-const registrarSenales=o=>Object.assign(SENALES,o);
+/* Señales del Ragnarok por día; cond(S) limita en qué capítulo se muestran */
+const registrarSenales=(o,cond)=>SENALES.push({o,cond:cond||(()=>true)});
 
 /* ---------- Texto según protagonista ----------
    {N} → nombre · {palabra|palabra} → versión masculina|femenina */
@@ -62,7 +63,7 @@ function ok(r){if(!r)return true;
 function avanza(h){S.hora+=h;
   while(S.hora>=24){S.hora-=24;S.dia++;S.hp=Math.min(S.mhp,S.hp+25);
     nota(`Amanece el día ${S.dia}. Recuperas 25 de Vida.`);
-    if(SENALES[S.dia])nota(SENALES[S.dia]);revisaJur()}}
+    for(const x of SENALES)if(x.o[S.dia]&&x.cond(S))nota(x.o[S.dia]);revisaJur()}}
 function ganaGloria(n){S.gl=Math.max(0,S.gl+n);
   while(S.rg<RANGOS.length-1&&S.gl>=RANGOS[S.rg+1].gl){S.rg++;S.mhp+=25;S.hp=S.mhp;
     nota(`Las valquirias te miran: ahora eres <b>${RANGOS[S.rg].n}</b>. Tu Vida máxima sube a ${S.mhp}.`)}}
@@ -93,6 +94,7 @@ function apply(f){if(!f)return;
   if(f.fin&&!S.fin.includes(f.fin))S.fin.push(f.fin);
   if(f.t)avanza(f.t);
   if(f.hasta!=null)avanza((f.hasta-S.hora+24)%24);
+  if(f.hastaDia){const d=typeof f.hastaDia=='string'?S.fl[f.hastaDia]:f.hastaDia;if(d&&S.dia<d)avanza((d-S.dia)*24-S.hora+8)}
   if(f.dormir){S.hp=S.mhp;S.fu=0}
   if(f.gl){ganaGloria(f.gl);if(f.gl<0)nota(`<span class=warn>Las valquirias apartan la mirada: ${f.gl} de Gloria.</span>`)}}
 function aprendeRuna(k){if(S.ru.includes(k))return;S.ru.push(k);if(S.rue.length<MAX_RUNAS)S.rue.push(k);

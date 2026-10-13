@@ -22,7 +22,7 @@ TIENDAS.hild.stock.push('miel','serbal');
 
 registrarSenales({
   6:'Esta mañana no ha cantado ningún gallo en Vindvik. Ni uno.'
-});
+},S=>!S.fl.c2);
 
 registrarMision(S=>{
   if(!S.fl.salon_noche)return null;
