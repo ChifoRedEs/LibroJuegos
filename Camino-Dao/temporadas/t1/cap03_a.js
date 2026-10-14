@@ -1,0 +1,85 @@
+/* Temporada 1 · Capítulo 3 · «La comarca de los bambúes» · PARTE A · «La caravana»
+   Se carga DESPUÉS de cap02_d.js. Convierte el 'patio' en CAMPAMENTO ITINERANTE cuando empieza el viaje (flag c3).
+   Las partes siguientes añaden botones al campamento con campBtn({...}). */
+Object.assign(ENEMIGOS,{
+ bandido_bambu:{n:'Bandido del Bambú',cat:'Villano',hp:70,a:13,xp:32,o:25,l:{mineral_hierro:.5,cuero:.5}},
+ serpiente_bambu:{n:'Serpiente de Jade Mayor',cat:'Bestia',hp:95,a:17,xp:55,o:15,l:{ginseng_sangre:.4,hongo_niebla:.4}},
+ espiritu_bambu:{n:'Espíritu del Bambú Cantor',cat:'Espíritu',hp:150,a:22,xp:90,o:30,l:{polvo_jade:1,jade_bruto:.5,flor_loto_lunar:.3}}});
+ZONAS.push(
+ {id:'calzada',n:'Calzada de los Mil Pasos',v:0,s:'cu',d:'Una calzada vieja donde el polvo tiene más memoria que los viajeros.',pool:['bandido_bambu','ladron','bandido']},
+ {id:'terrazas',n:'Terrazas de Arroz Dormido',v:1,s:'me',d:'Bancales en escalera donde algo serpentea entre el agua.',pool:['serpiente_bambu','oso','zorro']},
+ {id:'santuario',n:'Santuario del Pino Roto',v:2,s:'es',d:'Un templo abandonado donde el viento canta con voz de persona.',pool:['espiritu_bambu','guardian','asesino']});
+TIENDAS.caravana={n:'Mercader Lao Pi · «¡Todo con descuento! El descuento es mío.»',stock:['pildora_salud','pildora_qi','elixir_vida','elixir_qi','elixir_llama','hierba_qi','lirio_fuego','mineral_hierro','cuero','cristal_frio','ginseng_sangre','hongo_niebla','musgo_trueno','polvo_jade']};
+NPCS.push(
+ N_('lao','Mercader Lao Pi','reto','regateo de caravana',['«Mi precio es justo. Es decir, tan justo como mi bolsillo.»','«El que regatea bien, vive tranquilo. El que regatea mal, me invita a cenar.»'],{s:'me',dc:10,rw:{oro:45},pn:{oro:-15}}),
+ N_('sun','Peregrina Sun','mental','enigma de peregrina',['«He caminado trescientas leguas y solo he aprendido una cosa: que me duelen los pies.»','«Siéntate. Los enigmas se piensan mejor sin prisa y con las botas fuera.»']),
+ N_('meilin','Cazadora Meilin','lucha','duelo de arco y cuchillo',['«Si quieres cazar, que sea de frente. Los bandidos de la calzada no merecen más.»','«Mi flecha no falla. Mi lengua, a veces.»'],{en:'bandido_bambu'}),
+ N_('pip','Pip, el bardo errante','charla','canción de camino',['«¡Oh, camino, camino, qué largo eres y qué poco rimas!»','«Compongo odas por encargo. A mi madre, a mi mula y a mi bolsillo vacío.»'],{rw:{xp:10,oro:10}}),
+ N_('kai','Monje viajero Kai','mental','meditación de camino',['«El camino es la meta. La meta, normalmente, también es el camino. Qué desastre.»','«Siéntate. Respira. Y no preguntes dónde queda la fonda.»']),
+ N_('bo','Niño pastor Bo','reto','carrera tras la cabra',['«¡Mi cabra se ha escapado otra vez! ¡Corre, forastero, corre!»','«Dicen que soy muy rápido. Mi cabra dice lo contrario.»'],{s:'cu',dc:9,rw:{item:'hierba_qi'},pn:{hp:-5}}),
+ N_('ming2','Curandera Ming','charla','infusión y remiendo',['«Las heridas se curan con té, reposo y un poco de chisme.»','«Bebe. Es amargo. Si no lo fuera, no curaría.»'],{rw:{hp:50,qi:10}}));
+const mision5=window.mision;
+window.mision=function(){if(S.fl.c3){
+ if(!S.fl.c3a_acampa)return 'Sigue el camino con la caravana hasta el primer campamento.';
+ if(!S.fl.c3a_p1)return 'Habla con el mercader Lao Pi, jefe de la caravana de las Cien Mulas.';
+ if(!S.fl.c3a_p2)return 'Esta noche te toca guardia: protege la caravana.';
+ if(!S.fl.c3a_p3)return 'Una cazadora de la caravana quiere hablarte del camino.';
+ if(!S.fl.c3a_p4)return 'La aldea de Tres Almendros necesita ayuda: visítala.';
+ if(!S.fl.c3_a_fin)return 'Reúnete con Xu y Lian junto a la fogata: el mapa tiene novedades.';
+ return 'Parte A completada. La Parte B continuará por la comarca de los bambúes.'}return mision5()};
+const PATIO0={...SC.patio};
+PATIO0.c=[...PATIO0.c,{x:'Partir en caravana a la comarca de los bambúes (Capítulo 3)',to:'c3a_inicio',req:{fl:'c2_d_fin',no:'c3_ini'},oc:1,k:'main'}];
+const CAMP_BTNS=[];
+function campBtn(c){CAMP_BTNS.push(c);SC.patio.gt.push(c.to)}
+const CAMP=()=>({h:'Campamento de la caravana',sort:1,cp:1,t:['Las mulas rumian, las hogueras crepitan y Lao Pi cuenta monedas en voz alta para que no se pierdan. Alrededor, caravaneros, peregrinos y algún que otro charlatán se reparten la noche.','«Un campamento con cabra y todo —observa el Abuelo Pei—. Esto sí que es civilización.»'],c:[
+ {x:'Tienda del mercader Lao Pi',to:'camp_tienda',k:'shop'},{x:'Herrero de caravana, maese Dun',to:'camp_herrero',k:'shop'},
+ {x:'Horno de campaña (alquimia)',to:'camp_horno',k:'shop'},{x:'Armero de la caravana',to:'camp_armeria',k:'shop'},{x:'Escriba ambulante de técnicas',to:'camp_tecnicas',k:'shop'},
+ {x:'Zonas de caza y entrenamiento de la comarca',to:'cazar',k:'hunt'},{x:'Socializar con la gente de la caravana',to:'socializar',k:'social'},{x:'Tablón de encargos de la caravana',to:'tablon',k:'side'},
+ {x:'Dormir junto a la fogata · 8 h (recuperación total)',to:'patio',fx:{t:8,dormir:1}},...CAMP_BTNS]});
+GEN.patio_dyn=()=>S.fl.c3?CAMP():PATIO0;
+const CAMP_GT=['camp_tienda','camp_herrero','camp_horno','camp_armeria','camp_tecnicas','cazar','socializar','tablon','patio','c3a_mercader','c3a_guardia','c3a_cazadora','c3a_aldea','c3a_cierre','c3a_lao_enigma','c3a_lian_enigma'];
+registrarCapitulo({temporada:1,n:3,parte:'A',titulo:'La comarca de los bambúes',escenas:{
+ patio:{gen:'patio_dyn',gt:[...PATIO0.c.map(c=>c.to).filter(Boolean),...CAMP_GT,'c3a_inicio']},
+ camp_tienda:{h:'La tienda de Lao Pi',t:['Lao Pi, con un ábaco en cada mano, te recibe con los brazos abiertos. «¡Cliente! ¡Alma gemela! ¡Fuente de ingresos!»'],shop:'caravana',back:'patio'},
+ camp_herrero:{h:'La fragua de caravana',t:['Maese Dun, un hombretón con un yunque plegable, golpea una herradura sin mirarla. «Armas, armaduras y mejoras. Lo que sea, mientras pueda hacerse con un martillo y mal humor.»'],forja:1,back:'patio'},
+ camp_horno:{h:'El horno de campaña',t:['Un pequeño horno portátil humea sobre una carreta. Un cartel escrito a mano dice: «No tocar. No oler. No preguntar qué es».'],alq:1,back:'patio'},
+ camp_armeria:{h:'El armero de la caravana',t:['Sobre una manta, entre espadas, hachas y escudos, un armero con un solo ojo bueno asegura: «Todo es de primera. Excepto lo que no.»'],shop:'armeria',back:'patio'},
+ camp_tecnicas:{h:'El escriba ambulante',t:['Un anciano con lentes del tamaño de platos despliega pergaminos de técnicas sobre una alfombra. «Cada golpe tiene su historia. Y su precio.»'],shop:'tecnicas',back:'patio'},
+ c3a_inicio:{h:'Capítulo 3 · La comarca de los bambúes',cp:1,fx:{fl:{c3:true,c3_ini:true}},t:['El otoño llega al Dragón Azur con un viento que huele a bambú y a promesas. En la puerta, la caravana de las Cien Mulas espera con el Instructor Xu, Lian con el mapa y Gordo Tao con una cesta que ya no parece solo provisiones.','Hu te entrega una bolsita de hierbas sin decir palabra. Mei, con los ojos hinchados, te abraza demasiado fuerte. Ye Shan, apoyada en el muro, hace un gesto seco con la barbilla, que viniendo de ella equivale a un discurso.','«Qué emocionante —suspira el Abuelo Pei—. Mi primera caravana en cuarenta años. Y la primera sin ser vendido.»'],
+  c:[{x:'Despedirte de Mei: llevas dos Píldoras de Concentración',to:'c3a_camino',fx:{item:{pildora_qi:2}}},{x:'Aceptar el gesto de Ye Shan: un Elixir de Vida',to:'c3a_camino',fx:{item:'elixir_vida'}},{x:'Guardar las hierbas de Hu: Polvo de Jade',to:'c3a_camino',fx:{item:{polvo_jade:2}}}]},
+ c3a_camino:{h:'La primera encrucijada',t:['La caravana se detiene ante tres caminos: la calzada real, ancha, polvorienta y con peaje; una senda junto al arroyo, húmeda y con aroma a cosas que se mueven; y un atajo que Tao jura conocer «de oídas, de una prima, de un sueño».','«Yo votaría por el atajo —dice el Abuelo Pei—. Tao me inspira una confianza de película trágica.»'],
+  c:[{x:'Seguir la calzada real',to:'c3a_calzada'},{x:'Bajar por la senda del arroyo',to:'c3a_arroyo'},{x:'Probar el atajo de Tao (prueba de Suerte)',chk:{s:'su',dc:9,ok:'c3a_noche1',ko:'c3a_noche1',fxok:{xp:10},fxko:{hp:-8}}}]},
+ c3a_calzada:{t:['En un puesto de madera, un funcionario con sombrero de ala ancha se planta ante la caravana. «Inspección de sombreros. Cada viajero debe presentar su sombrero, su sombra y una justificación válida de ambos.»','Xu cierra los ojos. «Por favor, que alguien lo resuelva sin violencia.»'],
+  c:[{x:'Pagar 12 monedas «de justificación»',to:'c3a_noche1',req:{oro:12},fx:{oro:-12}},{x:'Argumentar con elocuencia absurda (prueba de Mente)',chk:{s:'me',dc:9,ok:'c3a_noche1',ko:'c3a_noche1',fxok:{xp:15},fxko:{oro:-20}}}]},
+ c3a_arroyo:{t:['El arroyo corre frío entre piedras. Algo largo, verde y con muy mal humor sale del agua como una cinta de ira. «No le des el pie —advierte el Abuelo Pei—. Se lo comerá. Y tu orgullo con él.»'],f:{e:'serpiente',win:'c3a_noche1',lose:'c3a_noche1',flee:'c3a_noche1'}},
+ c3a_noche1:{h:'La primera noche',cp:1,t:['Anochece con un cielo violeta y las primeras estrellas. La caravana forma un círculo de carros y encienden las hogueras. Lian lee en el humo, con ojos pensativos: «Hoy no habrá lluvia. Pero sí viento extraño.»','Tao reparte caldo, con el aire de quien reparte un tesoro. El Abuelo Pei, en voz baja, dice: «Esta noche, muchacho, duerme poco. El viento extraño suele llevar cosas con dientes.»'],
+  fx:{fl:{c3a_acampa:true},hp:15},c:[{x:'Montar el campamento junto a los carros',to:'patio',fx:{t:2}}]},
+ c3a_mercader:{h:'Lao Pi, el mercader de las Cien Mulas',fx:{fl:{c3a_p1:true}},t:['Lao Pi, un hombre redondo como una ciruela y con más anillos que dedos, te recibe frotándose las manos. «¡El famoso aprendiz del Dragón Azur! He oído que rompes calderos y resuelves enigmas. Dos cualidades muy valiosas en el comercio.»','Te explica, sin pestañear, que lleva cien mulas cargadas de seda, té y «cosas que mejor no se declaran». «Necesito guardias nocturnos. Treinta monedas por noche. Treinta y cinco si sonríes.»','«Es un estafador encantador —susurra el Abuelo Pei—. Los mejores.»'],
+  c:[{x:'Aceptar las treinta monedas',to:'patio',fx:{oro:30}},{x:'Regatear hasta las treinta y cinco (prueba de Mente)',chk:{s:'me',dc:10,ok:'patio',ko:'patio',fxok:{oro:35,xp:10},fxko:{oro:20}}}]},
+ c3a_guardia:{h:'La guardia de la noche',cp:1,t:['Te toca la guardia entre la tercera y la quinta vela. El fuego languidece, las mulas resoplan y el viento sopla desde los bambúes como una voz que no termina una frase. Un crujido seco te saca de tu modorra: sombras cruzando entre las carretas.','«Bandidos —susurra el Abuelo Pei—. Los reconozco por el aroma a mala educación.»'],
+  c:[{x:'Enfrentarlos de frente',to:'c3a_f_banda'},{x:'Despertar a Xu y prepararos juntos',to:'c3a_guardia_fin',fx:{xp:15}},{x:'Esconderte entre las mulas y sorprenderlos (prueba de Suerte)',chk:{s:'su',dc:10,ok:'c3a_guardia_fin',ko:'c3a_f_banda',fxok:{xp:25}}}]},
+ c3a_f_banda:{t:['Un bandido de capucha torcida salta sobre la carreta de té. «¡Esto es un asalto! —anuncia con voz grave—. Por favor, mantengan la calma y entreguen sus bolsas con orden.»'],f:{e:'bandido_bambu',win:'c3a_guardia_fin',lose:'c3a_guardia_fin',flee:'c3a_guardia_fin'}},
+ c3a_guardia_fin:{t:['Al amanecer, los bandidos han huido o dormido. Lao Pi, con el pelo revuelto y un sombrero torcido, te abraza con una gratitud tan sincera que parece sospechosa. «¡Salvaste mi té! ¡Y mis mulas! ¡Y, aunque es secundario, mi vida!»','Te entrega un pequeño saco de monedas y una infusión de ginseng. Xu asiente con la cabeza: «Cada vez resuelves mejor.»'],fx:{fl:{c3a_p2:true},oro:40,item:'ginseng_sangre',xp:20},c:[{x:'Volver al campamento',to:'patio'}]},
+ c3a_cazadora:{h:'Meilin, la cazadora',fx:{fl:{c3a_p3:true}},t:['Junto a la hoguera, una mujer de trenza larga y mirada precisa afila un cuchillo. «Soy Meilin, cazadora de la caravana. He visto cosas por estos bosques que no caben en los refranes: un oso con piel de roca, bambúes que cantan de noche y una cadena de huellas de tigre que no pertenecen a ningún tigre.»','Levanta la vista. «Quien siga ese rastro no vuelve igual. Pero si lo sigues, yo te enseño dónde mirar.»'],
+  c:[{x:'Pedirle que te enseñe a seguir huellas · +20 XP',to:'patio',fx:{xp:20,fl:{meilinRastro:true}}},{x:'Retarla a un concurso de puntería (prueba de Cuerpo)',chk:{s:'cu',dc:10,ok:'patio',ko:'patio',fxok:{xp:30,item:'cuero'},fxko:{hp:-5}}},{x:'Preguntarle por el Oso Piel de Piedra · +10 XP',to:'patio',fx:{xp:10,fl:{osoAviso:true}}}]},
+ c3a_aldea:{h:'La aldea de Tres Almendros',fx:{fl:{c3a_p4:true}},t:['Tres Almendros es una aldea pequeña con tres almendros y ningún motivo para llamarse así: los árboles murieron hace años. El alcalde, un hombre de bigote cuidado, te intercepta. «Ha desaparecido la Campana de la Aldea. Sin ella, no sabemos cuándo es mediodía. Ni cuándo dejar de discutir.»','Un vecino añade: «Aquí la verdad solo se dice después del almuerzo. Es una costumbre muy seria.»','«Una aldea que ha perdido la hora —murmura el Abuelo Pei—. Qué situación tan existencial.»'],
+  c:[{x:'Interrogar a los vecinos con tacto (prueba de Mente)',chk:{s:'me',dc:10,ok:'c3a_aldea_ok',ko:'c3a_aldea_ko'}},{x:'Buscar huellas junto al pozo (prueba de Suerte)',chk:{s:'su',dc:10,ok:'c3a_aldea_ok',ko:'c3a_aldea_ko'}}]},
+ c3a_aldea_ok:{t:['Tras el pozo encuentras la campana envuelta en una manta, escondida por un niño que quería «ver qué hacía sin que nadie la oyera». La campana suena y la aldea entera suspira, aliviada.','El alcalde llora de emoción. «¡Lo hemos recuperado todo! ¡La hora y la dignidad!» Te regala una Píldora del Azar y un puñado de monedas.'],fx:{item:'pildora_suerte',oro:50,xp:30},c:[{x:'Volver al campamento',to:'patio'}]},
+ c3a_aldea_ko:{t:['Tus pesquisas se pierden en un laberinto de refranes. Al final, Tao tropieza con una piedra, cae sobre un pajar y descubre la campana, sin enterarse de lo que ha hecho. El alcalde lo carga en hombros.','«Es el héroe del día», murmura el Abuelo Pei, resignado. Obtienes una parte pequeña del botín.'],fx:{item:'hierba_qi',oro:20,xp:15},c:[{x:'Volver al campamento, medio riendo',to:'patio'}]},
+ c3a_cierre:{h:'Junto a la fogata',cp:1,t:['Esa noche, Xu extiende el mapa junto al fuego. Lian señala un punto con el dedo. «Aquí. Tres jornadas hacia el este. El Santuario del Pino Roto. Donde, según la leyenda, el Dragón dejó su Colmillo.»','El Abuelo Pei, que llevaba un buen rato callado, murmura casi para sí: «Yo estuve allí. Hace cuarenta años. Y no hablamos de eso.»','Xu enarca una ceja. Lian mira a la espada. Tao deja de masticar, que es la señal más alarmante de todas.'],
+  c:[{x:'Preguntarle al Abuelo Pei qué ocurrió',to:'c3a_cierre_fin'},{x:'Respetar su silencio y mirar el fuego',to:'c3a_cierre_fin'}]},
+ c3a_cierre_fin:{h:'Fin de la Parte A',fx:{fl:{c3_a_fin:true},xp:40,oro:50},t:['El fuego crepita. Nadie habla durante un buen rato. Después, Lian apoya la cabeza en su mochila, Xu apaga una brasa con la bota y Tao, por fin, se queda dormido con una galleta en la mano.','El Abuelo Pei, tras un suspiro que parece venir de muy lejos, susurra: «Mañana, muchacho. Mañana te cuento un poco. Hoy no estoy para recuerdos.»','Afuera, en los bambúes, algo canta una nota larga, sin letra. Pero eso, quizá, es asunto de la Parte B.'],c:[{x:'Dormir junto a la fogata · Parte B próximamente',to:'patio'}]},
+ c3a_lao_enigma:{h:'El enigma de Lao Pi',t:['Lao Pi baja la voz con aire cómplice. «Un enigma de mercader. Si aciertas, te regalo mi sonrisa más cara.»'],acertijo:'c3a1',back:'patio'},
+ c3a_lian_enigma:{h:'El enigma de Lian',t:['Lian levanta la vista del mapa. «Uno de otoño, para que el camino no se haga largo.»'],acertijo:'c3a2',back:'patio'}
+}});
+campBtn({x:'Lao Pi te hace señas desde su carreta',to:'c3a_mercader',req:{fl:'c3a_acampa',no:'c3a_p1'},oc:1,k:'main'});
+campBtn({x:'Te toca la guardia de esta noche',to:'c3a_guardia',req:{fl:'c3a_p1',no:'c3a_p2'},oc:1,k:'main'});
+campBtn({x:'Meilin, la cazadora, quiere hablarte',to:'c3a_cazadora',req:{fl:'c3a_p2',no:'c3a_p3'},oc:1,k:'main'});
+campBtn({x:'La aldea de Tres Almendros necesita ayuda',to:'c3a_aldea',req:{fl:'c3a_p3',no:'c3a_p4'},oc:1,k:'main'});
+campBtn({x:'Xu y Lian te esperan junto a la fogata',to:'c3a_cierre',req:{fl:'c3a_p4',no:'c3_a_fin'},oc:1,k:'main'});
+campBtn({x:'Enigma de Lao Pi: «pasa de mano en mano»',to:'c3a_lao_enigma',req:{fl:'c3a_p1'},oc:1,k:'side'});
+campBtn({x:'Enigma de Lian: «viste de oro a los árboles»',to:'c3a_lian_enigma',req:{fl:'c3a_acampa'},oc:1,k:'side'});
+registrarAcertijos({
+ c3a1:{q:'«Pasa de mano en mano y nunca se cansa; a todos agrada y a nadie basta.»',o:['El dinero','El viento','El pan'],k:0,fx:{oro:60,xp:20},ok:'Lao Pi aplaude con ambas manos llenas de anillos. «¡El dinero! Qué listo. Qué caro, para mi gusto.» Te da 60 monedas.',ko:'Lao Pi sonríe con compasión. «Casi. Pero casi no se cobra.»'},
+ c3a2:{q:'«Visto de oro a los árboles y luego los dejo desnudos.»',o:['El otoño','El invierno','El viento'],k:0,fx:{item:'pildora_mente',xp:25},ok:'Lian sonríe, casi sin querer. «El otoño. Hermoso y despiadado.» Te da una Píldora de Claridad.',ko:'Lian niega con suavidad. «Piénsalo mirando las hojas.»'}
+});
