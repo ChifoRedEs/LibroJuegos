@@ -6,7 +6,7 @@
    Hrimfaxi (Ehwaz), la gran cacería de Skadi y el ultimátum de Thrym:
    la asamblea con Hrungnir. Termina con la invitación de Skrymir.
    Convierte c2_fin en enlace hacia c3_inicio.
-   Escena de enlace provisional: c3_p2 (la sustituirá la Parte 2)
+   Continúa en parte2.js (c3_p2)
    ===================================================================== */
 (()=>{
 const pelea=(e,win,flee,t)=>({t:[t],f:{e,win,lose:'muerte',flee}});
@@ -440,13 +440,7 @@ c3_p1_fin:{h:'Hacia Utgard',cp:1,t:[
   'Por la mañana te despides de los gigantes. Bergelmir te regala una capa de piel de foca. Hyndla, un saquito de hierbas. Ymma no te regala nada: te abraza, muy fuerte, y luego se va corriendo para que no la veas llorar.',
   'Al norte, más allá de las montañas, se alza la fortaleza de Utgard, tan alta que tienes que echar la cabeza atrás para ver dónde acaba. Allí está el ejército de Thrym. Allí están las armas de los enanos. Y allí te espera el señor de las ilusiones.'],
   fx:{fl:{c3p1fin:1},item:{carne_gigante:2,pocion_abedul:1}},
-  c:[{x:'Ponerte en camino hacia Utgard',to:'c3_p2',k:'main'}]},
-
-/* Escena de enlace provisional: la sustituirá la Parte 2 */
-c3_p2:{h:'Continuará',t:[
-  'Las puertas de Utgard son tan altas que, para entrar, tienes que pasar entre los barrotes.',
-  '<span class=tag>Aquí termina la Parte 1 del Capítulo 3. La historia continúa en la Parte 2: «Los juegos de Utgarda-Loki».</span>'],
-  c:[{x:'Volver a la aldea de Bergelmir',to:'c3_aldea'}]}
+  c:[{x:'Ponerte en camino hacia Utgard',to:'c3_p2',k:'main'}]}
 
 }});
 

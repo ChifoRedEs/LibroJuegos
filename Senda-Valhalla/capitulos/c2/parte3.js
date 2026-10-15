@@ -74,14 +74,14 @@ GEN.c2_vuelta=()=>({t:[
     ?'Eitri coge un lingote y frunce el ceño. «Este oro está maldito», dice. «Lo noto en los dedos.» Mira a Brok. «Da igual», gruñe Brok. «La maldición es para quien lo posee, no para quien lo forja. Al fuego.»'
     :'Eitri coge un lingote y lo sopesa. «Oro de Andvari», dice. «Limpio, por increíble que parezca.» Te mira con algo parecido al asombro.']});
 
-GEN.c2_lopt_final=()=>({t:tarde()?[
+GEN.c2_lopt_final=()=>{S.fl.brok_tarde=tarde()?1:0;return {t:tarde()?[
   '«Cuatro días», dice Lopt, sonriendo. «Y ya van cinco. La cabeza de Brok es mía.» Se levanta con el cuchillo en la mano.',
   'Brok no se mueve. «Mi cabeza, sí», dice muy despacio. «Pero en la apuesta no dijimos nada del cuello. Y el cuello es mío. Córtame la cabeza sin tocarme el cuello, Lopt, y es tuya.»',
   'Lopt abre la boca. La cierra. La vuelve a abrir. Thor se ríe tan fuerte que tiembla la montaña. Al final, Lopt guarda el cuchillo con un gesto de asco. «Tramposos», escupe. «Todos los enanos sois unos tramposos.» Y se va, entre carcajadas de toda la forja.']
  :[
   'Lopt aparece en la forja justo cuando el tercer tesoro sale del fuego. Ya no sonríe. Mira el nuevo mango de Mjolnir en las manos de Thor, mira a Brok, te mira a ti.',
   '«Bueno», dice. «Una apuesta es una apuesta. ¿Qué habíamos dicho que ganabas tú, Brok?» Brok sonríe por primera vez desde que lo conoces. Coge una lezna y un trozo de cordel. «Tu boca, Lopt. Dijimos que, si ganaba, te coserías esa boca de mentiroso.»',
-  'Thor sujeta a Lopt con una sola mano mientras Brok le cose los labios con siete puntadas. Lopt no grita: no puede. Pero te mira, por encima del cordel, con unos ojos que no olvidarás nunca. Luego se arranca el hilo de un tirón, sangrando, se ríe sin boca y desaparece. Kraka tarda una hora en dejar de temblar.']});
+  'Thor sujeta a Lopt con una sola mano mientras Brok le cose los labios con siete puntadas. Lopt no grita: no puede. Pero te mira, por encima del cordel, con unos ojos que no olvidarás nunca. Luego se arranca el hilo de un tirón, sangrando, se ríe sin boca y desaparece. Kraka tarda una hora en dejar de temblar.']};};
 
 GEN.c2_despedida=()=>({t:[
   'Antes de partir, te despides de Nidavellir. Eitri te regala un frasco de savia de Yggdrasil «para las runas». Brok te da una palmada en la espalda que casi te tira al suelo, y no dice nada, que en Brok es lo más parecido a un discurso.',

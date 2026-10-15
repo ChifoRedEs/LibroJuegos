@@ -17,7 +17,7 @@ LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80
 | | 2 | La forja de los hermanos | ✅ Hecha (60 escenas, 5 de combate) |
 | | 3 | El gusano de la veta de oro | ✅ Hecha (48 escenas, 6 de combate) |
 | 3 · El Invierno sin Fin | 1 | La tierra de los gigantes | ✅ Hecha (62 escenas, 8 de combate) |
-| | 2 | Los juegos de Utgarda-Loki | Pendiente |
+| | 2 | Los juegos de Utgarda-Loki | ✅ Hecha (49 escenas, 3 de combate) |
 | | 3 | El árbol del ahorcado | Pendiente |
 | 4 · El Crepúsculo | 1–3 | | Pendiente |
 
@@ -25,7 +25,9 @@ LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80
 
 **El Capítulo 2 está completo (154 escenas).** Su última escena, `c2_fin`, enlaza ahora con `c3_inicio`.
 
-La escena `c3_p2` es un enlace provisional al final de la Parte 1 del Capítulo 3. Hay que sustituirla al escribir la Parte 2.
+La escena `c3_p3` es un enlace provisional al final de la Parte 2 del Capítulo 3. Hay que sustituirla al escribir la Parte 3.
+
+**Marcas de la Parte 2 del Capítulo 3:** `desenmascarado` (vio a través de las ilusiones), `sospecha` (0 a 5) y `jok` (juegos casi ganados), `sabotaje` y `enanos_libres` (las armas de Thrym se romperán en la batalla), `plan` (conoce el plan de Lopt: soltar a Fenrir, el pozo de Mímir, Naglfar y Vigrid), `thrym_tentado`, `angrboda` y el objeto `colmillo_hierro` (para presentarse ante Fenrir), `brok_tarde` (1 si Brok se salvó por el truco del cuello; 0 si Lopt tiene la boca cosida).
 
 **Marcas de la Parte 1 del Capítulo 3:** `aldea_salvada` / `aldea_destruida` / `aldea_huida`, `hrungnir_muerto`, `cuerno_usado` y `thor_convencido`, `thor_cabra`, `berkano`, `ehwaz` (Hrimfaxi es aliado y puede volver), el favor `skadi`, `skrymir` (invitación a Utgard), `ymma`, `bergelmir_charla`.
 
@@ -252,7 +254,8 @@ Senda-Valhalla/
         ├── parte2.js       ← Parte 2 (Nidavellir, forja y grabado, la Gran Forja)
         └── parte3.js       ← Parte 3 y final del capítulo (c2_fin)
     └── c3/
-        └── parte1.js       ← escenas c3_* de la Parte 1 (convierte c2_fin en enlace)
+        ├── parte1.js       ← escenas c3_* de la Parte 1 (convierte c2_fin en enlace)
+        └── parte2.js       ← Parte 2 (Utgard, los cinco juegos, el campamento de Thrym)
 ```
 
 ### Cómo escribir una parte nueva
