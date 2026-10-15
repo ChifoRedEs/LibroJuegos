@@ -1,6 +1,6 @@
 /* Motor: estado, tiempo, dados, combate por turnos, tiendas, forja, alquimia, guardado, validador */
 const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),app=$('#app');
-const SC={},CAPS=[];let S=null,UI={},mem=null;const KEY='qi-silente-v2';
+const SC={},CAPS=[];let S=null,UI={},mem=null;const KEY='camino-dao-v1';
 function registrarCapitulo(c){CAPS.push(c);Object.assign(SC,c.escenas)}
 const hs=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7),
  shuf=(a,seed)=>{a=[...a];let x=seed>>>0||1;for(let i=a.length-1;i>0;i--){x=(x*1664525+1013904223)>>>0;const j=x%(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
