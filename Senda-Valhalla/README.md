@@ -22,7 +22,9 @@ LibroJuego de mitología nórdica en 5 capítulos. Cada capítulo tiene entre 80
 | 4 · El Camino de Hel | 1 | El muérdago | ✅ Hecha (54 escenas, 3 de combate) |
 | | 2 | El camino de los muertos | ✅ Hecha (42 escenas, 4 de combate) |
 | | 3 | Todas las cosas lloran | ✅ Hecha (38 escenas, 1 de combate) |
-| 5 · El Crepúsculo | 1–3 | | Pendiente |
+| 5 · El Crepúsculo | 1 | Las puertas del Valhalla | ✅ Hecha (36 escenas, 3 de combate) |
+| | 2 | La víspera | ✅ Hecha (34 escenas) |
+| | 3 | Ragnarok | Pendiente |
 
 **El Capítulo 1 está completo (128 escenas).** Su última escena, `c1_fin`, enlaza ahora con `c2_inicio`.
 
@@ -30,7 +32,22 @@ LibroJuego de mitología nórdica en 5 capítulos. Cada capítulo tiene entre 80
 
 **El Capítulo 3 está completo (155 escenas).** Su última escena, `c3_fin`, enlaza ahora con `c4_inicio`.
 
-**El Capítulo 4 está completo (134 escenas).** Termina en la escena `c4_fin` (`end:'Capítulo 4 completado'`). Al escribir el Capítulo 5, cambia en `c4_fin` el aviso final y conviértela en una escena normal que enlace con `c5_inicio`, como en los capítulos anteriores.
+**El Capítulo 4 está completo (134 escenas).** Su última escena, `c4_fin`, enlaza ahora con `c5_inicio`.
+
+La escena `c5_p3` es un enlace provisional al final de la Parte 2 del Capítulo 5. Hay que sustituirla al escribir la Parte 3.
+
+**Marcas de la Parte 2 del Capítulo 5 (para la batalla y los finales):**
+- `jur_vispera` (`'thor'`, `'tyr'`, `'odin'` o `'heimdal'`) y el juramento `ultimo` (cumplirlo con `cumple:'ultimo'`).
+- Aliados (máximo tres): `aliado_gigantes`, `aliado_enanos`, `aliado_skadi`, `aliado_hrimfaxi`, `aliado_lobo`, `aliado_ul`.
+- `bando_loki` (llega a Vigrid en Naglfar, con Loki); `pacto_roto` (se arrancó el hilo en la víspera o antes).
+- `siri_bosque` (Siri está en el bosque de Mímir con Lif y Lifthrasir), `folkvang_oferta` o `folkvang_rechazado`, el favor `freya`, `runa_skuld` (y la runa `skuld`), `thor_adios`, `tyr_adios`, `tyr_sabe_garm`, `kraka_noche5`, `hlidskjalf`, `loki_libre`, `gallo_rojo`.
+
+**Marcas de la Parte 1 del Capítulo 5 (clave para los finales):**
+- Juicio de las valquirias: `elegido` (rango Elegido y sin pacto activo), `rechazado` (pacto con Loki activo) o `casi` (Gloria insuficiente).
+- `deseo`: lo que el protagonista le dijo a Skuld que quiere el último día: `'valhalla'`, `'siri'`, `'amanecer'` o `'kraka'`.
+- Pacto: `pacto_roto` y `pacto_skuld` (Skuld cortó el hilo rojo) o `pacto_firme` (lo conservó: llega a Vigrid en Naglfar).
+- `duelos_ganados` (0 a 3), `nombres_dichos`, `abuelo`, `bragi`, `heidrun`, `lobos_odin`, `hervor_charla`, `skuld_revela`.
+- Bandrunas aprendidas: `rayo_helado`, `escudo_herencia`, `granizo_alba`, `sol_abedul`, `lanza_manco`.
 
 **Marcas de la Parte 3 del Capítulo 4 (clave para el Capítulo 5 y los finales):**
 - Hel: `hel_respeto`, `hel_miedo` o `hel_insulto`; `hel_conmovida` (respeto y 18 lágrimas o más: Hel recordará al protagonista en el último día).
@@ -283,11 +300,31 @@ Tras cuatro viajes aparece **Thokk** en su cueva: «Thokk llorará lágrimas sec
 **Escenario:** Asgard y la llanura de Vigrid.
 **Runas:** bandrunas maestras (combinaciones de dos runas) y la runa secreta de Skuld.
 
-### Parte 1 · Las puertas del Valhalla
-Las 540 puertas del Valhalla están cerradas. Los einherjar, los guerreros elegidos, someten al protagonista a su prueba: un día entero de combate (allí se muere y se resucita cada noche) y un banquete con el jabalí que nunca se acaba. Aquí se revela quién es **Skuld** en realidad y qué está tejiendo: el Ragnarok no se puede evitar, pero su hilo puede decidir quién sobrevive para ver el mundo nuevo.
+### Parte 1 · Las puertas del Valhalla ✅
+La valquiria **Sigrun** abre una de las 540 puertas. Para que las valquirias elijan al protagonista hace falta Gloria, pero también que los einherjar lo acepten tras un día con ellos. Si se aprendió los nombres de los guerreros olvidados en el camino de Hel, puede gritarlos en el campo y todo el Valhalla los repite.
 
-### Parte 2 · La víspera
-La última vuelta por los salones de los dioses para reunir favores, cumplir los juramentos pendientes y despedirse (Thor, Tyr, Freya y su **prueba de Folkvang**, una última mirada a Siri desde el trono de Odín). Loki rompe sus ataduras. Canta el tercer gallo, el rojo de Hel, y suena el cuerno Gjallarhorn.
+**Tres duelos** en el campo del Valhalla, donde nadie muere de verdad (quien cae se levanta al atardecer): **Starkad el Viejo**, el de las tres vidas; **Hervor**, la doncella escudera, con la espada maldita Tyrfing (su diálogo cambia con Astrid); y **Sigmund el Volsungo**, que quiere saber si el protagonista merecía matar a Fafnir en lugar de su hijo Sigurd.
+
+**El banquete:** Saehrimnir, el jabalí que renace cada mañana, el hidromiel de la cabra Heidrun y Odín dando su comida a los lobos. Por el salón: **Hjalmar, el abuelo del protagonista**, caído en Northumbria (contraste con su padre en Hel); **Bragi**, que canta su saga; el cocinero Andhrimnir; el tejado con Heidrun y el ciervo Eikthyrnir; los lobos Geri y Freki; Hervor y Starkad. Los brindis dependen de los duelos ganados, y **el juicio de las valquirias** pesa la Gloria en una balanza de oro: digno, «casi» o rechazado si hay pacto activo con Loki.
+
+**Las bandrunas:** Odín enseña cinco combinaciones de dos runas (Rayo helado, Escudo de la herencia, Granizo del amanecer, Sol del abedul y Lanza del manco), siempre que se conozcan sus dos runas. Se preparan y se graban como cualquier otra runa.
+
+**La revelación de Skuld:** en el tejado del Valhalla, la valquiria se revela como **la tercera Norna**, la de lo que ha de ser. El Ragnarok no se puede cambiar, pero después el mundo renacerá; el hilo del protagonista, enredado en el de medio mundo, puede decidir quién más llega a ver ese amanecer. Si conserva el pacto con Loki, Skuld le ofrece cortarlo. Al final le pregunta qué quiere el último día: el Valhalla, que Siri vea el mundo nuevo, verlo él mismo o que Kraka no se apague.
+
+**Detalles de la parte:** en el Valhalla nadie muere de verdad: perder un duelo lleva a una escena en la que el protagonista se levanta y sigue (las escenas de combate usan `lose` hacia `c5_caes1`, `c5_caes2` y `c5_caes3` en lugar de `muerte`).
+
+### Parte 2 · La víspera ✅
+**Asgard en la víspera** es la base de la parte:
+- **Thor:** sabe que dará nueve pasos tras matar a la serpiente; regala una hebilla de su cinturón de fuerza (+1 Fuerza).
+- **Tyr:** sabe que Garm lo matará. Se le puede contar cómo se calmó o se venció a Garm, o pagar ahora su favor si no se pagó en el Capítulo 1.
+- **Freya en Folkvang** (prueba de Freya): el trance del seid muestra tres caminos y da su favor y una lágrima de oro; ofrece un lugar en Folkvang (o se rechaza).
+- **Hlidskjalf:** desde el trono de Odín se ven los nueve mundos (Siri, Bergelmir, Nidavellir, Fenrir y Naglfar casi terminado).
+- **El brindis de la víspera:** el último juramento, a quién proteger en Vigrid (Thor, Tyr, Odín o Heimdal).
+- **Himinbjorg:** Kraka puede hacer **tres viajes** para llamar aliados (solo responden los que deben algo: gigantes de Bergelmir, enanos, Skadi, Hrimfaxi, el Lobo Ceniza, Utgarda-Loki).
+- **Siri:** se la puede llevar al **bosque de Mímir**, donde esperan Lif y Lifthrasir y el fuego no llegará.
+- **La última noche con Kraka** en las murallas («llevaba tres noches en tu alero sin atreverme a bajar»), Eir y la herrería.
+
+**El final de la víspera:** Loki se suelta (antes, si se le aflojaron las ataduras; Hel no sale a recibirlo si quedó conmovida). Con el pacto conservado, el hilo rojo tira hacia el sur: el protagonista puede seguirlo hasta **Naglfar** (bando de Loki) o arrancárselo por fin. Canta el **gallo rojo de Hel**, Heimdal sopla el **Gjallarhorn**, y Skuld enseña su **runa secreta**, que corta hilos (no se recibe en el bando de Loki).
 
 ### Parte 3 · Ragnarok
 La batalla final en la llanura de Vigrid, donde se cobran todas las decisiones: las armas saboteadas de Thrym, los gigantes de Bergelmir, Fenrir herido o entero (y si es «amigo»), Hel, el Lobo Ceniza, Hrimfaxi, Skadi, Regin y el anillo. El protagonista decide a quién ayudar: a Thor contra la Serpiente del Mundo, a Tyr contra Garm, a Odín contra Fenrir o a Heimdal contra Loki (o, con el pacto, llega en Naglfar en el bando de Loki). Después llegan los finales.
@@ -330,10 +367,13 @@ Senda-Valhalla/
     │   ├── parte1.js       ← escenas c3_* de la Parte 1 (convierte c2_fin en enlace)
     │   ├── parte2.js       ← Parte 2 (Utgard, los cinco juegos, el campamento de Thrym)
     │   └── parte3.js       ← Parte 3 y final del capítulo (c3_fin)
-    └── c4/
-        ├── parte1.js       ← escenas c4_* de la Parte 1 (convierte c3_fin en enlace)
-        ├── parte2.js       ← Parte 2 (el camino de los muertos, Garm y Helgrind)
-        └── parte3.js       ← Parte 3 y final del capítulo (c4_fin)
+    ├── c4/
+    │   ├── parte1.js       ← escenas c4_* de la Parte 1 (convierte c3_fin en enlace)
+    │   ├── parte2.js       ← Parte 2 (el camino de los muertos, Garm y Helgrind)
+    │   └── parte3.js       ← Parte 3 y final del capítulo (c4_fin)
+    └── c5/
+        ├── parte1.js       ← escenas c5_* de la Parte 1 (convierte c4_fin en enlace; bandrunas)
+        └── parte2.js       ← Parte 2 (la víspera, aliados, Siri, la runa de Skuld)
 ```
 
 ### Cómo escribir una parte nueva
@@ -383,7 +423,7 @@ Cada parte es un archivo que llama a `registrarCapitulo({capitulo, parte, titulo
 
 **Efectos (`fx`):** `hp`, `fu`, `plata`, `item`, `quita`, `equipa`, `runa`, `fl`, `st`, `mhp`, `hilo`, `gl`, `favor`, `jura:{id, txt, dias, gl}`, `cumple:'id'`, `saga:'texto'`, `suma:{marca:n}` (suma n a un contador), `fin:'texto'` (anota un final o capítulo completado), `t` (horas), `hasta` (avanza hasta esa hora), `hastaDia` (avanza hasta la mañana del día indicado o guardado en una marca), `dormir`.
 
-**Requisitos (`req`):** `item`, `fl`, `no`, `fav` y `nofav` (tener o no el favor de un dios), `min:{marca:n}` y `max:{marca:n}` (contadores), `st:[atributo, valor]`, `plata`, `dia`, `gl`, `rg`, `hilos`, `runa`, `hmin`, `hmax`.
+**Requisitos (`req`):** `item`, `fl`, `no`, `runas:[…]` y `noruna` (conocer varias runas o no conocer una), `rgmax` (rango máximo), `fav` y `nofav` (tener o no el favor de un dios), `min:{marca:n}` y `max:{marca:n}` (contadores), `st:[atributo, valor]`, `plata`, `dia`, `gl`, `rg`, `hilos`, `runa`, `hmin`, `hmax`.
 
 **Runas grabadas (`GRABADO` en `datos.js`):** cada runa da al arma un efecto pasivo: bonificaciones fijas (`atq`, `crit`, `def`, `arm`, `vel`, `am`) o efectos al golpear (`aturde` y `quema` en %, `roba` en % del daño, `fuG` Furor extra, `curaV` Vida al vencer).
 
