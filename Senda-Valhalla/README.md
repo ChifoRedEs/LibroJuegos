@@ -21,7 +21,7 @@ LibroJuego de mitología nórdica en 5 capítulos. Cada capítulo tiene entre 80
 | | 3 | El árbol del ahorcado | ✅ Hecha (44 escenas, 3 de combate) |
 | 4 · El Camino de Hel | 1 | El muérdago | ✅ Hecha (54 escenas, 3 de combate) |
 | | 2 | El camino de los muertos | ✅ Hecha (42 escenas, 4 de combate) |
-| | 3 | Todas las cosas lloran | Pendiente |
+| | 3 | Todas las cosas lloran | ✅ Hecha (38 escenas, 1 de combate) |
 | 5 · El Crepúsculo | 1–3 | | Pendiente |
 
 **El Capítulo 1 está completo (128 escenas).** Su última escena, `c1_fin`, enlaza ahora con `c2_inicio`.
@@ -30,7 +30,13 @@ LibroJuego de mitología nórdica en 5 capítulos. Cada capítulo tiene entre 80
 
 **El Capítulo 3 está completo (155 escenas).** Su última escena, `c3_fin`, enlaza ahora con `c4_inicio`.
 
-La escena `c4_p3` es un enlace provisional al final de la Parte 2 del Capítulo 4. Hay que sustituirla al escribir la Parte 3.
+**El Capítulo 4 está completo (134 escenas).** Termina en la escena `c4_fin` (`end:'Capítulo 4 completado'`). Al escribir el Capítulo 5, cambia en `c4_fin` el aviso final y conviértela en una escena normal que enlace con `c5_inicio`, como en los capítulos anteriores.
+
+**Marcas de la Parte 3 del Capítulo 4 (clave para el Capítulo 5 y los finales):**
+- Hel: `hel_respeto`, `hel_miedo` o `hel_insulto`; `hel_conmovida` (respeto y 18 lágrimas o más: Hel recordará al protagonista en el último día).
+- Lágrimas: contador `lagrimas`, `viajes` y las negativas `niega_regin`, `niega_ciervos`, `niega_nidhogg`, `niega_gigantes`, `niega_skadi`, `niega_angrboda` (más las de la Parte 2).
+- Loki: `loki_thokk` (lo desenmascaró en la cueva), `loki_protegido` (lo encubrió), `loki_cazado`, `loki_ayudado` (aflojó sus ataduras: se soltará antes), `pacto_roto` (rompió el pacto: la marca queda mitad roja, mitad plata), `skadi_serpiente`.
+- `atadura` y `c4fin`.
 
 **Marcas de la Parte 2 del Capítulo 4 (para las lágrimas de la Parte 3):** `llora_padre`, `llora_einar`, `llora_fafnir`, `llora_durin`, `llora_hod`, `llora_hrungnir` (muertos que llorarán por Baldr) y `niega_grim`, `niega_fafnir`, `niega_hrungnir` (los que se niegan). También: `sombra` (habló con la sombra de quien rechazó el trato), `recuerdo_madre` (su padre le devolvió la canción de su madre; objeto `canto_madre`), `garm_amigo` (lo calmó con pan), `garm_vencido`, `kraka_hel` (prometió decir el nombre de Kraka), `helgrind`, `nastrond`.
 
@@ -259,8 +265,17 @@ Como Hermod en el mito, el protagonista cabalga en Sleipnir nueve noches hacia e
 
 **Detalles de la parte:** en el camino de paja, el protagonista se cruza con **su propia sombra**: la de quien rechazó el trato de Skuld y murió en la cama («¿mereció la pena?»). Las sombras de guerreros que no fueron elegidos le cortan el paso (combate o aprenderse sus nombres). En **Gjallarbru**, Modgud pregunta qué busca (la verdad, la marca roja del pacto o un peaje en plata). El río **Gjoll**, lleno de cuchillos, se cruza con Sleipnir, Ehwaz o Isa. En **la llanura de los que esperan** (base de la parte) están **Bjorn, el padre del protagonista**, muerto de viejo en su cama (si se dieron los recuerdos en el pozo de Mímir, el hijo no lo reconoce y el padre le devuelve la canción de su madre), Einar, Fafnir (enano en paz o sombra de dragón), Durin, Höd (si Vali lo mató), Grim el Tuerto («ni muerto lloro por un dios»), Hrungnir (llora si le ganas a los dados), Nastrond con Nidhogg y un sitio reservado si se rompieron juramentos, Thorvald el mercader muerto y una charla con Kraka sobre qué les pasa a los cuervos al morir. Ante la cueva, los cachorros de Garm y **Garm**: se calma con pan si se ayudó a Gudrun en el Capítulo 1 (las viejas de Vindvik tenían razón), se congela con Isa, se esquiva al galope o se le vence. Al final, Sleipnir **salta la reja de Helgrind**, y el protagonista llega vivo ante el salón de Eljudnir.
 
-### Parte 3 · Todas las cosas lloran
+### Parte 3 · Todas las cosas lloran ✅
 En su salón de Eljudnir, **Hel**, mitad viva y mitad muerta, hija de Loki y de Angrboda, pone una condición: Baldr volverá si **todas las cosas del mundo lloran por él**. El protagonista recorre los nueve mundos pidiendo lágrimas a todos los que ha conocido: los gigantes de Bergelmir, los enanos de Nidavellir, Skadi, Ratatosk, Dain, Hrimfaxi, Siri… (cada aliado que ganó en la historia llora o se niega). Al final, en una cueva, una giganta llamada **Thokk** se niega a llorar. Es Loki. Con Thor y los dioses, el protagonista lo persigue y lo captura, y Loki queda atado bajo la tierra con una serpiente goteando veneno sobre su cara (si aceptó el pacto, puede ayudarle o traicionarle). Baldr se queda en Hel, pero promete volver después del fin. La actitud de Hel en el Ragnarok dependerá de cómo la trató el protagonista.
+
+**Detalles de la parte:** en Eljudnir, Baldr se alegra de que alguien haya venido «ni siquiera mi padre vino»; Höd está con él si murió, o el protagonista le da su mensaje. **Hel** es mitad viva y mitad muerta: mirarla a la cara (a las dos mitades), mirar solo su mitad viva o insultarla cambia cómo recordará al protagonista. Baldr le da su anillo para Odín y Nanna un lienzo para Frigg. **El viaje de las lágrimas** (base de la parte) visita cinco lugares en Sleipnir:
+- **Vindvik:** todo el pueblo llora; noche con Siri (si se dieron los recuerdos en el pozo, el protagonista no la reconoce).
+- **Nidavellir:** los enanos lloran; Regin se niega si se quedó el anillo maldito.
+- **Las raíces:** Ratatosk se lo cuenta al águila; los ciervos lloran o no según lo que pasó con Dain; Nidhogg se niega siempre.
+- **Jotunheim:** los gigantes de Bergelmir lloran salvo si Thor destruyó su aldea; Skadi llora una lágrima si se ganó su favor (y ofrece su serpiente); Hrimfaxi convierte todo el rocío del mundo en lágrimas.
+- **El Bosque de Hierro:** Angrboda llora una lágrima si el protagonista fue amable con Fenrir y respetó a Hel.
+
+Tras cuatro viajes aparece **Thokk** en su cueva: «Thokk llorará lágrimas secas». Es Loki: se le puede desenmascarar o, con el pacto, encubrir. La persecución lleva a la cascada de **Franang**, donde Loki, convertido en salmón, acaba en la mano de Thor (por eso los salmones tienen la cola estrecha). En la cueva de las tres piedras, Skadi cuelga la serpiente y Sigyn sostiene el cuenco. Con el pacto, el protagonista puede aflojar en secreto sus ataduras o **romper el pacto** arrancándose el hilo rojo. El recuento final muestra cuántos lloraron y quién se negó; con respeto y muchas lágrimas, Hel queda conmovida. Odín recibe el anillo de su hijo, Frigg el lienzo, y Skuld susurra «ya casi».
 
 ---
 
@@ -317,7 +332,8 @@ Senda-Valhalla/
     │   └── parte3.js       ← Parte 3 y final del capítulo (c3_fin)
     └── c4/
         ├── parte1.js       ← escenas c4_* de la Parte 1 (convierte c3_fin en enlace)
-        └── parte2.js       ← Parte 2 (el camino de los muertos, Garm y Helgrind)
+        ├── parte2.js       ← Parte 2 (el camino de los muertos, Garm y Helgrind)
+        └── parte3.js       ← Parte 3 y final del capítulo (c4_fin)
 ```
 
 ### Cómo escribir una parte nueva

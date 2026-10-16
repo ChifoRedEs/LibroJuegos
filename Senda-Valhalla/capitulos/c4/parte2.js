@@ -8,7 +8,7 @@
    Nastrond), los perros de Hel, Garm y el salto de Helgrind.
    Las marcas llora_* y niega_* se usan en la Parte 3 (las lágrimas).
    Sustituye la escena provisional c4_p2 de la Parte 1.
-   Escena de enlace provisional: c4_p3 (la sustituirá la Parte 3)
+   Continúa en parte3.js (c4_p3)
    ===================================================================== */
 (()=>{
 const pelea=(e,win,flee,t)=>({t:[t],f:{e,win,lose:'muerte',flee}});
@@ -337,13 +337,7 @@ c4_dentro:{h:'El reino de Hel',cp:1,t:[
   'En el centro del valle está el salón de Eljudnir. Sus muros son altos y húmedos, y sus puertas, enormes. En la entrada te esperan dos figuras: un criado y una criada tan lentos que tardan un día entero en dar un paso. Son Ganglati y Ganglot, los sirvientes de Hel. Te ven. Empiezan a girarse para saludarte.',
   'Kraka suspira. «A este paso», dice, «nos anunciarán para el Ragnarok.»'],
   fx:{fl:{c4p2fin:1},saga:'Llegó vivo al salón de Eljudnir, en el reino de Hel.'},
-  c:[{x:'Caminar hacia el salón de Eljudnir',to:'c4_p3',k:'main'}]},
-
-/* Escena de enlace provisional: la sustituirá la Parte 3 */
-c4_p3:{h:'Continuará',t:[
-  'Las puertas de Eljudnir se abren despacio, muy despacio, como todo en el reino de Hel.',
-  '<span class=tag>Aquí termina la Parte 2 del Capítulo 4. La historia continúa en la Parte 3: «Todas las cosas lloran».</span>'],
-  c:[{x:'Volver a la llanura de los que esperan',to:'c4_llanura'}]}
+  c:[{x:'Caminar hacia el salón de Eljudnir',to:'c4_p3',k:'main'}]}
 
 }});
 })();
