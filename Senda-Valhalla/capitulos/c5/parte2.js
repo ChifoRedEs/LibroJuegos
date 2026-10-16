@@ -8,7 +8,7 @@
    llamada si se conservó el pacto), el gallo rojo de Hel, el Gjallarhorn
    y la runa secreta de Skuld.
    Sustituye la escena provisional c5_p2 de la Parte 1.
-   Escena de enlace provisional: c5_p3 (la sustituirá la Parte 3)
+   Continúa en parte3.js (c5_p3)
    ===================================================================== */
 (()=>{
 const pelea=(e,win,flee,t)=>({t:[t],f:{e,win,lose:'muerte',flee}});
@@ -277,13 +277,7 @@ c5_runa_skuld:{h:'La runa de Skuld',t:[
 
 c5_p2_fin:{h:'Hacia Vigrid',cp:1,gen:'c5_p2_fin',t:[],
   fx:{fl:{c5p2fin:1},hp:999,fu:100},
-  c:[{x:'Marchar hacia Vigrid',to:'c5_p3',k:'main'}]},
-
-/* Escena de enlace provisional: la sustituirá la Parte 3 */
-c5_p3:{h:'Continuará',t:[
-  'El cielo se abre de lado a lado. Empieza el Ragnarok.',
-  '<span class=tag>Aquí termina la Parte 2 del Capítulo 5. La historia continúa en la Parte 3: «Ragnarok».</span>'],
-  c:[{x:'Volver a Asgard',to:'c5_vispera'}]}
+  c:[{x:'Marchar hacia Vigrid',to:'c5_p3',k:'main'}]}
 
 }});
 

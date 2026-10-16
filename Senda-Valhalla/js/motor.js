@@ -56,7 +56,12 @@ function ok(r){if(!r)return true;
   if(r.min&&Object.entries(r.min).some(([k,n])=>(S.fl[k]||0)<n))return false;
   if(r.max&&Object.entries(r.max).some(([k,n])=>(S.fl[k]||0)>n))return false;
   if(r.rg&&S.rg<r.rg)return false;
+  if(r.rgmax!=null&&S.rg>r.rgmax)return false;
+  if(r.eq&&Object.entries(r.eq).some(([k,v])=>S.fl[k]!==v))return false;
+  if(r.ne&&Object.entries(r.ne).some(([k,v])=>S.fl[k]===v))return false;
   if(r.runa&&!S.ru.includes(r.runa))return false;
+  if(r.runas&&r.runas.some(k=>!S.ru.includes(k)))return false;
+  if(r.noruna&&S.ru.includes(r.noruna))return false;
   if(r.hmax!=null&&S.hora>r.hmax)return false;
   if(r.hmin!=null&&S.hora<r.hmin)return false;
   return true}
