@@ -19,14 +19,22 @@ LibroJuego de mitología nórdica en 5 capítulos. Cada capítulo tiene entre 80
 | 3 · El Invierno sin Fin | 1 | La tierra de los gigantes | ✅ Hecha (62 escenas, 8 de combate) |
 | | 2 | Los juegos de Utgarda-Loki | ✅ Hecha (49 escenas, 3 de combate) |
 | | 3 | El árbol del ahorcado | ✅ Hecha (44 escenas, 3 de combate) |
-| 4 · El Camino de Hel | 1–3 | | Pendiente |
+| 4 · El Camino de Hel | 1 | El muérdago | ✅ Hecha (54 escenas, 3 de combate) |
+| | 2 | El camino de los muertos | ✅ Hecha (42 escenas, 4 de combate) |
+| | 3 | Todas las cosas lloran | Pendiente |
 | 5 · El Crepúsculo | 1–3 | | Pendiente |
 
 **El Capítulo 1 está completo (128 escenas).** Su última escena, `c1_fin`, enlaza ahora con `c2_inicio`.
 
 **El Capítulo 2 está completo (154 escenas).** Su última escena, `c2_fin`, enlaza ahora con `c3_inicio`.
 
-**El Capítulo 3 está completo (155 escenas).** Termina en la escena `c3_fin` (`end:'Capítulo 3 completado'`). Al escribir el Capítulo 4 («El Camino de Hel»), cambia en `c3_fin` el aviso «La senda continúa en el Capítulo 4: El Crepúsculo» y conviértela en una escena normal que enlace con `c4_inicio`, como hacen `c2/parte1.js` con `c1_fin` y `c3/parte1.js` con `c2_fin`.
+**El Capítulo 3 está completo (155 escenas).** Su última escena, `c3_fin`, enlaza ahora con `c4_inicio`.
+
+La escena `c4_p3` es un enlace provisional al final de la Parte 2 del Capítulo 4. Hay que sustituirla al escribir la Parte 3.
+
+**Marcas de la Parte 2 del Capítulo 4 (para las lágrimas de la Parte 3):** `llora_padre`, `llora_einar`, `llora_fafnir`, `llora_durin`, `llora_hod`, `llora_hrungnir` (muertos que llorarán por Baldr) y `niega_grim`, `niega_fafnir`, `niega_hrungnir` (los que se niegan). También: `sombra` (habló con la sombra de quien rechazó el trato), `recuerdo_madre` (su padre le devolvió la canción de su madre; objeto `canto_madre`), `garm_amigo` (lo calmó con pan), `garm_vencido`, `kraka_hel` (prometió decir el nombre de Kraka), `helgrind`, `nastrond`.
+
+**Marcas de la Parte 1 del Capítulo 4:** `verdad_h` (0 a 3 verdades dichas a Heimdal) y el favor `heimdal` (tres verdades sin pacto), `mintio_heimdal`, `heimdal_vigila` (con pacto); `baldr_suenos`, `hod_amigo`, `muerdago_visto` (y el objeto `ramita_muerdago`), `frigg_avisada`, `loki_descubierto`; `hod_salvado` o `hod_muerto` (Vali lo mató); `complice_baldr` (calló por el pacto con Loki); `aguila` (manzana de Idunn), `modi`, `hermod` (aceptó el encargo de Frigg).
 
 **Marcas de la Parte 3 del Capítulo 3 (clave para el Capítulo 4 y los finales):**
 - `pacto_loki` (aceptó el pacto: final «El hilo de Loki»; su marca es roja) o `pacto_no`.
@@ -241,11 +249,15 @@ Mientras todos miraban al Árbol, **Lopt robó agua del pozo de la memoria** par
 **Escenario:** Asgard, el camino de los muertos y Helheim.
 **Mecánicas nuevas:** la búsqueda de las lágrimas por los nueve mundos; reencuentros con los muertos de la saga.
 
-### Parte 1 · El muérdago
+### Parte 1 · El muérdago ✅
 Sleipnir deja al protagonista ante el Bifrost. **Heimdal**, que oye crecer la hierba, le somete a la prueba de la verdad: le pregunta por lo que ha hecho y oye cualquier mentira (la marca roja del pacto de Loki cambia la escena). En Asgard conoce a **Frigg** y a **Baldr**, el dios más amado, que sueña con su propia muerte. Frigg ha hecho jurar a todas las cosas del mundo que no le harán daño, menos a una ramita de **muérdago**, demasiado joven para jurar. Los dioses juegan a lanzarle armas a Baldr, que no le hieren. Una anciana (Loki disfrazado) le sonsaca el secreto a Frigg; el protagonista puede sospechar y desenmascararlo, pero el muérdago llega igualmente a manos de **Höd**, el dios ciego, y Baldr muere. Lo que haga el protagonista decide si Höd es acusado o si los dioses saben que el culpable es Loki. Funeral de Baldr en su barco Hringhorni: Odín le susurra algo al oído (el acertijo de Alvis), y en la pira se deja Draupnir, el anillo de Brok.
 
-### Parte 2 · El camino de los muertos
-Como Hermod en el mito, el protagonista cabalga en Sleipnir nueve noches hacia el norte y hacia abajo para pedirle a Hel que devuelva a Baldr. El puente de oro de **Gjallarbru**, custodiado por la giganta **Modgud** («ayer cruzaron cinco ejércitos de muertos y hacían menos ruido que tú»), el río Gjöll lleno de cuchillos, la cueva de **Garm**, el perro de Hel, y la reja de Helgrind. En el camino, los muertos de la saga: **Einar**, el rey **Rolf**, **Fafnir**, Durin, quizá el padre del protagonista, según lo que pasó con cada uno.
+**Detalles de la parte:** la base es **Asgard**, con Breidablik (Baldr cuenta sus sueños), Fensalir (Frigg; al anochecer, la anciana que pregunta por el muérdago: se la puede seguir, sobre todo si se desenmascaró a Utgarda-Loki, o avisar a Frigg), Höd junto a la fuente tallando un caballo de madera, Bilskirnir (Thor, Sif, Modi y Magni; dormir), el huerto de Idunn (el águila de escarcha y una manzana de oro: +20 de Vida máxima), Eir (tienda, caldero y runas), la herrería de los einherjar (forja, grabado y combates de entrenamiento; cota de los einherjar), las puertas cerradas del Valhalla y la torre de Heimdal. En el juego de las armas se puede gritar a tiempo (desenmascarando a Loki) o, con el pacto, callar. Después, defender a Höd ante los dioses decide si se salva o si Vali lo mata. El funeral incluye a la giganta Hyrrokkin en su lobo con riendas de víboras, y el protagonista se ofrece como jinete hacia Hel en Sleipnir, como Hermod en el mito.
+
+### Parte 2 · El camino de los muertos ✅
+Como Hermod en el mito, el protagonista cabalga en Sleipnir nueve noches hacia el norte y hacia abajo para pedirle a Hel que devuelva a Baldr. El puente de oro de **Gjallarbru**, custodiado por la giganta **Modgud** («ayer cruzaron cinco ejércitos de muertos y hacían menos ruido que tú»), el río Gjöll lleno de cuchillos, la cueva de **Garm**, el perro de Hel, y la reja de Helgrind. En el camino, los muertos de la saga, según lo que pasó con cada uno.
+
+**Detalles de la parte:** en el camino de paja, el protagonista se cruza con **su propia sombra**: la de quien rechazó el trato de Skuld y murió en la cama («¿mereció la pena?»). Las sombras de guerreros que no fueron elegidos le cortan el paso (combate o aprenderse sus nombres). En **Gjallarbru**, Modgud pregunta qué busca (la verdad, la marca roja del pacto o un peaje en plata). El río **Gjoll**, lleno de cuchillos, se cruza con Sleipnir, Ehwaz o Isa. En **la llanura de los que esperan** (base de la parte) están **Bjorn, el padre del protagonista**, muerto de viejo en su cama (si se dieron los recuerdos en el pozo de Mímir, el hijo no lo reconoce y el padre le devuelve la canción de su madre), Einar, Fafnir (enano en paz o sombra de dragón), Durin, Höd (si Vali lo mató), Grim el Tuerto («ni muerto lloro por un dios»), Hrungnir (llora si le ganas a los dados), Nastrond con Nidhogg y un sitio reservado si se rompieron juramentos, Thorvald el mercader muerto y una charla con Kraka sobre qué les pasa a los cuervos al morir. Ante la cueva, los cachorros de Garm y **Garm**: se calma con pan si se ayudó a Gudrun en el Capítulo 1 (las viejas de Vindvik tenían razón), se congela con Isa, se esquiva al galope o se le vence. Al final, Sleipnir **salta la reja de Helgrind**, y el protagonista llega vivo ante el salón de Eljudnir.
 
 ### Parte 3 · Todas las cosas lloran
 En su salón de Eljudnir, **Hel**, mitad viva y mitad muerta, hija de Loki y de Angrboda, pone una condición: Baldr volverá si **todas las cosas del mundo lloran por él**. El protagonista recorre los nueve mundos pidiendo lágrimas a todos los que ha conocido: los gigantes de Bergelmir, los enanos de Nidavellir, Skadi, Ratatosk, Dain, Hrimfaxi, Siri… (cada aliado que ganó en la historia llora o se niega). Al final, en una cueva, una giganta llamada **Thokk** se niega a llorar. Es Loki. Con Thor y los dioses, el protagonista lo persigue y lo captura, y Loki queda atado bajo la tierra con una serpiente goteando veneno sobre su cara (si aceptó el pacto, puede ayudarle o traicionarle). Baldr se queda en Hel, pero promete volver después del fin. La actitud de Hel en el Ragnarok dependerá de cómo la trató el protagonista.
@@ -295,14 +307,17 @@ Senda-Valhalla/
     │   ├── parte1.js       ← escenas c1_* de la Parte 1
     │   ├── parte2.js       ← Parte 2 (amplía c1_aldea, c1_casa y c1_groa2 con SC.<escena>.c.push)
     │   └── parte3.js       ← Parte 3 y final del capítulo (c1_fin)
-    └── c2/
-        ├── parte1.js       ← escenas c2_* de la Parte 1 (convierte c1_fin en enlace)
-        ├── parte2.js       ← Parte 2 (Nidavellir, forja y grabado, la Gran Forja)
-        └── parte3.js       ← Parte 3 y final del capítulo (c2_fin)
-    └── c3/
-        ├── parte1.js       ← escenas c3_* de la Parte 1 (convierte c2_fin en enlace)
-        ├── parte2.js       ← Parte 2 (Utgard, los cinco juegos, el campamento de Thrym)
-        └── parte3.js       ← Parte 3 y final del capítulo (c3_fin)
+    ├── c2/
+    │   ├── parte1.js       ← escenas c2_* de la Parte 1 (convierte c1_fin en enlace)
+    │   ├── parte2.js       ← Parte 2 (Nidavellir, forja y grabado, la Gran Forja)
+    │   └── parte3.js       ← Parte 3 y final del capítulo (c2_fin)
+    ├── c3/
+    │   ├── parte1.js       ← escenas c3_* de la Parte 1 (convierte c2_fin en enlace)
+    │   ├── parte2.js       ← Parte 2 (Utgard, los cinco juegos, el campamento de Thrym)
+    │   └── parte3.js       ← Parte 3 y final del capítulo (c3_fin)
+    └── c4/
+        ├── parte1.js       ← escenas c4_* de la Parte 1 (convierte c3_fin en enlace)
+        └── parte2.js       ← Parte 2 (el camino de los muertos, Garm y Helgrind)
 ```
 
 ### Cómo escribir una parte nueva
