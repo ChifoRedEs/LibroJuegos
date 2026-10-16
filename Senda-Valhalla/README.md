@@ -1,6 +1,6 @@
 # La Senda al Valhalla
 
-LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80 y 90 escenas, repartidas en 3 partes.
+LibroJuego de mitología nórdica en 5 capítulos. Cada capítulo tiene entre 80 y 90 escenas, repartidas en 3 partes.
 
 > Vas a morir en la cama, y quien muere en la cama no entra en el salón de Odín. Una valquiria te ofrece un invierno de vida prestada para ganarte el Valhalla antes de que llegue el Ragnarok.
 
@@ -19,13 +19,14 @@ LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80
 | 3 · El Invierno sin Fin | 1 | La tierra de los gigantes | ✅ Hecha (62 escenas, 8 de combate) |
 | | 2 | Los juegos de Utgarda-Loki | ✅ Hecha (49 escenas, 3 de combate) |
 | | 3 | El árbol del ahorcado | ✅ Hecha (44 escenas, 3 de combate) |
-| 4 · El Crepúsculo | 1–3 | | Pendiente |
+| 4 · El Camino de Hel | 1–3 | | Pendiente |
+| 5 · El Crepúsculo | 1–3 | | Pendiente |
 
 **El Capítulo 1 está completo (128 escenas).** Su última escena, `c1_fin`, enlaza ahora con `c2_inicio`.
 
 **El Capítulo 2 está completo (154 escenas).** Su última escena, `c2_fin`, enlaza ahora con `c3_inicio`.
 
-**El Capítulo 3 está completo (155 escenas).** Termina en la escena `c3_fin` (`end:'Capítulo 3 completado'`). Al escribir el Capítulo 4, convierte `c3_fin` en una escena normal que enlace con `c4_inicio`, como hacen `c2/parte1.js` con `c1_fin` y `c3/parte1.js` con `c2_fin`.
+**El Capítulo 3 está completo (155 escenas).** Termina en la escena `c3_fin` (`end:'Capítulo 3 completado'`). Al escribir el Capítulo 4 («El Camino de Hel»), cambia en `c3_fin` el aviso «La senda continúa en el Capítulo 4: El Crepúsculo» y conviértela en una escena normal que enlace con `c4_inicio`, como hacen `c2/parte1.js` con `c1_fin` y `c3/parte1.js` con `c2_fin`.
 
 **Marcas de la Parte 3 del Capítulo 3 (clave para el Capítulo 4 y los finales):**
 - `pacto_loki` (aceptó el pacto: final «El hilo de Loki»; su marca es roja) o `pacto_no`.
@@ -206,8 +207,22 @@ Thor deja al protagonista en Jotunheim con un cuerno para llamarlo una sola vez.
 
 Al final, el protagonista duerme sin saberlo dentro del guante del gigante **Skrymir**, que le invita a los juegos de Utgarda-Loki.
 
-### Parte 2 · Los juegos de Utgard-Loki
-Es la gran prueba del capítulo: comer contra Logi, correr contra Hugi, beber de un cuerno sin fondo, levantar un gato gigante y luchar contra la anciana Eli. Todo es ilusión. Si el jugador lo sospecha y lo descubre, gana mucha Gloria. Aprende **Laguz, Mannaz y Ingwaz**.
+### Parte 2 · Los juegos de Utgarda-Loki ✅
+**Utgard**, la fortaleza del señor de las ilusiones, es la base de esta parte. Utgarda-Loki recibe al protagonista como invitado (lo que impide que Thrym lo toque) y le propone **cinco juegos, uno cada noche**. En cada juego hay tres formas de afrontarlo: intentarlo con todas las fuerzas (si sale bien, casi se gana), observar (suma una **sospecha**) o usar una runa que revela el truco.
+- **El banquete contra Logi:** se come hasta la artesa; es el fuego salvaje (Kenaz revela el truco).
+- **La carrera contra Hugi:** no deja huellas; es el pensamiento (Ehwaz llama a Hrimfaxi). Da **Ingwaz**.
+- **El cuerno:** sabe a sal; tiene la punta en el mar. Da **Laguz**.
+- **El gato:** su cola son escamas; es Jormungandr, la serpiente del mundo (Sowilo lo revela).
+- **La lucha contra Elli:** conoce todas las cicatrices del protagonista; es la vejez. Da **Mannaz**.
+
+La sexta noche, con **tres sospechas o más**, el protagonista puede desenmascarar a Utgarda-Loki delante de todo su salón (algo que ni Thor consiguió). En cualquier caso, Utgarda-Loki le revela la verdad y Utgard desaparece.
+
+**De día:**
+- **El campamento de Thrym:** Lopt, con o sin la boca cosida según lo que pasó con Brok, escribe «Pronto, tijeras». Thrym tienta al protagonista con un sitio en el mundo nuevo. Hay veinte **enanos encadenados** que, si se les libera, sabotean las armas del ejército y montan una forja secreta en las bodegas, donde regalan el escudo de los cautivos. Espiando su consejo de guerra se descubre el plan de Lopt: soltar a Fenrir, ir al pozo de Mímir y llegar a Vigrid en Naglfar.
+- **El patio:** Skrymir cuenta que una vez «le cayeron tres hojas» en la cabeza mientras dormía (eran los martillazos de Thor); dados de gigantes.
+- **La vieja del Bosque de Hierro:** tienda; resulta ser **Angrboda**, madre de Fenrir, y da un colmillo para presentarse ante él.
+
+Al final, en la llanura vacía, espera **el Caminante**: un anciano tuerto con sombrero de ala ancha y dos cuervos, uno de ellos Hugin. Es Odín, y lleva al protagonista hacia el pozo de Mímir.
 
 ### Parte 3 · El árbol del ahorcado ✅
 El Caminante se revela como **Odín**: sabe cómo acaba todo y le interesa el protagonista porque es lo único que no sabe. El **campamento bajo la raíz** de Yggdrasil es la base de esta parte: charla con Odín junto al fuego, el taller de runas de Odín, el regreso de Nali el buhonero (con grabado y la piedra rúnica de Othala), caza de los hijos de Skoll y la escena de **Hugin y Kraka**: Hugin le ofrece volver al servicio de Odín y Kraka elige quedarse con el protagonista.
@@ -222,18 +237,33 @@ Mientras todos miraban al Árbol, **Lopt robó agua del pozo de la memoria** par
 
 ---
 
-## Capítulo 4 · El Crepúsculo
-**Escenario:** Asgard y la llanura de Vigrid.
-**Runas:** Bandrunas maestras (combinaciones de dos runas) y la runa secreta de Skuld.
+## Capítulo 4 · El Camino de Hel
+**Escenario:** Asgard, el camino de los muertos y Helheim.
+**Mecánicas nuevas:** la búsqueda de las lágrimas por los nueve mundos; reencuentros con los muertos de la saga.
 
-### Parte 1 · El puente que arde
-El protagonista cruza el puente Bifrost y supera la **prueba de Heimdal** en la puerta. Las 540 puertas del Valhalla están cerradas, y los einherjar, los guerreros elegidos, le someten a su prueba: un día entero de combate y un banquete por la noche. Aquí se revela quién es Skuld en realidad.
+### Parte 1 · El muérdago
+Sleipnir deja al protagonista ante el Bifrost. **Heimdal**, que oye crecer la hierba, le somete a la prueba de la verdad: le pregunta por lo que ha hecho y oye cualquier mentira (la marca roja del pacto de Loki cambia la escena). En Asgard conoce a **Frigg** y a **Baldr**, el dios más amado, que sueña con su propia muerte. Frigg ha hecho jurar a todas las cosas del mundo que no le harán daño, menos a una ramita de **muérdago**, demasiado joven para jurar. Los dioses juegan a lanzarle armas a Baldr, que no le hieren. Una anciana (Loki disfrazado) le sonsaca el secreto a Frigg; el protagonista puede sospechar y desenmascararlo, pero el muérdago llega igualmente a manos de **Höd**, el dios ciego, y Baldr muere. Lo que haga el protagonista decide si Höd es acusado o si los dioses saben que el culpable es Loki. Funeral de Baldr en su barco Hringhorni: Odín le susurra algo al oído (el acertijo de Alvis), y en la pira se deja Draupnir, el anillo de Brok.
+
+### Parte 2 · El camino de los muertos
+Como Hermod en el mito, el protagonista cabalga en Sleipnir nueve noches hacia el norte y hacia abajo para pedirle a Hel que devuelva a Baldr. El puente de oro de **Gjallarbru**, custodiado por la giganta **Modgud** («ayer cruzaron cinco ejércitos de muertos y hacían menos ruido que tú»), el río Gjöll lleno de cuchillos, la cueva de **Garm**, el perro de Hel, y la reja de Helgrind. En el camino, los muertos de la saga: **Einar**, el rey **Rolf**, **Fafnir**, Durin, quizá el padre del protagonista, según lo que pasó con cada uno.
+
+### Parte 3 · Todas las cosas lloran
+En su salón de Eljudnir, **Hel**, mitad viva y mitad muerta, hija de Loki y de Angrboda, pone una condición: Baldr volverá si **todas las cosas del mundo lloran por él**. El protagonista recorre los nueve mundos pidiendo lágrimas a todos los que ha conocido: los gigantes de Bergelmir, los enanos de Nidavellir, Skadi, Ratatosk, Dain, Hrimfaxi, Siri… (cada aliado que ganó en la historia llora o se niega). Al final, en una cueva, una giganta llamada **Thokk** se niega a llorar. Es Loki. Con Thor y los dioses, el protagonista lo persigue y lo captura, y Loki queda atado bajo la tierra con una serpiente goteando veneno sobre su cara (si aceptó el pacto, puede ayudarle o traicionarle). Baldr se queda en Hel, pero promete volver después del fin. La actitud de Hel en el Ragnarok dependerá de cómo la trató el protagonista.
+
+---
+
+## Capítulo 5 · El Crepúsculo
+**Escenario:** Asgard y la llanura de Vigrid.
+**Runas:** bandrunas maestras (combinaciones de dos runas) y la runa secreta de Skuld.
+
+### Parte 1 · Las puertas del Valhalla
+Las 540 puertas del Valhalla están cerradas. Los einherjar, los guerreros elegidos, someten al protagonista a su prueba: un día entero de combate (allí se muere y se resucita cada noche) y un banquete con el jabalí que nunca se acaba. Aquí se revela quién es **Skuld** en realidad y qué está tejiendo: el Ragnarok no se puede evitar, pero su hilo puede decidir quién sobrevive para ver el mundo nuevo.
 
 ### Parte 2 · La víspera
-Es la última vuelta por los salones de los dioses para reunir favores, cumplir los juramentos pendientes y prepararse. Freya ofrece un lugar en su salón de Folkvang (**prueba de Freya**). Canta el tercer gallo, el rojo de Hel, y suena el cuerno Gjallarhorn.
+La última vuelta por los salones de los dioses para reunir favores, cumplir los juramentos pendientes y despedirse (Thor, Tyr, Freya y su **prueba de Folkvang**, una última mirada a Siri desde el trono de Odín). Loki rompe sus ataduras. Canta el tercer gallo, el rojo de Hel, y suena el cuerno Gjallarhorn.
 
 ### Parte 3 · Ragnarok
-Es la batalla final en la llanura de Vigrid. Las elecciones del jugador deciden a quién puede ayudar: a Thor contra la Serpiente del Mundo, a Tyr contra el perro Garm o a Odín contra Fenrir. Después llegan los finales.
+La batalla final en la llanura de Vigrid, donde se cobran todas las decisiones: las armas saboteadas de Thrym, los gigantes de Bergelmir, Fenrir herido o entero (y si es «amigo»), Hel, el Lobo Ceniza, Hrimfaxi, Skadi, Regin y el anillo. El protagonista decide a quién ayudar: a Thor contra la Serpiente del Mundo, a Tyr contra Garm, a Odín contra Fenrir o a Heimdal contra Loki (o, con el pacto, llega en Naglfar en el bando de Loki). Después llegan los finales.
 
 ---
 
