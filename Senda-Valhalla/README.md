@@ -18,14 +18,22 @@ LibroJuego de mitología nórdica en 4 capítulos. Cada capítulo tiene entre 80
 | | 3 | El gusano de la veta de oro | ✅ Hecha (48 escenas, 6 de combate) |
 | 3 · El Invierno sin Fin | 1 | La tierra de los gigantes | ✅ Hecha (62 escenas, 8 de combate) |
 | | 2 | Los juegos de Utgarda-Loki | ✅ Hecha (49 escenas, 3 de combate) |
-| | 3 | El árbol del ahorcado | Pendiente |
+| | 3 | El árbol del ahorcado | ✅ Hecha (44 escenas, 3 de combate) |
 | 4 · El Crepúsculo | 1–3 | | Pendiente |
 
 **El Capítulo 1 está completo (128 escenas).** Su última escena, `c1_fin`, enlaza ahora con `c2_inicio`.
 
 **El Capítulo 2 está completo (154 escenas).** Su última escena, `c2_fin`, enlaza ahora con `c3_inicio`.
 
-La escena `c3_p3` es un enlace provisional al final de la Parte 2 del Capítulo 3. Hay que sustituirla al escribir la Parte 3.
+**El Capítulo 3 está completo (155 escenas).** Termina en la escena `c3_fin` (`end:'Capítulo 3 completado'`). Al escribir el Capítulo 4, convierte `c3_fin` en una escena normal que enlace con `c4_inicio`, como hacen `c2/parte1.js` con `c1_fin` y `c3/parte1.js` con `c2_fin`.
+
+**Marcas de la Parte 3 del Capítulo 3 (clave para el Capítulo 4 y los finales):**
+- `pacto_loki` (aceptó el pacto: final «El hilo de Loki»; su marca es roja) o `pacto_no`.
+- El favor `odin` y `arbol_completo` (aguantó las nueve noches) o `arbol_bajado`.
+- `tuerto` (dio un ojo en el pozo de Mímir) o `sin_recuerdos` (dio sus recuerdos de Vindvik).
+- `fenrir_amigo` (Fenrir solo buscará a Odín), `fenrir_respeto`, `fenrir_mordisco`; `fenrir_herido` (se liberó a medias: más débil en Vigrid) o `fenrir_libre_entero`.
+- `kraka_elige` (Kraka rechazó volver con Odín) y `odin_charla`.
+- Con las runas de esta parte (Othala, Tiwaz y Dagaz) el protagonista ya puede conocer las 24.
 
 **Marcas de la Parte 2 del Capítulo 3:** `desenmascarado` (vio a través de las ilusiones), `sospecha` (0 a 5) y `jok` (juegos casi ganados), `sabotaje` y `enanos_libres` (las armas de Thrym se romperán en la batalla), `plan` (conoce el plan de Lopt: soltar a Fenrir, el pozo de Mímir, Naglfar y Vigrid), `thrym_tentado`, `angrboda` y el objeto `colmillo_hierro` (para presentarse ante Fenrir), `brok_tarde` (1 si Brok se salvó por el truco del cuello; 0 si Lopt tiene la boca cosida).
 
@@ -201,8 +209,16 @@ Al final, el protagonista duerme sin saberlo dentro del guante del gigante **Skr
 ### Parte 2 · Los juegos de Utgard-Loki
 Es la gran prueba del capítulo: comer contra Logi, correr contra Hugi, beber de un cuerno sin fondo, levantar un gato gigante y luchar contra la anciana Eli. Todo es ilusión. Si el jugador lo sospecha y lo descubre, gana mucha Gloria. Aprende **Laguz, Mannaz y Ingwaz**.
 
-### Parte 3 · El árbol del ahorcado
-El protagonista llega al pozo de Mimir, donde puede sacrificar un ojo como hizo Odín para obtener más hilos de las Nornas. Llega la **prueba de Odín**: colgar nueve noches de Yggdrasil para comprender las últimas runas, **Tiwaz, Dagaz y Othala**. Fenrir rompe su cadena y Loki escapa, y aquí está la gran decisión moral del juego: Loki ofrece un pacto. Al final canta **Gullinkambi**, el gallo de Asgard.
+### Parte 3 · El árbol del ahorcado ✅
+El Caminante se revela como **Odín**: sabe cómo acaba todo y le interesa el protagonista porque es lo único que no sabe. El **campamento bajo la raíz** de Yggdrasil es la base de esta parte: charla con Odín junto al fuego, el taller de runas de Odín, el regreso de Nali el buhonero (con grabado y la piedra rúnica de Othala), caza de los hijos de Skoll y la escena de **Hugin y Kraka**: Hugin le ofrece volver al servicio de Odín y Kraka elige quedarse con el protagonista.
+
+**El pozo de Mímir:** la cabeza del sabio Mímir pide un precio por un trago de sabiduría. Se puede pagar con un ojo (+2 hilos, +1 Espíritu, −1 Astucia) o con los recuerdos de Vindvik (+1 hilo); las dos opciones enseñan **Othala**. También se puede no pagar.
+
+**La prueba de Odín:** colgar nueve noches del Árbol, en tres tramos con tiradas de Espíritu y visiones que cambian según lo que hizo el jugador (Siri, el salón de Hakon, Einar, el rey Rolf, Fafnir, Tyr y, al final, las tres Nornas tejiendo; Skuld se sorprende al verlo). Da **Tiwaz** (Tyr aparece en la visión) y **Dagaz** (el amanecer), además del favor de Odín. Quien pide que lo bajen antes pierde Gloria y las runas.
+
+Mientras todos miraban al Árbol, **Lopt robó agua del pozo de la memoria** para deshacer Gleipnir, la cadena de Fenrir. En **Sleipnir**, el protagonista llega a la isla de **Lyngvi**: quitarle el odre a Lopt (más fácil si espió el consejo de guerra o con Isa) hace que **Fenrir** se libere herido. Ante el lobo: enseñarle el colmillo de Angrboda (le perdona la vida y solo buscará a Odín), sostenerle la mirada, huir o recibir un mordisco.
+
+**El pacto de Loki:** Lopt se revela como **Loki** y ofrece cortar el hilo de Skuld con unas tijeras de plata a cambio de un sitio en el mundo nuevo. Aceptar (−150 de Gloria, marca roja) abre el final «El hilo de Loki»; rechazarlo o atacarlo (combate contra su sombra) le promete un reencuentro en Vigrid. Al final canta **Gullinkambi**, el gallo de oro de Asgard, y Odín envía al protagonista en Sleipnir hacia el puente del arco iris.
 
 ---
 
@@ -255,7 +271,8 @@ Senda-Valhalla/
         └── parte3.js       ← Parte 3 y final del capítulo (c2_fin)
     └── c3/
         ├── parte1.js       ← escenas c3_* de la Parte 1 (convierte c2_fin en enlace)
-        └── parte2.js       ← Parte 2 (Utgard, los cinco juegos, el campamento de Thrym)
+        ├── parte2.js       ← Parte 2 (Utgard, los cinco juegos, el campamento de Thrym)
+        └── parte3.js       ← Parte 3 y final del capítulo (c3_fin)
 ```
 
 ### Cómo escribir una parte nueva
@@ -305,10 +322,12 @@ Cada parte es un archivo que llama a `registrarCapitulo({capitulo, parte, titulo
 
 **Efectos (`fx`):** `hp`, `fu`, `plata`, `item`, `quita`, `equipa`, `runa`, `fl`, `st`, `mhp`, `hilo`, `gl`, `favor`, `jura:{id, txt, dias, gl}`, `cumple:'id'`, `saga:'texto'`, `suma:{marca:n}` (suma n a un contador), `fin:'texto'` (anota un final o capítulo completado), `t` (horas), `hasta` (avanza hasta esa hora), `hastaDia` (avanza hasta la mañana del día indicado o guardado en una marca), `dormir`.
 
-**Requisitos (`req`):** `item`, `fl`, `no`, `min:{marca:n}` y `max:{marca:n}` (contadores), `st:[atributo, valor]`, `plata`, `dia`, `gl`, `rg`, `hilos`, `runa`, `hmin`, `hmax`.
+**Requisitos (`req`):** `item`, `fl`, `no`, `fav` y `nofav` (tener o no el favor de un dios), `min:{marca:n}` y `max:{marca:n}` (contadores), `st:[atributo, valor]`, `plata`, `dia`, `gl`, `rg`, `hilos`, `runa`, `hmin`, `hmax`.
 
 **Runas grabadas (`GRABADO` en `datos.js`):** cada runa da al arma un efecto pasivo: bonificaciones fijas (`atq`, `crit`, `def`, `arm`, `vel`, `am`) o efectos al golpear (`aturde` y `quema` en %, `roba` en % del daño, `fuG` Furor extra, `curaV` Vida al vencer).
 
 **Objetos:** además de `atq`, `def`, `arm`, `crit` y `vel`, un arma puede tener `am` (daño extra contra no muertos y draugs).
+
+Si una escena deja la Vida a 0 con sus efectos (`fx`), el motor lleva automáticamente a la escena `muerte`, salvo en los finales.
 
 Antes de dar una parte por terminada, usa **«Comprobar la historia»** en el menú. Revisa enlaces rotos, escenas inalcanzables y datos que falten.

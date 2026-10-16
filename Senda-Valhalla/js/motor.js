@@ -51,6 +51,8 @@ function ok(r){if(!r)return true;
   if(r.dia&&S.dia<r.dia)return false;
   if(r.gl&&S.gl<r.gl)return false;
   if(r.hilos&&S.hilos<r.hilos)return false;
+  if(r.fav&&!S.fav[r.fav])return false;
+  if(r.nofav&&S.fav[r.nofav])return false;
   if(r.min&&Object.entries(r.min).some(([k,n])=>(S.fl[k]||0)<n))return false;
   if(r.max&&Object.entries(r.max).some(([k,n])=>(S.fl[k]||0)>n))return false;
   if(r.rg&&S.rg<r.rg)return false;
@@ -123,6 +125,7 @@ function misionBox(sc){return sc.mision?`<div class=mision><b>★ Misión princi
 function go(id){if(!SC[id]){pinta(`<div class=sc><p class=warn>Escena no encontrada: ${id}</p><button onclick="menu()">Menú</button></div>`);return}
   S.sc=id;UI.res=null;UI.tab='c';UI.stat=false;UI.top=true;UI.sn=null;
   const sc=cur();apply(sc.fx);
+  if(S.hp<=0&&!sc.end&&id!='muerte'){save();return go('muerte')}
   if(sc.end&&!S.fin.includes(sc.end))S.fin.push(sc.end);
   if(sc.cp)S.cp=snap();
   S.f=null;S.cb=null;if(sc.f)empiezaCombate(sc.f.e);

@@ -8,7 +8,7 @@
    encadenados, Lopt, la mercader del Bosque de Hierro (Angrboda) y
    la llegada del Caminante.
    Sustituye la escena provisional c3_p2 de la Parte 1.
-   Escena de enlace provisional: c3_p3 (la sustituirá la Parte 3)
+   Continúa en parte3.js (c3_p3)
    ===================================================================== */
 (()=>{
 const pelea=(e,win,flee,t)=>({t:[t],f:{e,win,lose:'muerte',flee}});
@@ -362,13 +362,7 @@ c3_caminante:{h:'El Caminante',cp:1,t:[
   'Sobre sus hombros hay dos cuervos. Uno de ellos es Hugin. Kraka se pone rígido.',
   '«Siéntate, {N} de Vindvik», dice el Caminante. Su voz es tranquila y antigua, como el viento en un bosque de robles. «Has visto a través de las ilusiones de los gigantes. Has bebido del mar y has luchado contra la vejez. Ya casi estás preparad{o|a}.» Se levanta, apoyándose en una lanza. «Ven conmigo. Te espera el pozo de Mímir. Y el árbol del que me colgué hace mucho tiempo.»'],
   fx:{fl:{c3p2fin:1},gl:15,saga:'Al desaparecer Utgard, un caminante tuerto con un sombrero de ala ancha le esperaba en la llanura.'},
-  c:[{x:'Seguir al Caminante',to:'c3_p3',k:'main'}]},
-
-/* Escena de enlace provisional: la sustituirá la Parte 3 */
-c3_p3:{h:'Continuará',t:[
-  'El Caminante echa a andar hacia el norte sin mirar atrás. Sus pasos no dejan huellas en la nieve.',
-  '<span class=tag>Aquí termina la Parte 2 del Capítulo 3. La historia continúa en la Parte 3: «El árbol del ahorcado».</span>'],
-  c:[{x:'Volver a la llanura',to:'c3_desaparece'}]}
+  c:[{x:'Seguir al Caminante',to:'c3_p3',k:'main'}]}
 
 }});
 })();
