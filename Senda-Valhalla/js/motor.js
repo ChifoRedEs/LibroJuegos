@@ -56,12 +56,7 @@ function ok(r){if(!r)return true;
   if(r.min&&Object.entries(r.min).some(([k,n])=>(S.fl[k]||0)<n))return false;
   if(r.max&&Object.entries(r.max).some(([k,n])=>(S.fl[k]||0)>n))return false;
   if(r.rg&&S.rg<r.rg)return false;
-  if(r.rgmax!=null&&S.rg>r.rgmax)return false;
-  if(r.eq&&Object.entries(r.eq).some(([k,v])=>S.fl[k]!==v))return false;
-  if(r.ne&&Object.entries(r.ne).some(([k,v])=>S.fl[k]===v))return false;
   if(r.runa&&!S.ru.includes(r.runa))return false;
-  if(r.runas&&r.runas.some(k=>!S.ru.includes(k)))return false;
-  if(r.noruna&&S.ru.includes(r.noruna))return false;
   if(r.hmax!=null&&S.hora>r.hmax)return false;
   if(r.hmin!=null&&S.hora<r.hmin)return false;
   return true}
@@ -378,9 +373,21 @@ function elegir(){window.scrollTo(0,0);const sv=load();
   pinta(`<div class=sc><h2>¿De quién es esta saga?</h2><p>Elige a quién acompañarás en su último invierno. La historia es la misma; cambian la voz, algunos diálogos y sus fuerzas.</p>
 ${Object.entries(PROTAS).map(([g,p])=>`<button class="k-n prota" onclick="S=nuevo('${g}');UI={};go(INICIO)"><b>${p.nom}</b><br><span class=tag>${p.d}<br>${Object.keys(NM).map(k=>NM[k]+' '+p.st[k]).join(' · ')}</span></button>`).join('')}
 ${sv?'<p class=tag>Empezar una partida nueva sustituirá a la guardada.</p>':''}<button onclick="menu()">Volver</button></div>`)}
-function expo(){const s=load();pinta(`<h2>Exportar partida</h2><p class=tag>Copia este código y guárdalo en un lugar seguro.</p><textarea id=cod rows=8>${s?btoa(unescape(encodeURIComponent(JSON.stringify(s)))):''}</textarea><button onclick="menu()">Volver</button>`)}
-function impo(){pinta(`<h2>Importar partida</h2><p class=tag>Pega aquí el código de una partida exportada.</p><textarea id=cod rows=8></textarea><button onclick="aplicaImp()">Cargar</button><button onclick="menu()">Volver</button>`)}
-function aplicaImp(){try{S=JSON.parse(decodeURIComponent(escape(atob($('#cod').value.trim()))));save();UI={};show()}catch(e){alert('El código no es válido.')}}
+function expo(){const s=load();
+  if(!s){pinta(`<h2>Exportar partida</h2><p class=warn>No hay ninguna partida guardada para exportar.</p><button onclick="menu()">Volver</button>`);return}
+  const f=new Date(),nom=String(s.nom||'saga').normalize('NFD').replace(/[^a-zA-Z0-9]+/g,'').toLowerCase()||'saga',
+    n=`senda-valhalla-${nom}-dia${s.dia}-${f.toISOString().slice(0,10)}.json`,
+    d=JSON.stringify({libro:'senda-valhalla',version:1,fecha:f.toISOString(),estado:s},null,1),a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([d],{type:'application/json'}));a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  pinta(`<h2>Exportar partida</h2><p class=ok>Se ha descargado el archivo <b>${n}</b>.</p><p class=tag>Guárdalo donde quieras. Para recuperar la partida, usa «Importar partida» y elige ese archivo.</p><button onclick="expo()">Descargar de nuevo</button><button onclick="menu()">Volver</button>`)}
+function impo(msg){pinta(`<h2>Importar partida</h2><p class=tag>Elige un archivo .json exportado desde este juego. Reemplazará tu partida guardada actual.</p><input type=file id=fil accept=".json,application/json" style="display:none" onchange="leerImp(this.files[0])"><button onclick="$('#fil').click()">Elegir archivo…</button>${msg?`<p class=warn>${msg}</p>`:''}<button onclick="menu()">Volver</button>`)}
+function leerImp(f){if(!f)return;const r=new FileReader();
+  r.onerror=()=>impo('No se ha podido leer el archivo.');
+  r.onload=()=>{let e;try{const d=JSON.parse(r.result);if(d.libro&&d.libro!='senda-valhalla')return impo('Ese archivo es de otro libro, no de «La Senda al Valhalla».');e=d.estado||d;
+    if(!e||typeof e.sc!='string'||!SC[e.sc]||!e.st||!e.inv||typeof e.hp!='number'||typeof e.nom!='string'||!PROTAS[e.g])throw 0}catch(x){return impo('El archivo no es una partida válida de este libro.')}
+    if(!confirm('Esto reemplazará tu partida guardada actual. ¿Continuar?'))return impo();
+    S=e;save();UI={};show()};
+  r.readAsText(f)}
 
 /* ---------- Validador de la historia ---------- */
 function destinos(s){const o=[];(s.c||[]).forEach(c=>{if(c.to)o.push(c.to);if(c.chk)o.push(c.chk.ok,c.chk.ko)});
