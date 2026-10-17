@@ -143,9 +143,20 @@ function statR(){UI.stat=true;const T=ST(),inv=Object.keys(S.inv),sv=UI.sv||'b';
  app.innerHTML=`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row><button class="${sv=='b'?'on':''}" onclick="UI.sv='b';statR()">Equipo y bolsa</button><button class="${sv=='t'?'on':''}" onclick="UI.sv='t';statR()">Técnicas de lucha</button></div>${body}<p class=tag>Finales: ${S.fin.join(', ')||'ninguno aún'}</p><button onclick="trampa()">Trampa: +5000 monedas</button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`}
 function mision(){if(S.fin.includes('Capítulo 1 completado'))return 'Capítulo 1 completado.';if(S.fl.investigas&&!S.fl.invFin)return 'Investiga las hierbas desaparecidas: visita el almacén.';if(S.dia<6)return `Prepárate para el Examen del Trimestre (desde el día 6; hoy es el día ${S.dia}).`;return 'Preséntate al Examen del Trimestre.'}
 function misionBox(){return S.sc=='patio'?`<div class=mision><b>★ Misión principal</b><br>${mision()}</div><p class=leyenda><span class=k-main>★ Historia</span><span class=k-side>Secundaria</span><span class=k-hunt>Caza</span><span class=k-shop>Tienda</span><span class=k-social>Social</span></p>`:''}
-function expo(){const s=load();app.innerHTML=`<h2>Exportar partida</h2><p class=tag>Copia este código y guárdalo.</p><textarea id=cod rows=8 style="width:100%">${s?btoa(unescape(encodeURIComponent(JSON.stringify(s)))):''}</textarea><button onclick="menu()">Volver</button>`}
-function impo(){app.innerHTML=`<h2>Importar partida</h2><textarea id=cod rows=8 style="width:100%"></textarea><button onclick="aplicaImp()">Cargar</button><button onclick="menu()">Volver</button>`}
-function aplicaImp(){try{S=JSON.parse(decodeURIComponent(escape(atob($('#cod').value.trim()))));save();show()}catch(e){alert('Código no válido')}}
+function expo(){const s=load();
+ if(!s){app.innerHTML=`<h2>Exportar partida</h2><p class=warn>No hay ninguna partida guardada para exportar.</p><button onclick="menu()">Volver</button>`;return}
+ const f=new Date(),n=`camino-dao-dia${s.dia}-${f.toISOString().slice(0,10)}.json`,
+  d=JSON.stringify({libro:'camino-dao',version:1,fecha:f.toISOString(),estado:s},null,1),a=document.createElement('a');
+ a.href=URL.createObjectURL(new Blob([d],{type:'application/json'}));a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+ app.innerHTML=`<h2>Exportar partida</h2><p class=ok>Se ha descargado el archivo <b>${n}</b>.</p><p class=tag>Guárdalo donde quieras. Para recuperar la partida, usa «Importar partida» y elige ese archivo.</p><button onclick="expo()">Descargar de nuevo</button><button onclick="menu()">Volver</button>`}
+function impo(msg){app.innerHTML=`<h2>Importar partida</h2><p class=tag>Elige un archivo .json exportado desde este juego. Reemplazará tu partida guardada actual.</p><input type=file id=fil accept=".json,application/json" style="display:none" onchange="leerImp(this.files[0])"><button onclick="$('#fil').click()">Elegir archivo…</button>${msg?`<p class=warn>${msg}</p>`:''}<button onclick="menu()">Volver</button>`}
+function leerImp(f){if(!f)return;const r=new FileReader();
+ r.onerror=()=>impo('No se ha podido leer el archivo.');
+ r.onload=()=>{let e;try{const d=JSON.parse(r.result);if(d.libro&&d.libro!='camino-dao')return impo('Ese archivo es de otro libro, no de «El Camino del Dao».');e=d.estado||d;
+  if(!e||typeof e.sc!='string'||!SC[e.sc]||!e.st||!e.inv||typeof e.hp!='number')throw 0}catch(x){return impo('El archivo no es una partida válida de este libro.')}
+  if(!confirm('Esto reemplazará tu partida guardada actual. ¿Continuar?'))return impo();
+  S=e;save();UI.top=true;show()};
+ r.readAsText(f)}
 function menu(){window.scrollTo(0,0);const sv=load();app.innerHTML=`<a class=volver href="../index.html">Biblioteca de LibroJuegos</a><h1>El Camino del Dao</h1><p class=sub>Temporada 1 · El Aspirante del Dragón Azur</p>
  <button onclick="S=nuevo();go('inicio')">Nueva partida</button><button ${sv?'':'disabled'} onclick="S=load();show()">Continuar</button>
  <button onclick="valid()">Comprobar la historia</button><button onclick="expo()">Exportar partida</button><button onclick="impo()">Importar partida</button>
