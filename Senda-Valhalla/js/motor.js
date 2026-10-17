@@ -373,13 +373,14 @@ function elegir(){window.scrollTo(0,0);const sv=load();
   pinta(`<div class=sc><h2>¿De quién es esta saga?</h2><p>Elige a quién acompañarás en su último invierno. La historia es la misma; cambian la voz, algunos diálogos y sus fuerzas.</p>
 ${Object.entries(PROTAS).map(([g,p])=>`<button class="k-n prota" onclick="S=nuevo('${g}');UI={};go(INICIO)"><b>${p.nom}</b><br><span class=tag>${p.d}<br>${Object.keys(NM).map(k=>NM[k]+' '+p.st[k]).join(' · ')}</span></button>`).join('')}
 ${sv?'<p class=tag>Empezar una partida nueva sustituirá a la guardada.</p>':''}<button onclick="menu()">Volver</button></div>`)}
-function expo(){const s=load();
+function expo(hecho){const s=load();
   if(!s){pinta(`<h2>Exportar partida</h2><p class=warn>No hay ninguna partida guardada para exportar.</p><button onclick="menu()">Volver</button>`);return}
+  pinta(`<h2>Exportar partida</h2><p class=tag>Se guardará tu partida actual (día ${s.dia}) en un archivo .json que podrás volver a cargar con «Importar partida».</p>${hecho?`<p class=ok>Se ha descargado el archivo <b>${hecho}</b>.</p>`:''}<button onclick="descargarGuardado()">${hecho?'Descargar de nuevo':'Descargar archivo de guardado'}</button><button onclick="menu()">Volver</button>`)}
+function descargarGuardado(){const s=load();if(!s)return expo();
   const f=new Date(),nom=String(s.nom||'saga').normalize('NFD').replace(/[^a-zA-Z0-9]+/g,'').toLowerCase()||'saga',
     n=`senda-valhalla-${nom}-dia${s.dia}-${f.toISOString().slice(0,10)}.json`,
     d=JSON.stringify({libro:'senda-valhalla',version:1,fecha:f.toISOString(),estado:s},null,1),a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([d],{type:'application/json'}));a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
-  pinta(`<h2>Exportar partida</h2><p class=ok>Se ha descargado el archivo <b>${n}</b>.</p><p class=tag>Guárdalo donde quieras. Para recuperar la partida, usa «Importar partida» y elige ese archivo.</p><button onclick="expo()">Descargar de nuevo</button><button onclick="menu()">Volver</button>`)}
+  a.href=URL.createObjectURL(new Blob([d],{type:'application/json'}));a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);expo(n)}
 function impo(msg){pinta(`<h2>Importar partida</h2><p class=tag>Elige un archivo .json exportado desde este juego. Reemplazará tu partida guardada actual.</p><input type=file id=fil accept=".json,application/json" style="display:none" onchange="leerImp(this.files[0])"><button onclick="$('#fil').click()">Elegir archivo…</button>${msg?`<p class=warn>${msg}</p>`:''}<button onclick="menu()">Volver</button>`)}
 function leerImp(f){if(!f)return;const r=new FileReader();
   r.onerror=()=>impo('No se ha podido leer el archivo.');

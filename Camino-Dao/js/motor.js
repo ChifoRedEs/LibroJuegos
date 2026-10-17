@@ -143,12 +143,13 @@ function statR(){UI.stat=true;const T=ST(),inv=Object.keys(S.inv),sv=UI.sv||'b';
  app.innerHTML=`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row><button class="${sv=='b'?'on':''}" onclick="UI.sv='b';statR()">Equipo y bolsa</button><button class="${sv=='t'?'on':''}" onclick="UI.sv='t';statR()">Técnicas de lucha</button></div>${body}<p class=tag>Finales: ${S.fin.join(', ')||'ninguno aún'}</p><button onclick="trampa()">Trampa: +5000 monedas</button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`}
 function mision(){if(S.fin.includes('Capítulo 1 completado'))return 'Capítulo 1 completado.';if(S.fl.investigas&&!S.fl.invFin)return 'Investiga las hierbas desaparecidas: visita el almacén.';if(S.dia<6)return `Prepárate para el Examen del Trimestre (desde el día 6; hoy es el día ${S.dia}).`;return 'Preséntate al Examen del Trimestre.'}
 function misionBox(){return S.sc=='patio'?`<div class=mision><b>★ Misión principal</b><br>${mision()}</div><p class=leyenda><span class=k-main>★ Historia</span><span class=k-side>Secundaria</span><span class=k-hunt>Caza</span><span class=k-shop>Tienda</span><span class=k-social>Social</span></p>`:''}
-function expo(){const s=load();
+function expo(hecho){const s=load();
  if(!s){app.innerHTML=`<h2>Exportar partida</h2><p class=warn>No hay ninguna partida guardada para exportar.</p><button onclick="menu()">Volver</button>`;return}
+ app.innerHTML=`<h2>Exportar partida</h2><p class=tag>Se guardará tu partida actual (día ${s.dia}) en un archivo .json que podrás volver a cargar con «Importar partida».</p>${hecho?`<p class=ok>Se ha descargado el archivo <b>${hecho}</b>.</p>`:''}<button onclick="descargarGuardado()">${hecho?'Descargar de nuevo':'Descargar archivo de guardado'}</button><button onclick="menu()">Volver</button>`}
+function descargarGuardado(){const s=load();if(!s)return expo();
  const f=new Date(),n=`camino-dao-dia${s.dia}-${f.toISOString().slice(0,10)}.json`,
   d=JSON.stringify({libro:'camino-dao',version:1,fecha:f.toISOString(),estado:s},null,1),a=document.createElement('a');
- a.href=URL.createObjectURL(new Blob([d],{type:'application/json'}));a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
- app.innerHTML=`<h2>Exportar partida</h2><p class=ok>Se ha descargado el archivo <b>${n}</b>.</p><p class=tag>Guárdalo donde quieras. Para recuperar la partida, usa «Importar partida» y elige ese archivo.</p><button onclick="expo()">Descargar de nuevo</button><button onclick="menu()">Volver</button>`}
+ a.href=URL.createObjectURL(new Blob([d],{type:'application/json'}));a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);expo(n)}
 function impo(msg){app.innerHTML=`<h2>Importar partida</h2><p class=tag>Elige un archivo .json exportado desde este juego. Reemplazará tu partida guardada actual.</p><input type=file id=fil accept=".json,application/json" style="display:none" onchange="leerImp(this.files[0])"><button onclick="$('#fil').click()">Elegir archivo…</button>${msg?`<p class=warn>${msg}</p>`:''}<button onclick="menu()">Volver</button>`}
 function leerImp(f){if(!f)return;const r=new FileReader();
  r.onerror=()=>impo('No se ha podido leer el archivo.');
