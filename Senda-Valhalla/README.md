@@ -453,5 +453,3 @@ Cada parte es un archivo que llama a `registrarCapitulo({capitulo, parte, titulo
 **Objetos:** además de `atq`, `def`, `arm`, `crit` y `vel`, un arma puede tener `am` (daño extra contra no muertos y draugs).
 
 Si una escena deja la Vida a 0 con sus efectos (`fx`), el motor lleva automáticamente a la escena `muerte`, salvo en los finales.
-
-Antes de dar una parte por terminada, usa **«Comprobar la historia»** en el menú. Revisa enlaces rotos, escenas inalcanzables y datos que falten.

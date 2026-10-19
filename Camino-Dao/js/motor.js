@@ -1,6 +1,7 @@
 /* Motor: estado, tiempo, dados, combate por turnos, tiendas, forja, alquimia, guardado, validador */
 const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),app=$('#app');
 const SC={},CAPS=[];let S=null,UI={},mem=null;const KEY='camino-dao-v1';
+LJInfo.libro='dao';const I=id=>LJInfo.i(id),IF=id=>LJInfo.fila(id);   /* ayudas «i» (comun/info.js) */
 function registrarCapitulo(c){CAPS.push(c);Object.assign(SC,c.escenas)}
 const hs=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7),
  shuf=(a,seed)=>{a=[...a];let x=seed>>>0||1;for(let i=a.length-1;i>0;i--){x=(x*1664525+1013904223)>>>0;const j=x%(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -36,7 +37,7 @@ function apply(f){if(!f)return;
  if(f.mqi){S.mqi+=f.mqi;S.qi+=f.mqi}
  if(f.xp){S.xp+=f.xp;while(S.rn<REINOS.length-1&&S.xp>=REINOS[S.rn+1].xp){S.rn++;S.mhp+=40;S.mqi+=20;S.hp=S.mhp;S.qi=S.mqi;UI.nota='Avanzas al reino «'+REINOS[S.rn].n+'».'}}}
 const bar=(v,m,c,l)=>`<div class=bw><span>${l} ${v}/${m}</span><div class=bar><i class=${c} style="width:${Math.max(0,v/m*100)}%"></i></div></div>`;
-function hud(){const h=S.hora;return `<header class=hud><div class=rw><b class=rn>${REINOS[S.rn].n}</b><span>Día ${S.dia} · ${h<13?'Mañana':h<19?'Tarde':'Noche'} ${h}:00</span><span class=oro>🪙 ${S.oro}</span></div><div class=rw>${bar(S.hp,S.mhp,'hp','Vida')}${bar(S.qi,S.mqi,'qi','Qi')}</div><div class=rw><span>${RANGOS[S.rg]}</span><span><button class=sm onclick="stat()">Estado</button> <button class=sm onclick="menu()">Menú</button></span></div></header>`}
+function hud(){const h=S.hora;return `<header class=hud><div class=rw><b class=rn>${REINOS[S.rn].n}</b><span>Día ${S.dia} · ${h<13?'Mañana':h<19?'Tarde':'Noche'} ${h}:00</span><span class=oro>🪙 ${S.oro}</span></div><div class=rw>${bar(S.hp,S.mhp,'hp','Vida')}${bar(S.qi,S.mqi,'qi','Qi')}${I('cabecera')}</div><div class=rw><span>${RANGOS[S.rg]}</span><span><button class=sm onclick="stat()">Estado</button>${I('estado')} <button class=sm onclick="menu()">Menú</button></span></div></header>`}
 
 /* ---------- flujo ---------- */
 function go(id){let sc=SC[id];if(!sc){app.innerHTML=`<p class=warn>Escena no encontrada: ${id}</p><button onclick="menu()">Menú</button>`;return}
@@ -53,18 +54,18 @@ function show(){UI.stat=false;const sc=cur();let h=hud()+misionBox()+'<div class
  const back=sc.back?`<button onclick="go('${sc.back}')">Volver</button>`:'';
  if(UI.res)h+=UI.res;else if(S.f)h+=pFight();
  else if(sc.acertijo)h+=pRid(sc)+back;else if(sc.shop)h+=pShop(sc)+(sc.c?opts(sc):'')+back;else if(sc.forja)h+=pForja()+(sc.c?opts(sc):'')+back;else if(sc.alq)h+=pAlq()+(sc.c?opts(sc):'')+back;
- else if(sc.end)h+=`<p><span class=sello>Final: ${sc.end}</span></p>`+(sc.end.includes('Muerte')?`<button onclick="retry()">Volver al último punto de guardado</button>`:'')+`<button onclick="menu()">Menú principal</button>`;
+ else if(sc.end)h+=`<p><span class=sello>Final: ${sc.end}</span></p>`+(sc.end.includes('Muerte')?`<button onclick="retry()">Volver al último punto de guardado</button>${IF('guardado')}`:'')+`<button onclick="menu()">Menú principal</button>`;
  else h+=opts(sc);
  const y=window.scrollY;app.innerHTML=h+'</div>';window.scrollTo(0,UI.top?0:y);UI.top=false}
 const ORD=['main','shop','hunt','social','side','n'],GRP={main:'★ Historia',shop:'Tiendas y herrería',hunt:'Caza',social:'Social',side:'Misiones y vida diaria',n:'Otros'};
-function opts(sc){const kd=c=>c.k||KIND[c.to]||'n';let L=sc.c.map((c,i)=>({c,i,k:kd(c)}));
+function opts(sc){const kd=c=>c.k||KIND[c.to]||'n';let L=sc.c.map((c,i)=>({c,i,k:kd(c)})),dz=0,bl=0;
  if(sc.sort)L=L.sort((a,b)=>ORD.indexOf(a.k)-ORD.indexOf(b.k)||a.i-b.i);let last='',h='';
  for(const{c,i,k}of L){const v=ok(c.req);if(!v&&c.oc)continue;if(sc.sort&&k!=last){last=k;h+=`<b class="t g-${k}">${GRP[k]}</b>`}
-  h+=`<button class="k-${k}" ${v?'':'disabled'} onclick="pick(${i})">${c.x}${v?'':' <span class=tag>(requisito no cumplido)</span>'}</button>`}return h}
+  h+=`<button class="k-${k}" ${v?'':'disabled'} onclick="pick(${i})">${c.x}${v?'':' <span class=tag>(requisito no cumplido)</span>'}</button>${v?(c.fx&&c.fx.dormir&&!dz++?IF('dormir'):''):(!bl++?IF('bloqueadas'):'')}`}return h}
 function pick(i){const c=cur().c[i];if(!ok(c.req))return;apply(c.fx);if(c.fn)window[c.fn[0]](...c.fn.slice(1));
  if(c.chk){const k=c.chk,a=R(1,6),b=R(1,6),t=a+b+S.st[k.s],g=t>=k.dc;apply(g?k.fxok:k.fxko);
   if(S.hp<=0){save();return go('muerte')}
-  UI.res=`<div class=dice>🎲 ${a} + ${b} + ${NM[k.s]} ${S.st[k.s]} = <b>${t}</b> contra ${k.dc}: <b class=${g?'ok':'warn'}>${g?'Éxito':'Fallo'}</b></div><button onclick="go('${g?k.ok:k.ko}')">Continuar</button>`;
+  UI.res=`<div class=dice>🎲 ${a} + ${b} + ${NM[k.s]} ${S.st[k.s]} = <b>${t}</b> contra ${k.dc}: <b class=${g?'ok':'warn'}>${g?'Éxito':'Fallo'}</b>${I('dados')}</div><button onclick="go('${g?k.ok:k.ko}')">Continuar</button>`;
   save();return show()}
  go(c.to)}
 function retry(){S=S.cp?JSON.parse(S.cp):nuevo();save();go(S.sc)}
@@ -137,12 +138,12 @@ function trampa(){const s=S||load();if(!s)return;S=s;S.oro+=5000;save();document
 function stat(){if(UI.stat){UI.stat=false;UI.top=true;return show()}window.scrollTo(0,0);statR()}
 function statR(){UI.stat=true;const T=ST(),inv=Object.keys(S.inv),sv=UI.sv||'b';
  const mini=`<div class="stats mini">${[['Atq',T.atq],['Def',T.def+'%'],['Arm',T.arm],['Crít',T.crit+'%'],['Qi',T.qi],['Vel',T.vel]].map(([a,b])=>`<span><b>${b}</b>${a}</span>`).join('')}</div>`;
- let body=`<p>${Object.keys(NM).map(k=>NM[k]+' '+S.st[k]).join(' · ')}<br>Experiencia ${S.xp}${S.rn<REINOS.length-1?' / '+REINOS[S.rn+1].xp:''}</p><p class=tag>Equipo: ${['arma','esc','arm'].map(s=>S.eq[s]?nm(S.eq[s])+(S.mej[S.eq[s]]?' +'+S.mej[S.eq[s]]:''):'—').join(' · ')}</p>`;
+ let body=`<p>${Object.keys(NM).map(k=>NM[k]+' '+S.st[k]).join(' · ')}${I('atributos')}<br>Experiencia ${S.xp}${S.rn<REINOS.length-1?' / '+REINOS[S.rn+1].xp:''}</p><p class=tag>Equipo: ${['arma','esc','arm'].map(s=>S.eq[s]?nm(S.eq[s])+(S.mej[S.eq[s]]?' +'+S.mej[S.eq[s]]:''):'—').join(' · ')}</p>`;
  if(sv=='t')body+=pTec();
  else body+='<b class=t>Bolsa</b><div class=lst>'+(inv.map(k=>{const o=OBJ[k],e=['arma','esc','arm'].some(s=>S.eq[s]==k);return `<div class=rw><span>${has(k)}× ${nm(k)}${S.mej[k]?' +'+S.mej[k]:''}${e?' <span class=ok>(equipado)</span>':''}<br><span class=tag>${o.d}${sl(o)}</span></span>${EQT.includes(o.tipo)&&!e?`<button class=sm onclick="equipar('${k}')">Equipar</button>`:''}${o.tipo=='consumible'?`<button class=sm onclick="usar('${k}')">Usar</button>`:''}${o.tec?`<button class=sm onclick="usar('${k}')">Aprender</button>`:''}</div>`}).join('')||'<p class=tag>Bolsa vacía.</p>')+'</div>';
- app.innerHTML=`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row><button class="${sv=='b'?'on':''}" onclick="UI.sv='b';statR()">Equipo y bolsa</button><button class="${sv=='t'?'on':''}" onclick="UI.sv='t';statR()">Técnicas de lucha</button></div>${body}<p class=tag>Finales: ${S.fin.join(', ')||'ninguno aún'}</p><button onclick="trampa()">Trampa: +5000 monedas</button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`}
+ app.innerHTML=`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row><button class="${sv=='b'?'on':''}" onclick="UI.sv='b';statR()">Equipo y bolsa</button><button class="${sv=='t'?'on':''}" onclick="UI.sv='t';statR()">Técnicas de lucha</button></div>${body}<p class=tag>Finales: ${S.fin.join(', ')||'ninguno aún'}</p><button onclick="trampa()"><span class=oro>🪙</span> monedas + 5000</button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`}
 function mision(){if(S.fin.includes('Capítulo 1 completado'))return 'Capítulo 1 completado.';if(S.fl.investigas&&!S.fl.invFin)return 'Investiga las hierbas desaparecidas: visita el almacén.';if(S.dia<6)return `Prepárate para el Examen del Trimestre (desde el día 6; hoy es el día ${S.dia}).`;return 'Preséntate al Examen del Trimestre.'}
-function misionBox(){return S.sc=='patio'?`<div class=mision><b>★ Misión principal</b><br>${mision()}</div><p class=leyenda><span class=k-main>★ Historia</span><span class=k-side>Secundaria</span><span class=k-hunt>Caza</span><span class=k-shop>Tienda</span><span class=k-social>Social</span></p>`:''}
+function misionBox(){return S.sc=='patio'?`<div class=mision><b>★ Misión principal</b>${I('decisiones')}<br>${mision()}</div><p class=leyenda><span class=k-main>★ Historia</span><span class=k-side>Secundaria</span><span class=k-hunt>Caza</span><span class=k-shop>Tienda</span><span class=k-social>Social</span></p>`:''}
 function expo(hecho){const s=load();
  if(!s){app.innerHTML=`<h2>Exportar partida</h2><p class=warn>No hay ninguna partida guardada para exportar.</p><button onclick="menu()">Volver</button>`;return}
  app.innerHTML=`<h2>Exportar partida</h2><p class=tag>Se guardará tu partida actual (día ${s.dia}) en un archivo .json que podrás volver a cargar con «Importar partida».</p>${hecho?`<p class=ok>Se ha descargado el archivo <b>${hecho}</b>.</p>`:''}<button onclick="descargarGuardado()">${hecho?'Descargar de nuevo':'Descargar archivo de guardado'}</button><button onclick="menu()">Volver</button>`}
@@ -159,13 +160,7 @@ function leerImp(f){if(!f)return;const r=new FileReader();
   S=e;save();UI.top=true;show()};
  r.readAsText(f)}
 function menu(){window.scrollTo(0,0);const sv=load();app.innerHTML=`<a class=volver href="../index.html">Biblioteca de LibroJuegos</a><h1>El Camino del Dao</h1><p class=sub>Temporada 1 · El Aspirante del Dragón Azur</p>
- <button onclick="S=nuevo();go('inicio')">Nueva partida</button><button ${sv?'':'disabled'} onclick="S=load();show()">Continuar</button>
- <button onclick="valid()">Comprobar la historia</button><button onclick="expo()">Exportar partida</button><button onclick="impo()">Importar partida</button>
+ <button onclick="S=nuevo();go('inicio')">Nueva partida</button><button ${sv?'':'disabled'} onclick="S=load();show()">Continuar</button>${IF('guardado')}
+ <button onclick="expo()">Exportar partida</button>${IF('exportar')}<button onclick="impo()">Importar partida</button>
  <p class=tag>Capítulos cargados: ${CAPS.length} · Escenas: ${Object.keys(SC).length}</p>`}
-function tg(s){const o=[];(s.c||[]).forEach(c=>{if(c.to)o.push(c.to);if(c.chk)o.push(c.chk.ok,c.chk.ko)});if(s.f)o.push(s.f.win,s.f.lose,s.f.flee);if(s.back)o.push(s.back);if(s.gt)o.push(...s.gt);return o}
-function valid(){const bad=[],seen=new Set(['inicio']),q=['inicio'];
- for(const id in SC)tg(SC[id]).forEach(t=>{if(!SC[t])bad.push(`${id} → «${t}»`)});
- while(q.length)tg(SC[q.pop()]||{}).forEach(t=>{if(SC[t]&&!seen.has(t)){seen.add(t);q.push(t)}});
- const lost=Object.keys(SC).filter(i=>!seen.has(i)),dead=Object.keys(SC).filter(i=>{const s=SC[i];return !s.end&&!s.c&&!s.f&&!s.shop&&!s.forja&&!s.alq&&!s.acertijo&&!s.gen});
- app.innerHTML=`<h2>Comprobación</h2><p>${Object.keys(SC).length} escenas en ${CAPS.length} capítulo(s).</p><p class=${bad.length?'warn':'ok'}>Enlaces rotos: ${bad.join(', ')||'ninguno'}</p><p class=${lost.length?'warn':'ok'}>Inalcanzables: ${lost.join(', ')||'ninguna'}</p><p class=${dead.length?'warn':'ok'}>Sin salida: ${dead.join(', ')||'ninguna'}</p><button onclick="menu()">Volver</button>`}
 window.addEventListener('load',menu);

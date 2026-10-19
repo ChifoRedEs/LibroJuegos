@@ -8,6 +8,7 @@
    ===================================================================== */
 const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),app=$('#app');
 const KEY='senda-valhalla-v1',INICIO='c1_inicio';
+LJInfo.libro='senda';const I=id=>LJInfo.i(id),IF=id=>LJInfo.fila(id);   /* ayudas «i» (comun/info.js) */
 const SC={},CAPS=[],GEN={},ACERT={},SENNA={},MISIONES=[],SENALES=[];
 let S=null,UI={},mem=null;
 
@@ -116,10 +117,10 @@ function grabado(){const k=S.eq&&S.eq.arma,r=k&&S.grab&&S.grab[k];return r&&GRAB
 const bar=(v,m,c,l)=>`<div class=bw><span>${l} ${v}/${m}</span><div class=bar><i class=${c} style="width:${Math.max(0,Math.min(100,v/m*100))}%"></i></div></div>`;
 const franja=h=>h<6?'Madrugada':h<13?'Mañana':h<20?'Tarde':'Noche';
 function hud(){return `<header class=hud><div class=rw><b class=rn>${RANGOS[S.rg].n}</b><span>Día ${S.dia} · ${franja(S.hora)} ${S.hora}:00</span><span class=oro>🪙 ${S.plata}</span></div>
-<div class=rw>${bar(S.hp,S.mhp,'hp','Vida')}${bar(S.fu,100,'fu','Furor')}</div>
-<div class=rw><span>Gloria ${S.gl} · Hilos ${S.hilos}</span><span><button class=sm onclick="stat()">Estado</button> <button class=sm onclick="menu()">Menú</button></span></div></header>`}
+<div class=rw>${bar(S.hp,S.mhp,'hp','Vida')}${bar(S.fu,100,'fu','Furor')}${I('cabecera')}</div>
+<div class=rw><span>Gloria ${S.gl} · Hilos ${S.hilos}</span><span><button class=sm onclick="stat()">Estado</button>${I('estado')} <button class=sm onclick="menu()">Menú</button></span></div></header>`}
 function mision(){for(const f of MISIONES){const r=f(S);if(r)return r}return 'Sigue tu senda.'}
-function misionBox(sc){return sc.mision?`<div class=mision><b>★ Misión principal</b><br>${mision()}</div><p class=leyenda><span class=k-main>★ Historia</span><span class=k-side>Vida diaria</span><span class=k-hunt>Caza</span><span class=k-shop>Comercio</span><span class=k-social>Gente</span></p>`:''}
+function misionBox(sc){return sc.mision?`<div class=mision><b>★ Misión principal</b>${I('decisiones')}<br>${mision()}</div><p class=leyenda><span class=k-main>★ Historia</span><span class=k-side>Vida diaria</span><span class=k-hunt>Caza</span><span class=k-shop>Comercio</span><span class=k-social>Gente</span></p>`:''}
 
 /* ---------- Flujo de escenas ---------- */
 function go(id){if(!SC[id]){pinta(`<div class=sc><p class=warn>Escena no encontrada: ${id}</p><button onclick="menu()">Menú</button></div>`);return}
@@ -150,18 +151,18 @@ function show(){UI.stat=false;if(!S.grab)S.grab={};const sc=cur();let h=hud()+mi
   const y=window.scrollY;pinta(h+'</div>');window.scrollTo(0,UI.top?0:y);UI.top=false}
 const ORD=['main','shop','hunt','social','side','n'];
 const GRP={main:'★ Historia',shop:'Comercio y forja',hunt:'Caza y combate',social:'Gente',side:'Vida diaria',n:'Otros'};
-function opts(sc){let L=(sc.c||[]).map((c,i)=>({c,i,k:c.k||'n'})),last='',h='';
+function opts(sc){let L=(sc.c||[]).map((c,i)=>({c,i,k:c.k||'n'})),last='',h='',dz=0,bl=0;
   if(sc.sort)L=L.sort((a,b)=>ORD.indexOf(a.k)-ORD.indexOf(b.k)||a.i-b.i);
   for(const{c,i,k}of L){const v=ok(c.req);if(!v&&c.oc)continue;
     if(sc.sort&&k!=last){last=k;h+=`<b class="t g-${k}">${GRP[k]}</b>`}
-    h+=`<button class="k-${k}" ${v?'':'disabled'} onclick="pick(${i})">${c.x}${v?'':' <span class=tag>(requisito no cumplido)</span>'}</button>`}
+    h+=`<button class="k-${k}" ${v?'':'disabled'} onclick="pick(${i})">${c.x}${v?'':' <span class=tag>(requisito no cumplido)</span>'}</button>${v?(c.fx&&c.fx.dormir&&!dz++?IF('dormir'):''):(!bl++?IF('bloqueadas'):'')}`}
   return h}
 function pick(i){const c=cur().c[i];if(!ok(c.req))return;apply(c.fx);if(c.chk)return tirada(c.chk,false);go(c.to)}
 function retry(){if(!S.cp){S=nuevo(S.g);return go(INICIO)}S=JSON.parse(S.cp);S.f=null;S.cb=null;save();UI.top=true;show()}
 
 /* ---------- Tiradas de dados e hilos de las Nornas ---------- */
 function tirada(k,re){const a=R(1,6),b=R(1,6),o=S.fav.odin?1:0,t=a+b+S.st[k.s]+o,g=t>=k.dc;UI.tk=k;
-  let h=`<div class=dice>🎲 ${a} + ${b} + ${NM[k.s]} ${S.st[k.s]}${o?' + Odín 1':''} = <b>${t}</b> contra ${k.dc}: <b class=${g?'ok':'warn'}>${g?'Éxito':'Fallo'}</b>${re?'<br><span class=tag>Las Nornas han vuelto a tejer tu destino.</span>':''}</div>`;
+  let h=`<div class=dice>🎲 ${a} + ${b} + ${NM[k.s]} ${S.st[k.s]}${o?' + Odín 1':''} = <b>${t}</b> contra ${k.dc}: <b class=${g?'ok':'warn'}>${g?'Éxito':'Fallo'}</b>${I('dados')}${re?'<br><span class=tag>Las Nornas han vuelto a tejer tu destino.</span>':''}</div>`;
   if(g)h+=`<button onclick="finTirada(1)">Continuar</button>`;
   else{if(S.hilos>0)h+=`<button onclick="hilo()">Tirar de un hilo de las Nornas y repetir (te quedan ${S.hilos})</button>`;
     h+=`<button onclick="finTirada(0)">Aceptar el destino</button>`}
@@ -327,7 +328,7 @@ function replica(i){const sc=cur(),id=sc.senna,D=SENNA[id],U=UI.sn;if(!U)return;
 /* ---------- Finales y saga ---------- */
 function pFinal(sc){const muerte=sc.end.includes('Muerte');
   return `<p><span class=sello>${/^Cap/.test(sc.end)?'':'Final: '}${sc.end}</span></p>${sc.saga?sagaHTML():''}`+
-    (muerte?`<button onclick="retry()">Volver al último punto seguro</button>`:'')+`<button onclick="menu()">Menú principal</button>`}
+    (muerte?`<button onclick="retry()">Volver al último punto seguro</button>${IF('guardado')}`:'')+`<button onclick="menu()">Menú principal</button>`}
 const sagaHTML=()=>S.saga.length?`<b class=t>La saga de {N}</b>`+S.saga.map(x=>`<p class=tag>${x}</p>`).join(''):'<p class=tag>Ningún escaldo ha cantado aún tus hazañas.</p>';
 
 /* ---------- Estado ---------- */
@@ -344,7 +345,7 @@ function statR(){UI.stat=true;const T=ST(),sv=UI.sv||'b',inv=Object.keys(S.inv);
   const msg=UI.tm||UI.nota?`<p class=ok>${[UI.nota,UI.tm].filter(Boolean).join('<br>')}</p>`:'';UI.tm=null;UI.nota=null;
   let body=msg;
   if(sv=='b'){
-    body+=`<p>${Object.keys(NM).map(k=>NM[k]+' '+S.st[k]).join(' · ')}<br>Gloria ${S.gl}${S.rg<RANGOS.length-1?' / '+RANGOS[S.rg+1].gl+' para '+RANGOS[S.rg+1].n:''}</p>`;
+    body+=`<p>${Object.keys(NM).map(k=>NM[k]+' '+S.st[k]).join(' · ')}${I('atributos')}<br>Gloria ${S.gl}${S.rg<RANGOS.length-1?' / '+RANGOS[S.rg+1].gl+' para '+RANGOS[S.rg+1].n:''}</p>`;
     body+='<b class=t>Equipo</b><div class=lst>'+[['arma','Arma'],['esc','Escudo'],['arm','Armadura']].map(([s,l])=>{const k=S.eq[s];
       return `<div class=rw><span>${l}: ${k?nm(k)+(S.mej[k]?' +'+S.mej[k]:''):'—'}${k?`<br><span class=tag>${OBJ[k].d}${statsObj(OBJ[k])}${S.grab&&S.grab[k]?`<br>Runa grabada: <span class=runa>${RUNAS[S.grab[k]].sym}</span> ${RUNAS[S.grab[k]].n} · ${GRABADO[S.grab[k]].d}`:''}</span>`:''}</span>${k?`<button class=sm onclick="desequipar('${s}')">Quitar</button>`:''}</div>`}).join('')+'</div>';
     body+='<b class=t>Bolsa</b><div class=lst>'+(inv.map(k=>{const o=OBJ[k],e=Object.values(S.eq).includes(k);
@@ -361,13 +362,13 @@ function statR(){UI.stat=true;const T=ST(),sv=UI.sv||'b',inv=Object.keys(S.inv);
     body+=`<p class=tag>Hilos de las Nornas: ${S.hilos}. Cada hilo permite repetir una tirada fallida.</p>`}
   else body+=sagaHTML()+`<p class=tag>Finales vistos: ${S.fin.join(', ')||'ninguno aún'}</p>`;
   const tab=(k,l)=>`<button class="${sv==k?'on':''}" onclick="UI.sv='${k}';statR()">${l}</button>`;
-  pinta(`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row>${tab('b','Equipo')}${tab('r','Runas')}${tab('j','Juramentos')}${tab('s','Saga')}</div>${body}<button onclick="trampa()">Trampa: +5000 de plata</button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`)}
+  pinta(`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row>${tab('b','Equipo')}${tab('r','Runas')}${tab('j','Juramentos')}${tab('s','Saga')}</div>${body}<button onclick="trampa()"><span class=oro>🪙</span> monedas + 5000</button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`)}
 
 /* ---------- Menú, protagonista, exportar e importar ---------- */
 function menu(){window.scrollTo(0,0);const sv=load();
   pinta(`<a class=volver href="../index.html">Biblioteca de LibroJuegos</a><h1>La Senda al Valhalla</h1><p class=sub>Un invierno para ganarse la eternidad</p>
-<button onclick="elegir()">Nueva partida</button><button ${sv?'':'disabled'} onclick="S=load();UI={};show()">Continuar${sv?` con ${sv.nom}, día ${sv.dia}`:''}</button>
-<button onclick="valid()">Comprobar la historia</button><button onclick="expo()">Exportar partida</button><button onclick="impo()">Importar partida</button>
+<button onclick="elegir()">Nueva partida</button><button ${sv?'':'disabled'} onclick="S=load();UI={};show()">Continuar${sv?` con ${sv.nom}, día ${sv.dia}`:''}</button>${IF('guardado')}
+<button onclick="expo()">Exportar partida</button>${IF('exportar')}<button onclick="impo()">Importar partida</button>
 <p class=tag>Partes cargadas: ${CAPS.length} · Escenas: ${Object.keys(SC).length}</p>`)}
 function elegir(){window.scrollTo(0,0);const sv=load();
   pinta(`<div class=sc><h2>¿De quién es esta saga?</h2><p>Elige a quién acompañarás en su último invierno. La historia es la misma; cambian la voz, algunos diálogos y sus fuerzas.</p>
@@ -391,19 +392,6 @@ function leerImp(f){if(!f)return;const r=new FileReader();
   r.readAsText(f)}
 
 /* ---------- Validador de la historia ---------- */
-function destinos(s){const o=[];(s.c||[]).forEach(c=>{if(c.to)o.push(c.to);if(c.chk)o.push(c.chk.ok,c.chk.ko)});
-  if(s.f)o.push(s.f.win,s.f.lose,s.f.flee);if(s.back)o.push(s.back);if(s.gt)o.push(...s.gt);return o.filter(Boolean)}
-function valid(){const bad=[],seen=new Set([INICIO]),q=[INICIO];
-  for(const id in SC)destinos(SC[id]).forEach(t=>{if(!SC[t])bad.push(`${id} → «${t}»`)});
-  while(q.length)destinos(SC[q.pop()]||{}).forEach(t=>{if(SC[t]&&!seen.has(t)){seen.add(t);q.push(t)}});
-  const lost=Object.keys(SC).filter(i=>!seen.has(i)&&i!='muerte');
-  const dead=Object.keys(SC).filter(i=>{const s=SC[i];return !s.end&&!s.c&&!s.f&&!s.back&&!s.gen});
-  const mal=[];for(const id in SC){const s=SC[id];if(s.f&&!ENEMIGOS[s.f.e])mal.push(`${id}: enemigo «${s.f.e}»`);
-    if(s.senna&&!SENNA[s.senna])mal.push(`${id}: duelo «${s.senna}»`);if(s.acertijo&&!ACERT[s.acertijo])mal.push(`${id}: acertijo «${s.acertijo}»`);
-    if(s.shop&&!TIENDAS[s.shop])mal.push(`${id}: tienda «${s.shop}»`);
-    const fxs=[s.fx,...(s.c||[]).flatMap(c=>[c.fx,c.chk&&c.chk.fxok,c.chk&&c.chk.fxko])].filter(Boolean);
-    for(const f of fxs){for(const k of Object.keys(items(f.item||{})))if(!OBJ[k])mal.push(`${id}: objeto «${k}»`);if(f.runa&&!RUNAS[f.runa])mal.push(`${id}: runa «${f.runa}»`);if(f.favor&&!FAV[f.favor])mal.push(`${id}: favor «${f.favor}»`)}}
-  pinta(`<h2>Comprobación</h2><p>${Object.keys(SC).length} escenas en ${CAPS.length} parte(s).</p><p class=${bad.length?'warn':'ok'}>Enlaces rotos: ${bad.join(', ')||'ninguno'}</p><p class=${lost.length?'warn':'ok'}>Inalcanzables: ${lost.join(', ')||'ninguna'}</p><p class=${dead.length?'warn':'ok'}>Sin salida: ${dead.join(', ')||'ninguna'}</p><p class=${mal.length?'warn':'ok'}>Datos que faltan: ${mal.join(', ')||'ninguno'}</p><button onclick="menu()">Volver</button>`)}
 
 /* ---------- Escena común: muerte en combate ---------- */
 SC.muerte={h:'Has caído',t:['La nieve se tiñe de rojo y el frío deja de doler. Por un instante oyes cascos de caballo en el cielo, muy arriba, entre las nubes. Pero no se detienen: aún no has hecho lo suficiente.','Muy lejos, alguien tira de un hilo.'],end:'Muerte en batalla'};

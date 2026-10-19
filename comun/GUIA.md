@@ -10,6 +10,8 @@ LibroJuegos/
 ├── comun/
 │   ├── libro.css         ← el estándar: no se toca desde una historia
 │   ├── ajustes.js        ← ajustes de texto del lector (tipografía y tamaño)
+│   ├── info.js           ← ayudas «i»: icono amarillo y ventana de explicación
+│   ├── info-textos.js    ← los textos de esas ayudas (uno por función)
 │   └── GUIA.md
 └── Mi-Historia/
     ├── index.html
@@ -26,6 +28,8 @@ LibroJuegos/
 <link rel="stylesheet" href="../comun/libro.css">
 <link rel="stylesheet" href="css/estilos.css">
 <script src="../comun/ajustes.js"></script>
+<script src="../comun/info.js"></script>
+<script src="../comun/info-textos.js"></script>
 ```
 
    La última línea hace que la historia respete la tipografía y el tamaño de texto que el lector eligió en la biblioteca. Si falta, la historia se verá siempre con los valores por defecto.
@@ -97,3 +101,13 @@ El motor solo tiene que generar este HTML para que todo se vea bien.
 - `<html>` recibe `data-fuente` y `data-tam` (0 a 4), por si un tema necesita ajustar algo con un tamaño concreto.
 
 El panel de ajustes lo dibuja el propio módulo. Para abrirlo desde cualquier página, pon el atributo `data-ajustes` a un botón o llama a `LJAjustes.abrir()`. Para añadir una tipografía, añade un objeto a la lista `FUENTES` de `ajustes.js`.
+
+## Ayudas «i» del juego
+
+Un icono amarillo «i» abre una ventana que explica una función (tiempo, dormir, dados…). El icono y la ventana los dibuja `comun/info.js`; los textos están en `comun/info-textos.js`.
+
+- **Dónde va el icono.** En el motor de cada historia hay dos atajos: `I('id')` devuelve el icono para ponerlo dentro de un texto (cabecera, caja de misión, tirada de dados) e `IF('id')` lo coloca a la derecha del botón anterior (decisiones, menú). El icono **nunca** va dentro de un botón.
+- **Libro.** El motor indica a qué libro pertenece con `LJInfo.libro='dao'` o `'senda'`, y cada texto puede tener una parte común (`'*'`) y partes solo de un libro.
+- **Ver también.** Cada texto puede listar otros (`ver:['tiempo','dormir']`) y se muestran como botones al final de la ventana.
+- **Añadir una ayuda.** Añade una entrada a `info-textos.js` y pon `I('id')` o `IF('id')` donde quieras el icono.
+- Los textos usan `rem`, así que también respetan el tamaño elegido en Ajustes de Texto.
