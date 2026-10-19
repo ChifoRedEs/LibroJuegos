@@ -9,6 +9,7 @@ LibroJuegos/
 ├── index.html            ← biblioteca (catálogo en la lista LIBROS)
 ├── comun/
 │   ├── libro.css         ← el estándar: no se toca desde una historia
+│   ├── ajustes.js        ← ajustes de texto del lector (tipografía y tamaño)
 │   └── GUIA.md
 └── Mi-Historia/
     ├── index.html
@@ -24,7 +25,10 @@ LibroJuegos/
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Alegreya+Sans:wght@400;500;700&family=TU+FUENTE&display=swap">
 <link rel="stylesheet" href="../comun/libro.css">
 <link rel="stylesheet" href="css/estilos.css">
+<script src="../comun/ajustes.js"></script>
 ```
+
+   La última línea hace que la historia respete la tipografía y el tamaño de texto que el lector eligió en la biblioteca. Si falta, la historia se verá siempre con los valores por defecto.
 
 3. En `css/estilos.css`, redefine solo las variables que cambien, tanto para el modo oscuro como para el claro:
 
@@ -83,3 +87,13 @@ El motor solo tiene que generar este HTML para que todo se vea bien.
 - Un tema nunca cambia medidas, márgenes ni componentes del estándar. Si algo debe cambiar para todas las historias, se cambia en `libro.css`.
 - Los colores escritos en el JavaScript usan variables (por ejemplo, `var(--rar-raro)`) para que funcionen en el modo claro y en el oscuro.
 - Comprueba siempre los dos modos (claro y oscuro) y el móvil.
+
+## Ajustes de texto del lector
+
+`comun/ajustes.js` guarda la tipografía y el tamaño elegidos en `localStorage` (clave `librojuegos-ajustes-v1`) y los aplica nada más cargar la página:
+
+- La tipografía sobrescribe `--f-texto` y `--f-ui` en `<html>`. Los títulos (`--f-titulo`) y los ornamentos conservan el estilo de cada historia.
+- El tamaño cambia el `font-size` de `<html>` (90 %, 100 %, 115 %, 130 % o 145 %). Por eso, **en el CSS de las historias las medidas del texto van en `rem`**: con `px` no escalarían.
+- `<html>` recibe `data-fuente` y `data-tam` (0 a 4), por si un tema necesita ajustar algo con un tamaño concreto.
+
+El panel de ajustes lo dibuja el propio módulo. Para abrirlo desde cualquier página, pon el atributo `data-ajustes` a un botón o llama a `LJAjustes.abrir()`. Para añadir una tipografía, añade un objeto a la lista `FUENTES` de `ajustes.js`.

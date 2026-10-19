@@ -8,7 +8,8 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Alegreya+Sans:wght@400;500;700&family=Ma+Shan+Zheng&family=Uncial+Antiqua&family=Noto+Sans+Runic&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Alegreya:ital,wght@0,400;0,500;1,400&family=Alegreya+Sans:wght@400;500;700&family=Ma+Shan+Zheng&family=Uncial+Antiqua&family=Noto+Sans+Runic&display=swap">
+<script src="comun/ajustes.js"></script>
 <style>
 :root{
   --fondo:#141a2e;      /* noche índigo */
@@ -18,6 +19,8 @@
   --oro:#c9a75b;        /* dorado de encuadernación */
   --papel:#e9dfc8;
   --linea:#2c3558;
+  --f-texto:"Alegreya",Georgia,serif;                 /* lectura (los ajustes la sustituyen) */
+  --f-ui:"Alegreya Sans",system-ui,sans-serif;       /* interfaz (los ajustes la sustituyen) */
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
@@ -32,12 +35,12 @@
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:border-box}
 body{
-  margin:0;min-height:100%;
+  margin:0;min-height:100%;position:relative;
   background:
     radial-gradient(900px 420px at 50% -8%,color-mix(in srgb,var(--oro) 14%,transparent),transparent 70%),
     var(--fondo);
   color:var(--texto);
-  font:400 1.0625rem/1.6 "Alegreya Sans",system-ui,sans-serif;
+  font:400 1.0625rem/1.6 var(--f-ui);
   -webkit-font-smoothing:antialiased;
 }
 main{max-width:1040px;margin:0 auto;padding:0 clamp(18px,4vw,40px) 64px}
@@ -46,7 +49,8 @@ main{max-width:1040px;margin:0 auto;padding:0 clamp(18px,4vw,40px) 64px}
 header{text-align:center;padding:clamp(48px,11vh,110px) 0 clamp(36px,7vh,64px)}
 h1{
   margin:0;
-  font:600 clamp(3.2rem,11vw,6.6rem)/.95 "Cormorant Garamond",Georgia,serif;
+  /* el tope en vw evita que el título se salga de pantallas estrechas con texto grande */
+  font:600 min(clamp(3.2rem,11vw,6.6rem),15vw)/.95 "Cormorant Garamond",Georgia,serif;
   letter-spacing:-.01em;
   color:var(--texto);
 }
@@ -149,6 +153,27 @@ footer{
   margin-top:clamp(56px,9vh,96px);padding-top:22px;border-top:1px solid var(--linea);
   text-align:center;color:var(--tenue);font-size:.9rem;
 }
+footer p{margin:0}
+
+/* ---------- Ajustes de texto: enlace del pie y engranaje ---------- */
+.enlace-aj{
+  margin:8px 0 0;padding:10px 12px;min-height:44px;
+  background:none;border:0;border-radius:6px;cursor:pointer;
+  font:inherit;font-weight:500;color:var(--oro);
+  text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;
+}
+.enlace-aj:hover{color:var(--texto)}
+.enlace-aj:focus-visible,.aj-icono:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+.aj-icono{
+  position:absolute;top:14px;right:clamp(10px,3vw,26px);z-index:5;
+  display:grid;place-items:center;width:44px;height:44px;padding:0;
+  background:none;border:1px solid transparent;border-radius:50%;
+  color:var(--tenue);cursor:pointer;
+  transition:color .2s,border-color .2s;
+}
+.aj-icono:hover{color:var(--oro);border-color:var(--linea)}
+.aj-icono svg{width:25px;height:25px;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.aj-icono:hover svg{transform:rotate(60deg)}
 
 /* Entrada: los libros se colocan en la estantería una sola vez */
 @keyframes colocar{from{opacity:0;transform:translateY(18px)}}
@@ -157,15 +182,24 @@ footer{
   .estante>li{animation:none}
   .tapa{transition:none}
   .libro:hover .tapa,.libro:focus-visible .tapa{transform:none}
+  .aj-icono svg{transition:none}
+  .aj-icono:hover svg{transform:none}
 }
 @media (max-width:480px){
   .estante{grid-template-columns:repeat(2,1fr);gap:32px 18px}
   .ficha h2{font-size:1.2rem}
   .ficha .resumen{font-size:.92rem}
+  /* Con texto «Muy grande» o «Enorme», dos columnas quedan demasiado estrechas */
+  html[data-tam="3"] .estante,html[data-tam="4"] .estante{grid-template-columns:1fr}
+  html[data-tam="3"] .estante>li,html[data-tam="4"] .estante>li{justify-content:center}
+  html[data-tam="3"] .libro,html[data-tam="4"] .libro{max-width:320px}
 }
 </style>
 </head>
 <body>
+<button type="button" class="aj-icono" data-ajustes aria-label="Ajustes de texto" title="Ajustes de texto">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M10.20 4.51 L10.49 1.91 L13.51 1.91 L13.80 4.51 A7.7 7.7 0 0 1 16.02 5.43 L18.07 3.80 L20.20 5.93 L18.57 7.98 A7.7 7.7 0 0 1 19.49 10.20 L22.09 10.49 L22.09 13.51 L19.49 13.80 A7.7 7.7 0 0 1 18.57 16.02 L20.20 18.07 L18.07 20.20 L16.02 18.57 A7.7 7.7 0 0 1 13.80 19.49 L13.51 22.09 L10.49 22.09 L10.20 19.49 A7.7 7.7 0 0 1 7.98 18.57 L5.93 20.20 L3.80 18.07 L5.43 16.02 A7.7 7.7 0 0 1 4.51 13.80 L1.91 13.51 L1.91 10.49 L4.51 10.20 A7.7 7.7 0 0 1 5.43 7.98 L3.80 5.93 L5.93 3.80 L7.98 5.43 A7.7 7.7 0 0 1 10.20 4.51 Z"/><circle cx="12" cy="12" r="3.1"/></svg>
+</button>
 <main>
   <header>
     <h1>LibroJuegos</h1>
@@ -177,7 +211,10 @@ footer{
 
   <ul class="estante" id="estante" aria-label="Historias disponibles"></ul>
 
-  <footer>Tus partidas se guardan en este navegador.</footer>
+  <footer>
+    <p>Tus partidas se guardan en este navegador.</p>
+    <button type="button" class="enlace-aj" data-ajustes>Ajustes de Texto</button>
+  </footer>
 </main>
 
 <script>
