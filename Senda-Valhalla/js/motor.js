@@ -362,7 +362,7 @@ function statR(){UI.stat=true;const T=ST(),sv=UI.sv||'b',inv=Object.keys(S.inv);
     body+=`<p class=tag>Hilos de las Nornas: ${S.hilos}. Cada hilo permite repetir una tirada fallida.</p>`}
   else body+=sagaHTML()+`<p class=tag>Finales vistos: ${S.fin.join(', ')||'ninguno aún'}</p>`;
   const tab=(k,l)=>`<button class="${sv==k?'on':''}" onclick="UI.sv='${k}';statR()">${l}</button>`;
-  pinta(`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row>${tab('b','Equipo')}${tab('r','Runas')}${tab('j','Juramentos')}${tab('s','Saga')}</div>${body}<button onclick="trampa()"><span class=oro>🪙</span> monedas + 5000</button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`)}
+  pinta(`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row>${tab('b','Equipo')}${tab('r','Runas')}${tab('j','Juramentos')}${tab('s','Saga')}</div>${body}<button onclick="trampa()">+ 5000 <span class=oro>🪙</span></button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`)}
 
 /* ---------- Menú, protagonista, exportar e importar ---------- */
 function menu(){window.scrollTo(0,0);const sv=load();

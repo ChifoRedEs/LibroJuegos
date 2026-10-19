@@ -26,6 +26,7 @@
   --azul:#86a9dc;
   --sobre-acento:#1b1813;    /* texto encima del acento */
   --info-bg:#f2c230;         /* icono «i» de ayuda (amarillo, igual en claro y oscuro) */
+  --info-bg-suave:rgb(242 194 48 / .6);   /* el mismo amarillo con un 40 % de transparencia */
   --info-tx:#1d1600;
   /* Rarezas (el motor las usa por nombre) */
   --rar-comun:#b9b2a2;--rar-raro:#6fb3ea;--rar-epico:#c193e3;--rar-leg:#e9b04d;
@@ -340,22 +341,23 @@ textarea{
 /* ---------- 8b. Ayudas «i» (la ventana la dibuja comun/info.js) ---------- */
 button.info{
   position:relative;display:inline-grid;place-items:center;vertical-align:middle;
-  flex:none;width:1.4rem;height:1.4rem;min-width:0;margin:0 0 0 .45em;padding:0;
-  border:0;border-radius:50%;background:var(--info-bg);color:var(--info-tx);
-  font:italic 700 .95rem/1 Georgia,"Times New Roman",serif;text-indent:0;text-align:center;
-  box-shadow:0 0 0 1px rgba(0,0,0,.28),0 1px 3px rgba(0,0,0,.28);
-  transition:transform .15s,filter .15s;
+  flex:none;width:.85rem;height:.85rem;min-width:0;margin:0 0 0 .4em;padding:0;
+  border:0;border-radius:50%;background:var(--info-bg-suave);color:var(--info-tx);
+  font:italic 700 .62rem/1 Georgia,"Times New Roman",serif;text-indent:0;text-align:center;
+  box-shadow:0 0 0 1px rgba(0,0,0,.18);
+  transition:transform .15s,background-color .15s;
 }
 button.info::after{content:"";position:absolute;inset:-.6rem}   /* zona táctil ampliada */
-button.info:hover:not(:disabled){filter:brightness(1.08);transform:scale(1.1);border:0}
+button.info:hover:not(:disabled),button.info:focus-visible{background:var(--info-bg);transform:scale(1.15);border:0}
 button.info:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
-.hud button.info,.mision button.info,.dice button.info{width:1.2rem;height:1.2rem;font-size:.8rem;margin-block:-.15rem}
+.hud button.info,.mision button.info,.dice button.info{width:.75rem;height:.75rem;font-size:.55rem;margin-block:-.1rem}
+.hud button.info::after{inset:-.5rem}   /* en la cabecera la zona táctil es menor para no pisar a Estado y Menú */
 /* Icono en su propia fila, pegado al borde derecho del botón anterior */
 .i-row{display:block;position:relative;height:0;margin:0}
-.i-row>button.info{position:absolute;right:6px;bottom:.75rem;margin:0}
-.sc>button:has(+ .i-row){padding-right:2.6rem}
+.i-row>button.info{position:absolute;right:10px;bottom:1rem;margin:0}
+.sc>button:has(+ .i-row){padding-right:2.2rem}
 #app>h1~.i-row{max-width:380px;margin:0 auto}
-#app>h1~button:has(+ .i-row){padding-right:2.6rem;padding-left:2.6rem}   /* texto centrado de verdad */
+#app>h1~button:has(+ .i-row){padding-right:2.2rem;padding-left:2.2rem}   /* texto centrado de verdad */
 
 /* ---------- 9. Movimiento reducido y móvil ---------- */
 @media (prefers-reduced-motion:reduce){
