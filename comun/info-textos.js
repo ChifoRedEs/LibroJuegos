@@ -17,6 +17,8 @@
 
    TANDA 1 · cabecera, tiempo, dormir, guardado, exportar, estado,
              decisiones, bloqueadas, dados, atributos
+   TANDA 2 · estadisticas, combate, guardia, equipo, tiendas, forja,
+             objetos, acertijos, progreso, alquimia
    ===================================================================== */
 LJInfo.registrar({
 
@@ -167,15 +169,163 @@ atributos:{ ver:['dados','estado'], t:'Los atributos', h:{
   '<li><b>Mente:</b> también potencia técnicas, y te ayuda a <b>huir</b> de un combate.</li>'+
   '<li><b>Suerte:</b> sube la probabilidad de <b>golpe crítico</b> (daño extra).</li></ul>'+
   '<p>Cada técnica indica de qué atributo depende.</p>'+
-  '<h3>Cómo subirlos</h3><p>Con píldoras permanentes y con ciertas recompensas de la historia, como resolver enigmas.</p>',
+  '<h3>Cómo subirlos</h3><p>Con ciertas recompensas de la historia, como resolver enigmas o superar pruebas.</p>',
  senda:'<h3>Qué hace cada uno</h3><ul>'+
   '<li><b>Fuerza:</b> sube tu <b>ataque</b>. Cada punto añade +2.</li>'+
   '<li><b>Astucia:</b> sube tu <b>velocidad</b> (más posibilidades de esquivar) y te ayuda a <b>huir</b> de un combate.</li>'+
   '<li><b>Espíritu:</b> potencia tus <b>runas</b> y su poder de curación.</li>'+
   '<li><b>Suerte:</b> sube la probabilidad de <b>golpe crítico</b> (daño extra).</li></ul>'+
-  '<h3>Cómo subirlos</h3><p>Con algunos objetos y con ciertas recompensas de la historia.</p>'
+  '<h3>Cómo subirlos</h3><p>Con ciertas recompensas de la historia, como superar pruebas y enigmas.</p>'
 }}
+,
 
+
+/* ═══════════════════════ TANDA 2 ═══════════════════════ */
+
+/* 11 ────────────────────────────────────────────────────────────── */
+estadisticas:{ ver:['equipo','combate'], t:'Estadísticas de combate', h:{
+ '*':'<p>Son los seis números de la franja que ves en <b>Estado</b>. Resumen de cómo luchas: se calculan solos a partir de tu personaje y de lo que llevas puesto.</p>'+
+  '<ul>'+
+  '<li><b>Atq (ataque):</b> el daño que se suma a tus golpes.</li>'+
+  '<li><b>Def (defensa):</b> el porcentaje del daño enemigo que se anula. Tiene un tope del <b>60 %</b>.</li>'+
+  '<li><b>Arm (armadura):</b> puntos fijos que se restan a cada golpe que recibes. Siempre recibes al menos 1.</li>',
+ dao:'<li><b>Crít:</b> el daño extra de tus golpes críticos. Un crítico normal hace ×1,5; este número lo aumenta. La probabilidad de que salga depende de tu <b>Suerte</b> (8 % más 1 % por punto).</li>'+
+  '<li><b>Qi:</b> tu poder de Qi. Cada punto suma +2 de daño a las técnicas que gastan Qi.</li>'+
+  '<li><b>Vel (velocidad):</b> la probabilidad de esquivar un ataque, con un tope del <b>40 %</b>. También ayuda a huir.</li></ul>'+
+  '<p>Estos números vienen de tu <b>equipo</b> y de sus mejoras. Los demás factores del daño son tus atributos, tu Reino y la técnica que uses.</p>',
+ senda:'<li><b>Crít:</b> la probabilidad de golpe crítico: 5 % más 1 % por punto de Suerte, más lo que sume tu equipo. Un crítico hace un 60 % más de daño.</li>'+
+  '<li><b>Vel (velocidad):</b> la probabilidad de esquivar un ataque, con un tope del <b>35 %</b>. Sale de tu Astucia y de tu equipo, y también ayuda a huir.</li>'+
+  '<li><b>Runas:</b> las que llevas preparadas, de un máximo de 4.</li></ul>'+
+  '<p>Tu <b>ataque</b> sale de tu Fuerza (cada punto suma 2), de tu rango de Gloria (3 por rango) y de tu arma. Def y Arm vienen de tu equipo y de sus mejoras.</p>'
+}},
+
+/* 12 ────────────────────────────────────────────────────────────── */
+combate:{ ver:['guardia','estadisticas'], t:'El combate por turnos', h:{
+ '*':'<p>En un combate, tú y el enemigo os turnáis. <b>Tú actúas primero</b>; después, si sigue en pie, ataca él.</p>'+
+  '<h3>Cómo jugar un turno</h3><ol>'+
+  '<li><b>Lee la «Intención» del enemigo.</b> Te avisa de lo que hará en su turno. Si dice que <b>carga</b> un golpe, su próximo ataque hará <b>doble daño</b>: es buen momento para cubrirte.</li>'+
+  '<li><b>Elige tu acción</b> entre los botones de abajo.</li>'+
+  '<li><b>Mira el registro</b> sobre los botones: cuenta lo que pasó en el turno anterior.</li></ol>'+
+  '<p>Cubrirte, descansar o usar un objeto <b>también gastan tu turno</b>.</p>'+
+  '<h3>Cómo termina</h3><ul>'+
+  '<li><b>Ganas</b> si la barra de Vida del enemigo llega a 0: recibes recompensa y, a veces, botín.</li>'+
+  '<li><b>Pierdes</b> si la tuya llega a 0. Entonces puedes volver al último punto seguro.</li></ul>',
+ dao:'<h3>Tus acciones</h3><ul><li><b>Técnicas:</b> cada una gasta Qi y muestra su daño aproximado. Si no tienes Qi suficiente, el botón se apaga.</li>'+
+  '<li><b>Meditar:</b> recuperas 8 de Qi.</li><li><b>Objetos:</b> las píldoras y elixires que lleves.</li></ul>',
+ senda:'<h3>Tus acciones</h3><ul><li><b>Golpe:</b> siempre disponible, y te da +8 de Furor.</li>'+
+  '<li><b>Runas:</b> gastan Furor y hacen cosas muy distintas. Con Furor 100 puedes desatar la furia berserker.</li>'+
+  '<li><b>Objetos:</b> ungüentos, tónicos y bebidas que lleves.</li></ul>'+
+  '<p>Bajo la intención del enemigo aparecen los <b>estados</b> activos: aturdido, escudo rúnico, esquiva, regeneración… Un enemigo aturdido no ataca ese turno.</p>'
+}},
+
+/* 13 ────────────────────────────────────────────────────────────── */
+guardia:{ ver:['combate'], t:'Guardia y huir', h:{
+ '*':'<h3>Guardia</h3>'+
+  '<p>Te cubres durante este turno: el ataque del enemigo hace un <b>60 % menos de daño</b>. Gasta tu turno.</p>'+
+  '<h3>Huir</h3>'+
+  '<p>Intentas escapar del combate. Se tiran dos dados, se suman tu atributo y un bonus por velocidad (1 por cada 5 de Vel), y hace falta sacar <b>9 o más</b>.</p>'+
+  '<ul><li>Si lo logras, <b>sales del combate</b> y no recibes su recompensa.</li>'+
+  '<li>Si fallas, <b>pierdes el turno</b> y el enemigo ataca.</li></ul>',
+ dao:'<div class="ej"><p>🎲 4 + 3 + Mente 3 + velocidad 0 = <b>10</b> → logras huir (hacía falta 9)</p></div>'+
+  '<p>En el Dao se suma tu <b>Mente</b>. La guardia no gasta Qi.</p>',
+ senda:'<div class="ej"><p>🎲 4 + 3 + Astucia 3 + velocidad 0 = <b>10</b> → logras huir (hacía falta 9)</p></div>'+
+  '<p>En la Senda se suma tu <b>Astucia</b>.</p>'+
+  '<ul><li>La guardia te da además <b>+6 de Furor</b>.</li>'+
+  '<li><b>No todos los combates permiten huir:</b> si no ves el botón «Huir», ese combate no tiene escapatoria.</li>'+
+  '<li>Con la furia berserker activa no puedes cubrirte ni huir.</li></ul>'
+}},
+
+/* 14 ────────────────────────────────────────────────────────────── */
+equipo:{ ver:['estadisticas','forja'], t:'Equipo: armas y armaduras', h:{
+ '*':'<p>Llevas tres piezas a la vez: <b>un arma, un escudo y una armadura</b>. Cada una mejora tus estadísticas de combate (Atq, Def, Arm…).</p>'+
+  '<h3>Para equiparte</h3><ol>'+
+  '<li>Abre <b>Estado</b>.</li>'+
+  '<li>En tu <b>Bolsa</b>, busca la pieza y pulsa <b>«Equipar»</b>. No gasta tiempo.</li>'+
+  '<li>Quedará marcada como <b>«(equipado)»</b>. Si ya llevabas otra del mismo tipo, la sustituye.</li></ol>'+
+  '<p>Si ves un <b>+1, +2…</b> junto al nombre, es el nivel de mejora de esa pieza (hasta +5). Se consigue en la forja.</p>',
+ dao:'<p class="tip">En el Dao, el color del nombre indica la rareza de la pieza: común, muy rara, épica o legendaria. Las más raras se forjan con materiales más difíciles y piden un Reino más alto.</p>',
+ senda:'<ul><li>Para dejar una pieza sin equipar, pulsa <b>«Quitar»</b> junto a ella en la sección Equipo.</li>'+
+  '<li>Algunas armas dan un bonus especial, por ejemplo contra los no muertos.</li></ul>'
+}},
+
+/* 15 ────────────────────────────────────────────────────────────── */
+tiendas:{ ver:['objetos','forja'], t:'Tiendas: comprar y vender', h:{
+ '*':'<h3>Para comprar</h3><ol>'+
+  '<li>Elige la <b>cantidad</b> con los botones de arriba (×1, ×5, ×10 o «Máx»).</li>'+
+  '<li>Pulsa el objeto que quieres. Su precio total aparece a la derecha.</li>'+
+  '<li>Se descuenta de tu dinero y el objeto pasa a tu bolsa.</li></ol>'+
+  '<p>Si no te alcanza el dinero, el botón se apaga. Si pides más unidades de las que puedes pagar, compras todas las que te alcancen.</p>'+
+  '<h3>Para vender</h3><ol>'+
+  '<li>Pulsa la pestaña <b>«Vender»</b>.</li>'+
+  '<li>Elige cantidad y pulsa el objeto.</li></ol>'+
+  '<ul><li>Te pagan <b>la mitad</b> de su precio de compra.</li>'+
+  '<li>Los <b>objetos clave</b> de la historia no se pueden vender.</li>'+
+  '<li>Si vendes la última copia de una pieza que llevas puesta, te la quitas.</li></ul>'+
+  '<p>«(tienes N)» te dice cuántas unidades llevas ya. Más arriba ves tu dinero y tus materiales.</p>',
+ dao:'<p class="tip">En el Dao también existe la cantidad ×50. Antes de vender materiales, piensa si los necesitas para forjar o refinar píldoras.</p>',
+ senda:'<p class="tip">Antes de vender materiales, piensa si los necesitas para forjar o preparar remedios en el caldero.</p>'
+}},
+
+/* 16 ────────────────────────────────────────────────────────────── */
+forja:{ ver:['equipo','objetos'], t:'La forja: forjar y mejorar', h:{
+ '*':'<p>La forja tiene dos pestañas.</p>'+
+  '<h3>Forjar · 2 horas</h3><p>Creas una pieza nueva a cambio de dinero y materiales.</p><ol>'+
+  '<li>Cada receta muestra su precio y lo que necesita. En <b>verde</b> lo que ya tienes; en <b>rojo</b>, lo que te falta.</li>'+
+  '<li>Si puedes pagarla, pulsa la receta. Se gastan el dinero y los materiales, y la pieza pasa a tu bolsa.</li></ol>',
+ dao:'<p>Las recetas de piezas más raras se desbloquean al subir de Reino: muy raras en el Espiritual de Qi, épicas en el Celestial y legendarias en el Dios Marcial. Puedes filtrar por rareza o pulsar «Solo las que puedo forjar».</p>',
+ senda:'',
+},
+/* el resto, común, se añade abajo */ },
+
+/* 17 ────────────────────────────────────────────────────────────── */
+objetos:{ ver:['tiendas','alquimia'], t:'Objetos y botín', h:{
+ '*':'<p>Todo lo que recoges va a tu <b>bolsa</b> (en Estado). Hay varios tipos:</p><ul>'+
+  '<li><b>Materiales:</b> ingredientes para la forja y para preparar remedios. No se usan solos.</li>'+
+  '<li><b>Consumibles:</b> restauran Vida u otras reservas. Úsalos con <b>«Usar»</b> en tu bolsa, o dentro de un combate (gasta tu turno).</li>'+
+  '<li><b>Equipo:</b> armas, escudos y armaduras. Se llevan puestos con «Equipar».</li>'+
+  '<li><b>Objetos clave:</b> pruebas y llaves de la historia. No se usan ni se venden.</li>',
+ dao:'<li><b>Pergaminos:</b> con «Aprender» conoces una técnica nueva.</li></ul>'+
+  '<p>Las píldoras de Concentración devuelven Qi, las de Sangre devuelven Vida y los elixires devuelven las dos cosas.</p>',
+ senda:'<li><b>Piedras rúnicas:</b> con «Aprender» conoces una runa nueva.</li></ul>'+
+  '<p>Los ungüentos y tónicos devuelven Vida, y el cuerno de hidromiel te da Furor.</p>'
+}},
+
+/* 18 ────────────────────────────────────────────────────────────── */
+acertijos:{ ver:['tiempo'], t:'Acertijos y enigmas', h:{
+ '*':'<p>Un enigma plantea una pregunta con varias respuestas. Elige la que creas correcta.</p><ul>'+
+  '<li><b>Si aciertas:</b> recibes la recompensa (a veces un punto de atributo u un objeto) y el enigma <b>no vuelve a aparecer</b>: solo se resuelve una vez.</li>'+
+  '<li><b>Si fallas:</b> pierdes <b>1 hora</b> y no puedes reintentarlo hasta el <b>día siguiente</b>.</li>'+
+  '<li>El <b>orden de las respuestas cambia cada día</b>, así que no sirve recordar en qué posición estaba la buena.</li></ul>'+
+  '<p class="tip">Piénsalo con calma antes de contestar: un error te cuesta tiempo y un día de espera.</p>'
+}},
+
+/* 19 ────────────────────────────────────────────────────────────── */
+progreso:{ ver:['estadisticas'], t:'Progreso: experiencia y rangos', h:{
+ dao:'<p>Tu progreso en el Dao tiene dos vías distintas.</p>'+
+  '<h3>Experiencia y Reinos</h3>'+
+  '<p>Los combates y algunas misiones te dan <b>experiencia (XP)</b>. En Estado ves cuánta llevas y cuánta necesitas para el siguiente Reino.</p>'+
+  '<ul><li><b>Condensación de Qi:</b> el inicio.</li><li><b>Espiritual de Qi:</b> con 150 XP.</li><li><b>Celestial de Qi:</b> con 500 XP.</li><li><b>Dios Marcial:</b> con 1500 XP.</li></ul>'+
+  '<p>Al subir de Reino: <b>+40 de Vida máxima</b>, <b>+20 de Qi máximo</b>, recuperas todo, tus técnicas pegan <b>+5 de daño</b> más y se desbloquean mejores recetas de forja.</p>'+
+  '<h3>Rango en la secta</h3>'+
+  '<p>Aspirante, Discípulo Común, Maestro Común, Maestro Anciano y Líder Supremo. Lo concede la <b>historia</b>, no la experiencia, y aparece en la cabecera.</p>',
+ senda:'<h3>Gloria</h3>'+
+  '<p>La Gloria mide la fama de tus hazañas. La ganas <b>venciendo enemigos</b> (más cuanto más fuertes), cumpliendo juramentos y con actos valerosos; la pierdes si rompes un juramento. En Estado ves cuánta llevas y cuánta falta para el siguiente rango.</p>'+
+  '<h3>Rangos</h3>'+
+  '<ul><li><b>Bóndi:</b> el inicio.</li><li><b>Drengr:</b> 100 de Gloria.</li><li><b>Hersir:</b> 350.</li><li><b>Jarl:</b> 800.</li><li><b>Campeón:</b> 1400.</li><li><b>Elegido:</b> 2400, digno del Valhalla.</li></ul>'+
+  '<p>Cada vez que subes de rango: <b>+25 de Vida máxima</b>, recuperas toda la Vida y ganas <b>+3 de ataque</b> (también en el daño de tus runas).</p>'
+}},
+
+/* 20 ────────────────────────────────────────────────────────────── */
+alquimia:{ ver:['objetos','tiempo'], t:'Preparar pociones', h:{
+ '*':'<p>Aquí conviertes ingredientes en remedios y bebidas. Cada unidad preparada cuesta <b>1 hora</b>.</p><ol>'+
+  '<li>Elige la <b>cantidad</b> (×1, ×5…, o «Máx»).</li>'+
+  '<li>Pulsa la receta que quieres. Se gastan los ingredientes y recibes el resultado.</li>'+
+  '<li>El tiempo avanza una hora por cada unidad.</li></ol>'+
+  '<p>En cada receta ves los ingredientes: en <b>verde</b> los que tienes, en <b>rojo</b> los que faltan. Si te faltan, el botón se apaga. «(tienes N)» indica cuántas unidades ya llevas del resultado.</p>'+
+  '<p class="tip">Si pides una cantidad grande, comprueba antes la hora: ×5 son 5 horas de tu día.</p>',
+ dao:'<p>En el Dao se prepara en el <b>Horno de Alquimia</b>: las hierbas y otras plantas se refinan en píldoras.</p>',
+ senda:'<p>En la Senda se prepara en el <b>caldero de la völva</b>: remedios, como ungüentos y tónicos, y bebidas, como el hidromiel.</p>'
+}}
 });
 
 /* Cierres comunes que se colocan detrás del texto específico de cada libro */
@@ -189,4 +339,11 @@ atributos:{ ver:['dados','estado'], t:'Los atributos', h:{
     '<li>Para cerrar el día y empezar el siguiente con todo recuperado.</li></ul>'+
     '<p class="tip">Como cuesta 8 horas, comprueba antes que no tienes nada con plazo hoy. La opción de dormir aparece en lugares donde puedes descansar, como tu cama o una fogata.</p>';
   T.dormir.h.dao += cierre; T.dormir.h.senda += cierre;
+  /* La forja: la parte «Mejorar» es común, con las cifras de cada libro */
+  var mej = '<h3>Mejorar · 1 hora</h3><p>Subes una pieza que ya tienes, de +0 hasta <b>+5</b>. Cada nivel cuesta más:</p><ul>'+
+    '<li><b>Dinero:</b> %D.</li>'+
+    '<li><b>Material:</b> %M. Necesitas 1 unidad para el +1, 2 para el +2, y así hasta 5 para el +5.</li></ul>'+
+    '<p>Qué ganas con cada nivel: las <b>armas</b> suman <b>+3 de ataque</b>; los <b>escudos y armaduras</b> suman <b>+2 de armadura</b> y <b>+1 de defensa</b>.</p>';
+  T.forja.h.dao += mej.replace('%D','40 monedas para el +1, 80 para el +2, 120 para el +3, 160 para el +4 y 200 para el +5').replace('%M','mineral de hierro frío');
+  T.forja.h.senda += mej.replace('%D','30 de plata para el +1, 60 para el +2, 90 para el +3, 120 para el +4 y 150 para el +5').replace('%M','hierro de pantano');
 })();

@@ -72,7 +72,7 @@ function retry(){S=S.cp?JSON.parse(S.cp):nuevo();save();go(S.sc)}
 
 /* ---------- combate por turnos ---------- */
 function pFight(){const F=S.f,E=ENEMIGOS[F.id],L={atq:'se prepara para atacar',carga:'acumula fuerza: ataque doble'};
- return `<div class=fight><b>${E.n}</b> <span class=tag>${E.cat||''}</span>${bar(F.hp,E.hp,'hp','Vida')}<div class=log>${F.lg}</div><p class=tag>Intención: ${E.n} ${L[F.it]}.</p><div class=row>${eqT().map(k=>{const t=TECNICAS[k],l=tl(k);return `<button ${S.qi<t.c?'disabled':''} onclick="turno('${k}')">${tn(k)}${l?' +'+l:''}<br><span class=tag>${t.c} Qi · ${Math.round(t.d[0]*(1+.12*l))}-${Math.round(t.d[1]*(1+.12*l))}</span></button>`}).join('')}
+ return `<div class=fight><b>${E.n}</b> <span class=tag>${E.cat||''}</span>${bar(F.hp,E.hp,'hp','Vida')}<div class=log>${F.lg}</div><p class=tag>Intención: ${E.n} ${L[F.it]}.${I('combate')}</p><p class=tag>Tus acciones${I('guardia')}</p><div class=row>${eqT().map(k=>{const t=TECNICAS[k],l=tl(k);return `<button ${S.qi<t.c?'disabled':''} onclick="turno('${k}')">${tn(k)}${l?' +'+l:''}<br><span class=tag>${t.c} Qi · ${Math.round(t.d[0]*(1+.12*l))}-${Math.round(t.d[1]*(1+.12*l))}</span></button>`}).join('')}
  <button onclick="turno('_g')">Guardia<br><span class=tag>Reduce el daño</span></button><button onclick="turno('_m')">Meditar<br><span class=tag>+8 Qi</span></button><button onclick="turno('_f')">Huir<br><span class=tag>2d6+Mente vs 9</span></button>
  ${Object.keys(S.inv).filter(k=>OBJ[k].tipo=='consumible'&&(OBJ[k].ef.hp||OBJ[k].ef.qi)).map(k=>`<button onclick="turno('${k}')">${OBJ[k].n} ×${has(k)}</button>`).join('')}</div></div>`}
 function turno(a){const F=S.f,E=ENEMIGOS[F.id],fs=cur().f,T=ST();let lg='';const g0=F.g;F.g=0;
@@ -93,7 +93,7 @@ function turno(a){const F=S.f,E=ENEMIGOS[F.id],fs=cur().f,T=ST();let lg='';const
 /* ---------- tienda, forja, alquimia ---------- */
 function pShop(sc){const T=TIENDAS[sc.shop],v=UI.tab=='v',q=UI.qty||1;
  const L=v?Object.keys(S.inv).filter(k=>OBJ[k].tipo!='clave'):T.stock;
- return `<p class=tag>${T.n}</p>${cab()}<div class=row><button class="${v?'':'on'}" onclick="UI.tab='c';show()">Comprar</button><button class="${v?'on':''}" onclick="UI.tab='v';show()">Vender</button></div><div class=qty>Cantidad: ${[1,5,10,50,'max'].map(x=>`<button class="sm ${q==x?'on':''}" onclick="UI.qty=${x=='max'?"'max'":x};show()">${x=='max'?'Máx':'×'+x}</button>`).join(' ')}</div>`+
+ return `<p class=tag>${T.n}${I('tiendas')}</p>${cab()}<div class=row><button class="${v?'':'on'}" onclick="UI.tab='c';show()">Comprar</button><button class="${v?'on':''}" onclick="UI.tab='v';show()">Vender</button></div><div class=qty>Cantidad: ${[1,5,10,50,'max'].map(x=>`<button class="sm ${q==x?'on':''}" onclick="UI.qty=${x=='max'?"'max'":x};show()">${x=='max'?'Máx':'×'+x}</button>`).join(' ')}</div>`+
  (L.map(k=>{const o=OBJ[k],p=v?Math.floor(o.pr/2):o.pr,n=qn(k,v);return `<button ${n<1?'disabled':''} onclick="${v?'vender':'comprar'}('${k}')">${nm(k)}${v?' ×'+has(k):' <span class=tag>(tienes '+has(k)+')</span>'}<span class=pr>🪙 ${p*Math.max(n,1)}${n>1?' ('+n+')':''}</span><br><span class=tag>${o.d}${sl(o)}</span></button>`}).join('')||'<p class=tag>No llevas nada que vender.</p>')}
 const qn=(k,v)=>{const p=v?Math.floor(OBJ[k].pr/2):OBJ[k].pr,mx=v?has(k):(p?Math.floor(S.oro/p):0),q=UI.qty||1;return q=='max'?mx:Math.min(q,mx)};
 function comprar(k){const n=qn(k,0);if(n<1)return;S.oro-=n*OBJ[k].pr;add(k,n);save();show()}
@@ -105,7 +105,7 @@ const co=c=>`<span class=pr><span class=${S.oro>=c?'oro':'warn'}>🪙 ${c}</span
 const MINRN={comun:0,raro:1,epico:2,leg:3};
 const forjaVis=f=>S.rn>=MINRN[OBJ[f.r].rar||'comun']||has(f.r)>0;
 function pForja(){const ft=UI.ft||'f',eq=Object.keys(S.inv).filter(k=>EQT.includes(OBJ[k].tipo));
- let h=`<p class=tag>Herrero Tie · «Si se rompe, no fue mi martillo.»</p>${cab()}<div class=row><button class="${ft=='f'?'on':''}" onclick="UI.ft='f';show()">Forjar</button><button class="${ft=='m'?'on':''}" onclick="UI.ft='m';show()">Mejorar</button></div>`;
+ let h=`<p class=tag>Herrero Tie · «Si se rompe, no fue mi martillo.»${I('forja')}</p>${cab()}<div class=row><button class="${ft=='f'?'on':''}" onclick="UI.ft='f';show()">Forjar</button><button class="${ft=='m'?'on':''}" onclick="UI.ft='m';show()">Mejorar</button></div>`;
  if(ft=='f'){h+=rarTabs()+`<button class="sm ${UI.fo?'on':''}" onclick="UI.fo=!UI.fo;show()">Solo las que puedo forjar</button><div class=lst>`+
   (FORJA.map((f,i)=>{if(!forjaVis(f))return '';if(UI.fr&&UI.fr!='todos'&&(OBJ[f.r].rar||'comun')!=UI.fr)return '';const y=S.oro>=f.oro&&Object.entries(f.mat).every(([k,n])=>has(k)>=n);if(UI.fo&&!y)return '';
    return `<button ${y?'':'disabled'} onclick="forjar(${i})">${nm(f.r)}${co(f.oro)}<br><span class=tag>${sl(OBJ[f.r])}<br>${rq(f.mat)}</span></button>`}).join('')||'<p class=tag>No hay recetas disponibles con este filtro. Las de rango superior se desbloquean al avanzar de reino.</p>')+'</div>'}
@@ -116,14 +116,14 @@ function forjar(i){const f=FORJA[i];S.oro-=f.oro;for(const k in f.mat)add(k,-f.m
 function mejorar(k){const n=S.mej[k]||0;S.oro-=40*(n+1);add('mineral_hierro',-(n+1));S.mej[k]=n+1;avanza(1);save();show()}
 function qtyRow(){const q=UI.qty||1;return `<div class=qty>Cantidad: ${[1,5,10,50,'max'].map(x=>`<button class="sm ${q==x?'on':''}" onclick="UI.qty=${x=='max'?"'max'":x};show()">${x=='max'?'Máx':'×'+x}</button>`).join(' ')}</div>`}
 const mxA=a=>Math.min(...Object.entries(a.ing).map(([k,n])=>Math.floor(has(k)/n)));
-function pAlq(){let h=`<p class=tag>Horno de Alquimia · cada refinado cuesta 1 hora</p>${cab()}${qtyRow()}<div class=lst>`,c='';
+function pAlq(){let h=`<p class=tag>Horno de Alquimia · cada refinado cuesta 1 hora${I('alquimia')}</p>${cab()}${qtyRow()}<div class=lst>`,c='';
  ALQ.forEach((a,i)=>{if(a.c!=c){c=a.c;h+=`<b class=t>${c}</b>`}const mx=mxA(a),q=UI.qty||1,n=q=='max'?mx:Math.min(q,mx);
   h+=`<button ${n<1?'disabled':''} onclick="refinar(${i})">${nm(a.r)} <span class=tag>(tienes ${has(a.r)})</span>${n>1?`<span class=pr>×${n} · ${n} h</span>`:''}<br><span class=tag>${rq(a.ing)} · ${OBJ[a.r].d}</span></button>`});return h+'</div>'}
 const ACERT={};function registrarAcertijos(o){Object.assign(ACERT,o)}
 function pRid(sc){const A=ACERT[sc.acertijo],id=sc.acertijo;
  if(S.fl['ac_'+id])return `<p class=ok>Ya resolviste este enigma.</p>`;
  if(S.fl['af_'+id]===S.dia)return `<p class=warn>Hoy ya has fallado. Vuelve otro día con la mente despejada.</p>`;
- return `<div class=dice><b>${A.q}</b></div>`+shuf(A.o.map((o,i)=>i),S.dia*131+hs(id)).map(i=>`<button onclick="resolver('${id}',${i})">${A.o[i]}</button>`).join('')+`<p class=tag>Una respuesta equivocada te cuesta 1 hora y no podrás reintentar hasta mañana.</p>`}
+ return `<div class=dice><b>${A.q}</b>${I('acertijos')}</div>`+shuf(A.o.map((o,i)=>i),S.dia*131+hs(id)).map(i=>`<button onclick="resolver('${id}',${i})">${A.o[i]}</button>`).join('')+`<p class=tag>Una respuesta equivocada te cuesta 1 hora y no podrás reintentar hasta mañana.</p>`}
 function resolver(id,i){const A=ACERT[id],b=cur().back;
  if(i==A.k){S.fl['ac_'+id]=true;apply(A.fx);UI.res=`<p class=ok>${A.ok}</p><button onclick="go('${b}')">Continuar</button>`}
  else{S.fl['af_'+id]=S.dia;avanza(1);UI.res=`<p class=warn>${A.ko}</p><button onclick="go('${b}')">Continuar</button>`}
@@ -137,10 +137,10 @@ function usar(k){if(OBJ[k].tec)return aprende(k);apply(OBJ[k].ef);add(k,-1);save
 function trampa(){const s=S||load();if(!s)return;S=s;S.oro+=5000;save();document.querySelector('.hud')?statR():menu()}
 function stat(){if(UI.stat){UI.stat=false;UI.top=true;return show()}window.scrollTo(0,0);statR()}
 function statR(){UI.stat=true;const T=ST(),inv=Object.keys(S.inv),sv=UI.sv||'b';
- const mini=`<div class="stats mini">${[['Atq',T.atq],['Def',T.def+'%'],['Arm',T.arm],['Crít',T.crit+'%'],['Qi',T.qi],['Vel',T.vel]].map(([a,b])=>`<span><b>${b}</b>${a}</span>`).join('')}</div>`;
- let body=`<p>${Object.keys(NM).map(k=>NM[k]+' '+S.st[k]).join(' · ')}${I('atributos')}<br>Experiencia ${S.xp}${S.rn<REINOS.length-1?' / '+REINOS[S.rn+1].xp:''}</p><p class=tag>Equipo: ${['arma','esc','arm'].map(s=>S.eq[s]?nm(S.eq[s])+(S.mej[S.eq[s]]?' +'+S.mej[S.eq[s]]:''):'—').join(' · ')}</p>`;
+ const mini=`<div class="stats mini">${[['Atq',T.atq],['Def',T.def+'%'],['Arm',T.arm],['Crít',T.crit+'%'],['Qi',T.qi],['Vel',T.vel]].map(([a,b])=>`<span><b>${b}</b>${a}</span>`).join('')}${I('estadisticas')}</div>`;
+ let body=`<p>${Object.keys(NM).map(k=>NM[k]+' '+S.st[k]).join(' · ')}${I('atributos')}<br>Experiencia ${S.xp}${S.rn<REINOS.length-1?' / '+REINOS[S.rn+1].xp:''}${I('progreso')}</p><p class=tag>Equipo: ${['arma','esc','arm'].map(s=>S.eq[s]?nm(S.eq[s])+(S.mej[S.eq[s]]?' +'+S.mej[S.eq[s]]:''):'—').join(' · ')}${I('equipo')}</p>`;
  if(sv=='t')body+=pTec();
- else body+='<b class=t>Bolsa</b><div class=lst>'+(inv.map(k=>{const o=OBJ[k],e=['arma','esc','arm'].some(s=>S.eq[s]==k);return `<div class=rw><span>${has(k)}× ${nm(k)}${S.mej[k]?' +'+S.mej[k]:''}${e?' <span class=ok>(equipado)</span>':''}<br><span class=tag>${o.d}${sl(o)}</span></span>${EQT.includes(o.tipo)&&!e?`<button class=sm onclick="equipar('${k}')">Equipar</button>`:''}${o.tipo=='consumible'?`<button class=sm onclick="usar('${k}')">Usar</button>`:''}${o.tec?`<button class=sm onclick="usar('${k}')">Aprender</button>`:''}</div>`}).join('')||'<p class=tag>Bolsa vacía.</p>')+'</div>';
+ else body+='<b class=t>Bolsa'+I('objetos')+'</b><div class=lst>'+(inv.map(k=>{const o=OBJ[k],e=['arma','esc','arm'].some(s=>S.eq[s]==k);return `<div class=rw><span>${has(k)}× ${nm(k)}${S.mej[k]?' +'+S.mej[k]:''}${e?' <span class=ok>(equipado)</span>':''}<br><span class=tag>${o.d}${sl(o)}</span></span>${EQT.includes(o.tipo)&&!e?`<button class=sm onclick="equipar('${k}')">Equipar</button>`:''}${o.tipo=='consumible'?`<button class=sm onclick="usar('${k}')">Usar</button>`:''}${o.tec?`<button class=sm onclick="usar('${k}')">Aprender</button>`:''}</div>`}).join('')||'<p class=tag>Bolsa vacía.</p>')+'</div>';
  app.innerHTML=`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row><button class="${sv=='b'?'on':''}" onclick="UI.sv='b';statR()">Equipo y bolsa</button><button class="${sv=='t'?'on':''}" onclick="UI.sv='t';statR()">Técnicas de lucha</button></div>${body}<p class=tag>Finales: ${S.fin.join(', ')||'ninguno aún'}</p><button onclick="trampa()">+ 5000 <span class=oro>🪙</span></button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`}
 function mision(){if(S.fin.includes('Capítulo 1 completado'))return 'Capítulo 1 completado.';if(S.fl.investigas&&!S.fl.invFin)return 'Investiga las hierbas desaparecidas: visita el almacén.';if(S.dia<6)return `Prepárate para el Examen del Trimestre (desde el día 6; hoy es el día ${S.dia}).`;return 'Preséntate al Examen del Trimestre.'}
 function misionBox(){return S.sc=='patio'?`<div class=mision><b>★ Misión principal</b>${I('decisiones')}<br>${mision()}</div><p class=leyenda><span class=k-main>★ Historia</span><span class=k-side>Secundaria</span><span class=k-hunt>Caza</span><span class=k-shop>Tienda</span><span class=k-social>Social</span></p>`:''}

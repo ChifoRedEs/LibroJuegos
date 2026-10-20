@@ -190,8 +190,8 @@ function pFight(){const F=S.f,E=ENEMIGOS[F.id],C=S.cb,fs=cur().f,L={atq:'se prep
   const rb=S.rue.map(k=>{const r=RUNAS[k];return `<button ${S.fu<r.c?'disabled':''} onclick="turno('${k}')"><span class=runa>${r.sym}</span> ${r.n}${S.rn[k]?' +'+S.rn[k]:''}<br><span class=tag>${r.c} Furor · ${resumenRuna(k)}</span></button>`}).join('');
   const cons=Object.keys(S.inv).filter(k=>OBJ[k].tipo=='consumible').map(k=>`<button onclick="turno('${k}')">${OBJ[k].n} ×${has(k)}<br><span class=tag>${OBJ[k].d}</span></button>`).join('');
   return `<div class=fight><b>${E.n}</b> <span class=tag>${E.cat||''}</span>${bar(F.hp,F.mhp,'hp','Vida')}<div class=log>${F.lg}</div>
-<p class=tag>Intención: ${F.at?E.n+' está aturdido y no podrá atacar':E.n+' '+L[F.it]}.${est?'<br>'+est:''}</p>
-<div class=row><button onclick="turno('_a')">Golpe<br><span class=tag>+8 Furor</span></button>${rb}
+<p class=tag>Intención: ${F.at?E.n+' está aturdido y no podrá atacar':E.n+' '+L[F.it]}.${I('combate')}${est?'<br>'+est:''}</p>
+<p class=tag>Tus acciones${I('guardia')}</p><div class=row><button onclick="turno('_a')">Golpe<br><span class=tag>+8 Furor</span></button>${rb}
 ${S.fu>=100&&!C.ber?`<button class=ber onclick="turno('_b')">¡Furia berserker!<br><span class=tag>Daño doble 3 turnos · gasta todo el Furor</span></button>`:''}
 <button ${C.ber?'disabled':''} onclick="turno('_g')">Guardia<br><span class=tag>Reduce el daño · +6 Furor</span></button>
 ${fs.flee?`<button ${C.ber?'disabled':''} onclick="turno('_h')">Huir<br><span class=tag>2d6 + Astucia contra 9</span></button>`:''}${cons}</div></div>`}
@@ -254,7 +254,7 @@ const precio=(k,v)=>v?Math.floor(OBJ[k].pr/2):OBJ[k].pr;
 const qn=(k,v)=>{const p=precio(k,v),mx=v?has(k):(p?Math.floor(S.plata/p):0),q=UI.qty||1;return q=='max'?mx:Math.min(q,mx)};
 const bolsa=()=>{const m=Object.keys(S.inv).filter(k=>OBJ[k].tipo=='material').map(k=>has(k)+'× '+OBJ[k].n).join(', ');return `<p class=tag>Tu plata: <b class=oro>🪙 ${S.plata}</b><br>Tus materiales: ${m||'ninguno'}</p>`};
 function pShop(sc){const T=TIENDAS[sc.shop],v=UI.tab=='v';const L=v?Object.keys(S.inv).filter(k=>OBJ[k].tipo!='clave'):T.stock;
-  return `<p class=tag>${T.n}</p>${bolsa()}<div class=row><button class="${v?'':'on'}" onclick="UI.tab='c';show()">Comprar</button><button class="${v?'on':''}" onclick="UI.tab='v';show()">Vender</button></div>${qtyRow()}`+
+  return `<p class=tag>${T.n}${I('tiendas')}</p>${bolsa()}<div class=row><button class="${v?'':'on'}" onclick="UI.tab='c';show()">Comprar</button><button class="${v?'on':''}" onclick="UI.tab='v';show()">Vender</button></div>${qtyRow()}`+
   (L.map(k=>{const o=OBJ[k],p=precio(k,v),n=qn(k,v);return `<button ${n<1?'disabled':''} onclick="${v?'vender':'comprar'}('${k}')">${nm(k)}${v?' ×'+has(k):' <span class=tag>(tienes '+has(k)+')</span>'}<span class=pr>🪙 ${p*Math.max(n,1)}${n>1?' ('+n+')':''}</span><br><span class=tag>${o.d}${statsObj(o)}</span></button>`}).join('')||'<p class=tag>No llevas nada que vender.</p>')}
 function comprar(k){const n=qn(k,0);if(n<1)return;S.plata-=n*precio(k,0);add(k,n);save();show()}
 function vender(k){const n=qn(k,1);if(n<1)return;S.plata+=n*precio(k,1);add(k,-n);for(const s in S.eq)if(S.eq[s]==k&&!has(k))S.eq[s]=null;save();show()}
@@ -265,7 +265,7 @@ const coste=c=>`<span class=pr><span class=${S.plata>=c?'oro':'warn'}>🪙 ${c}<
 
 /* ---------- Forja ---------- */
 function pForja(){const ft=UI.ft||'f',eq=Object.keys(S.inv).filter(k=>EQT.includes(OBJ[k].tipo));
-  let h=`${bolsa()}<div class=row><button class="${ft=='f'?'on':''}" onclick="UI.ft='f';show()">Forjar · 2 h</button><button class="${ft=='m'?'on':''}" onclick="UI.ft='m';show()">Mejorar · 1 h</button></div><div class=lst>`;
+  let h=`<p class=tag>La forja${I('forja')}</p>${bolsa()}<div class=row><button class="${ft=='f'?'on':''}" onclick="UI.ft='f';show()">Forjar · 2 h</button><button class="${ft=='m'?'on':''}" onclick="UI.ft='m';show()">Mejorar · 1 h</button></div><div class=lst>`;
   if(ft=='f')h+=FORJA.map((f,i)=>{const y=S.plata>=f.plata&&Object.entries(f.mat).every(([k,n])=>has(k)>=n);
     return `<button ${y?'':'disabled'} onclick="forjar(${i})">${nm(f.r)}${coste(f.plata)}<br><span class=tag>${OBJ[f.r].d}${statsObj(OBJ[f.r])}<br>${reqs(f.mat)}</span></button>`}).join('');
   else h+=eq.map(k=>{const n=S.mej[k]||0,c=30*(n+1),y=n<5&&S.plata>=c&&has('hierro_pantano')>=n+1;
@@ -276,7 +276,7 @@ function mejorar(k){const n=S.mej[k]||0,c=30*(n+1);if(n>=5||S.plata<c||has('hier
 
 /* ---------- Caldero de la völva ---------- */
 const maxCal=a=>Math.min(...Object.entries(a.ing).map(([k,n])=>Math.floor(has(k)/n)));
-function pCaldero(){let h=`<p class=tag>Cada preparación cuesta 1 hora.</p>${bolsa()}${qtyRow()}<div class=lst>`,c='';
+function pCaldero(){let h=`<p class=tag>Cada preparación cuesta 1 hora.${I('alquimia')}</p>${bolsa()}${qtyRow()}<div class=lst>`,c='';
   CALDERO.forEach((a,i)=>{if(a.c!=c){c=a.c;h+=`<b class=t>${c}</b>`}const mx=maxCal(a),q=UI.qty||1,n=q=='max'?mx:Math.min(q,mx);
     h+=`<button ${n<1?'disabled':''} onclick="cocinar(${i})">${nm(a.r)} <span class=tag>(tienes ${has(a.r)})</span>${n>1?`<span class=pr>×${n} · ${n} h</span>`:''}<br><span class=tag>${reqs(a.ing)} · ${OBJ[a.r].d}</span></button>`});
   return h+'</div>'}
@@ -305,7 +305,7 @@ function grabar(r){const k=S.eq.arma;if(!k||S.grab[k]==r)return;const gratis=S.f
 function pRid(sc){const A=ACERT[sc.acertijo],id=sc.acertijo;
   if(S.fl['ac_'+id])return `<p class=ok>Ya resolviste este enigma.</p>`;
   if(S.fl['af_'+id]===S.dia)return `<p class=warn>Hoy ya has fallado. Vuelve otro día con la cabeza despejada.</p>`;
-  return `<div class=dice><b>${A.q}</b></div>`+shuf(A.o.map((o,i)=>i),S.dia*131+hs(id)).map(i=>`<button onclick="resolver('${id}',${i})">${A.o[i]}</button>`).join('')+`<p class=tag>Una respuesta equivocada te cuesta 1 hora y no podrás reintentarlo hasta mañana.</p>`}
+  return `<div class=dice><b>${A.q}</b>${I('acertijos')}</div>`+shuf(A.o.map((o,i)=>i),S.dia*131+hs(id)).map(i=>`<button onclick="resolver('${id}',${i})">${A.o[i]}</button>`).join('')+`<p class=tag>Una respuesta equivocada te cuesta 1 hora y no podrás reintentarlo hasta mañana.</p>`}
 function resolver(id,i){const A=ACERT[id],b=cur().back;
   if(i==A.k){S.fl['ac_'+id]=true;apply(A.fx);UI.res=`<p class=ok>${A.ok}</p><button onclick="go('${b}')">Continuar</button>`}
   else{S.fl['af_'+id]=S.dia;avanza(1);UI.res=`<p class=warn>${A.ko}</p><button onclick="go('${b}')">Continuar</button>`}
@@ -341,14 +341,14 @@ function eqRuna(k){const e=S.rue;if(e.includes(k)){if(e.length>1)S.rue=e.filter(
 function trampa(){if(!S)return;S.plata+=5000;save();statR()}
 function stat(){if(UI.stat){UI.stat=false;UI.top=true;return show()}window.scrollTo(0,0);statR()}
 function statR(){UI.stat=true;const T=ST(),sv=UI.sv||'b',inv=Object.keys(S.inv);
-  const mini=`<div class="stats mini">${[['Atq',T.atq],['Def',T.def+'%'],['Arm',T.arm],['Crít',T.crit+'%'],['Vel',T.vel],['Runas',S.rue.length+'/'+MAX_RUNAS]].map(([a,b])=>`<span><b>${b}</b>${a}</span>`).join('')}</div>`;
+  const mini=`<div class="stats mini">${[['Atq',T.atq],['Def',T.def+'%'],['Arm',T.arm],['Crít',T.crit+'%'],['Vel',T.vel],['Runas',S.rue.length+'/'+MAX_RUNAS]].map(([a,b])=>`<span><b>${b}</b>${a}</span>`).join('')}${I('estadisticas')}</div>`;
   const msg=UI.tm||UI.nota?`<p class=ok>${[UI.nota,UI.tm].filter(Boolean).join('<br>')}</p>`:'';UI.tm=null;UI.nota=null;
   let body=msg;
   if(sv=='b'){
-    body+=`<p>${Object.keys(NM).map(k=>NM[k]+' '+S.st[k]).join(' · ')}${I('atributos')}<br>Gloria ${S.gl}${S.rg<RANGOS.length-1?' / '+RANGOS[S.rg+1].gl+' para '+RANGOS[S.rg+1].n:''}</p>`;
-    body+='<b class=t>Equipo</b><div class=lst>'+[['arma','Arma'],['esc','Escudo'],['arm','Armadura']].map(([s,l])=>{const k=S.eq[s];
+    body+=`<p>${Object.keys(NM).map(k=>NM[k]+' '+S.st[k]).join(' · ')}${I('atributos')}<br>Gloria ${S.gl}${S.rg<RANGOS.length-1?' / '+RANGOS[S.rg+1].gl+' para '+RANGOS[S.rg+1].n:''}${I('progreso')}</p>`;
+    body+='<b class=t>Equipo'+I('equipo')+'</b><div class=lst>'+[['arma','Arma'],['esc','Escudo'],['arm','Armadura']].map(([s,l])=>{const k=S.eq[s];
       return `<div class=rw><span>${l}: ${k?nm(k)+(S.mej[k]?' +'+S.mej[k]:''):'—'}${k?`<br><span class=tag>${OBJ[k].d}${statsObj(OBJ[k])}${S.grab&&S.grab[k]?`<br>Runa grabada: <span class=runa>${RUNAS[S.grab[k]].sym}</span> ${RUNAS[S.grab[k]].n} · ${GRABADO[S.grab[k]].d}`:''}</span>`:''}</span>${k?`<button class=sm onclick="desequipar('${s}')">Quitar</button>`:''}</div>`}).join('')+'</div>';
-    body+='<b class=t>Bolsa</b><div class=lst>'+(inv.map(k=>{const o=OBJ[k],e=Object.values(S.eq).includes(k);
+    body+='<b class=t>Bolsa'+I('objetos')+'</b><div class=lst>'+(inv.map(k=>{const o=OBJ[k],e=Object.values(S.eq).includes(k);
       return `<div class=rw><span>${has(k)}× ${nm(k)}${S.mej[k]?' +'+S.mej[k]:''}${e?' <span class=ok>(equipado)</span>':''}<br><span class=tag>${o.d}${statsObj(o)}</span></span>${EQT.includes(o.tipo)&&!e?`<button class=sm onclick="equipar('${k}')">Equipar</button>`:''}${o.tipo=='consumible'?`<button class=sm onclick="usar('${k}')">Usar</button>`:''}${o.tipo=='piedra'?`<button class=sm onclick="usar('${k}')">Aprender</button>`:''}</div>`}).join('')||'<p class=tag>Bolsa vacía.</p>')+'</div>'}
   else if(sv=='r'){
     body+=`<p class=tag>Llevas ${S.rue.length}/${MAX_RUNAS} runas preparadas para el combate. Las runas gastan Furor: lo ganas golpeando (+8), cubriéndote (+6) y recibiendo heridas (+10). Con el Furor al máximo puedes desatar la furia berserker.</p>`;
