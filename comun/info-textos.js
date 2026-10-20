@@ -19,11 +19,13 @@
              decisiones, bloqueadas, dados, atributos
    TANDA 2 · estadisticas, combate, guardia, equipo, tiendas, forja,
              objetos, acertijos, progreso, alquimia
+   TANDA 3 · Dao: qi, tecnicas, reinos, caza, social, tablon, comedor
+             Senda: furor, berserker, runas
    ===================================================================== */
 LJInfo.registrar({
 
 /* 1 ─────────────────────────────────────────────────────────────── */
-cabecera:{ ver:['tiempo','estado'], t:'La cabecera', h:{
+cabecera:{ ver:{'*':['tiempo','estado'],dao:['qi'],senda:['furor']}, t:'La cabecera', h:{
  '*':'<p>La franja de la parte de arriba te acompaña durante toda la partida y te muestra cómo estás de un vistazo. Se queda fija mientras lees.</p>',
  dao:'<h3>Primera línea</h3><ul>'+
   '<li><b>Tu Reino de cultivo</b> (por ejemplo, «Condensación de Qi»): cuánto has avanzado en tu camino de poder.</li>'+
@@ -183,7 +185,7 @@ atributos:{ ver:['dados','estado'], t:'Los atributos', h:{
 /* ═══════════════════════ TANDA 2 ═══════════════════════ */
 
 /* 11 ────────────────────────────────────────────────────────────── */
-estadisticas:{ ver:['equipo','combate'], t:'Estadísticas de combate', h:{
+estadisticas:{ ver:{'*':['equipo','combate'],dao:['qi']}, t:'Estadísticas de combate', h:{
  '*':'<p>Son los seis números de la franja que ves en <b>Estado</b>. Resumen de cómo luchas: se calculan solos a partir de tu personaje y de lo que llevas puesto.</p>'+
   '<ul>'+
   '<li><b>Atq (ataque):</b> el daño que se suma a tus golpes.</li>'+
@@ -200,7 +202,7 @@ estadisticas:{ ver:['equipo','combate'], t:'Estadísticas de combate', h:{
 }},
 
 /* 12 ────────────────────────────────────────────────────────────── */
-combate:{ ver:['guardia','estadisticas'], t:'El combate por turnos', h:{
+combate:{ ver:{'*':['guardia','estadisticas'],dao:['qi','tecnicas'],senda:['furor','runas']}, t:'El combate por turnos', h:{
  '*':'<p>En un combate, tú y el enemigo os turnáis. <b>Tú actúas primero</b>; después, si sigue en pie, ataca él.</p>'+
   '<h3>Cómo jugar un turno</h3><ol>'+
   '<li><b>Lee la «Intención» del enemigo.</b> Te avisa de lo que hará en su turno. Si dice que <b>carga</b> un golpe, su próximo ataque hará <b>doble daño</b>: es buen momento para cubrirte.</li>'+
@@ -219,7 +221,7 @@ combate:{ ver:['guardia','estadisticas'], t:'El combate por turnos', h:{
 }},
 
 /* 13 ────────────────────────────────────────────────────────────── */
-guardia:{ ver:['combate'], t:'Guardia y huir', h:{
+guardia:{ ver:{'*':['combate'],senda:['berserker']}, t:'Guardia y huir', h:{
  '*':'<h3>Guardia</h3>'+
   '<p>Te cubres durante este turno: el ataque del enemigo hace un <b>60 % menos de daño</b>. Gasta tu turno.</p>'+
   '<h3>Huir</h3>'+
@@ -300,7 +302,7 @@ acertijos:{ ver:['tiempo'], t:'Acertijos y enigmas', h:{
 }},
 
 /* 19 ────────────────────────────────────────────────────────────── */
-progreso:{ ver:['estadisticas'], t:'Progreso: experiencia y rangos', h:{
+progreso:{ ver:{'*':['estadisticas'],dao:['reinos']}, t:'Progreso: experiencia y rangos', h:{
  dao:'<p>Tu progreso en el Dao tiene dos vías distintas.</p>'+
   '<h3>Experiencia y Reinos</h3>'+
   '<p>Los combates y algunas misiones te dan <b>experiencia (XP)</b>. En Estado ves cuánta llevas y cuánta necesitas para el siguiente Reino.</p>'+
@@ -325,6 +327,147 @@ alquimia:{ ver:['objetos','tiempo'], t:'Preparar pociones', h:{
   '<p class="tip">Si pides una cantidad grande, comprueba antes la hora: ×5 son 5 horas de tu día.</p>',
  dao:'<p>En el Dao se prepara en el <b>Horno de Alquimia</b>: las hierbas y otras plantas se refinan en píldoras.</p>',
  senda:'<p>En la Senda se prepara en el <b>caldero de la völva</b>: remedios, como ungüentos y tónicos, y bebidas, como el hidromiel.</p>'
+}},
+
+
+/* ═══════════════════════ TANDA 3 ═══════════════════════ */
+
+/* 21 · Dao ──────────────────────────────────────────────────────── */
+qi:{ ver:['tecnicas','combate'], t:'El Qi', h:{
+ dao:'<p>El Qi es la energía de tu cultivo. Es la <b>barra verde</b> de la cabecera («Qi 30/30») y se gasta al usar técnicas de lucha.</p>'+
+  '<h3>Cuánto gastas</h3>'+
+  '<p>Cada técnica indica su coste, por ejemplo «6 Qi». Si no tienes Qi suficiente, el botón de esa técnica se apaga. La técnica básica, el Puño del Monte, <b>no gasta Qi</b>: nunca te quedas sin ataque.</p>'+
+  '<h3>Cómo se recupera</h3><ul>'+
+  '<li><b>Meditar</b> en combate: +8 de Qi (gasta tu turno).</li>'+
+  '<li><b>Píldora de Concentración:</b> +20 de Qi. Los elixires también devuelven Qi.</li>'+
+  '<li><b>Dormir:</b> lo recuperas todo.</li>'+
+  '<li><b>Comer</b> en el comedor: algunos platos dan Qi.</li>'+
+  '<li><b>Subir de Reino:</b> +20 de Qi máximo y te rellena la barra.</li></ul>'+
+  '<p class="tip">El «Qi» de la franja de Estado es otra cosa: tu poder de Qi. Cada punto suma +2 de daño a las técnicas que gastan Qi.</p>'
+}},
+
+/* 22 · Dao ──────────────────────────────────────────────────────── */
+tecnicas:{ ver:['qi','objetos'], t:'Técnicas de lucha', h:{
+ dao:'<p>Las técnicas son tus ataques en combate. Las gestionas en <b>Estado → «Técnicas de lucha»</b>.</p>'+
+  '<h3>Qué ves de cada una</h3><ul>'+
+  '<li>Su <b>nombre</b>; el color indica la rareza (de común a legendaria). Las más raras pegan más, pero gastan más Qi.</li>'+
+  '<li>Su <b>coste en Qi</b> y su <b>daño aproximado</b>.</li>'+
+  '<li>El <b>atributo</b> del que depende (Cuerpo, Espíritu o Mente): cada punto suma +2 de daño.</li></ul>'+
+  '<h3>Equipar</h3>'+
+  '<p>Llevas <b>hasta 4 técnicas</b> a la vez en combate. Pulsa <b>«Equipar»</b> o <b>«Quitar»</b>. Siempre debes llevar al menos una. Si ya llevas 4 y equipas otra, sustituye a la más antigua.</p>'+
+  '<h3>Aprender nuevas</h3><ol>'+
+  '<li>Consigue un <b>pergamino</b>: en la tienda del Maestro Yun, como botín de algunos enemigos o como premio de enigmas.</li>'+
+  '<li>En Estado, en tu bolsa, pulsa <b>«Aprender»</b>.</li>'+
+  '<li>Si tenías algún hueco libre, se equipa sola.</li></ol>'+
+  '<h3>Mejorar</h3>'+
+  '<p>El botón <b>«Mejorar 🪙N»</b> sube la técnica hasta <b>+5</b>. Cada nivel suma un <b>12 % de daño</b> y cuesta más que el anterior.</p>'
+}},
+
+/* 23 · Dao ──────────────────────────────────────────────────────── */
+reinos:{ ver:['progreso'], t:'Reino y rango', h:{
+ dao:'<p>En la cabecera ves dos cosas que se parecen pero son <b>distintas</b>:</p>'+
+  '<h3>Reino de cultivo</h3>'+
+  '<p>Está en la primera línea («Condensación de Qi»…). Mide tu <b>poder real</b> y sube al ganar experiencia en combates y misiones. Mejora tu Vida, tu Qi y tu daño, y te abre nuevas zonas de caza y recetas de forja.</p>'+
+  '<h3>Rango en la secta</h3>'+
+  '<p>Está en la última línea («Aspirante»…). Mide tu <b>posición</b> dentro de la secta y lo concede la <b>historia</b>, al superar pruebas y logros. Algunas opciones piden un rango mínimo.</p>'+
+  '<div class="ej"><p>Puedes tener un Reino alto y seguir siendo Aspirante, o al revés: avanzan por separado.</p></div>'
+}},
+
+/* 24 · Dao ──────────────────────────────────────────────────────── */
+caza:{ ver:['combate','progreso'], t:'Zonas de caza y entrenamiento', h:{
+ dao:'<p>Cazar es combatir bestias, villanos y espíritus para ganar <b>experiencia, monedas y botín</b>.</p>'+
+  '<h3>Elegir zona</h3>'+
+  '<p>Las tierras se dividen en tres niveles, según tu Reino:</p><ul>'+
+  '<li><b>Nivel 1 · Estribaciones:</b> desde el principio.</li>'+
+  '<li><b>Nivel 2 · Tierras Altas:</b> con el Reino Espiritual de Qi.</li>'+
+  '<li><b>Nivel 3 · Cumbres Prohibidas:</b> con el Reino Celestial de Qi.</li></ul>'+
+  '<p>Las zonas que aún no puedes pisar muestran «requiere» y el Reino necesario. Más nivel significa enemigos más duros, pero también más experiencia y mejor botín.</p>'+
+  '<h3>Dentro de una zona</h3><ul>'+
+  '<li><b>Buscar presa · 2 h:</b> te topas con un enemigo al azar de la zona y empieza un combate. Si huyes, vuelves a la lista de zonas.</li>'+
+  '<li><b>Entrenar · 3 h:</b> una prueba de dados. Si la superas, ganas experiencia; si fallas, pierdes algo de Vida. Solo puedes entrenar <b>una vez al día</b> en cada zona.</li></ul>'+
+  '<p class="tip">Antes de subir de nivel, comprueba tu Vida, tu Qi y tu equipo.</p>'
+}},
+
+/* 25 · Dao ──────────────────────────────────────────────────────── */
+social:{ ver:['dados','acertijos','combate'], t:'Socializar', h:{
+ dao:'<p>Cada día te cruzas con <b>cinco personajes distintos</b>. Mañana serán otros. Hablar con cualquiera cuesta <b>1 hora</b>.</p>'+
+  '<h3>Qué te pueden ofrecer</h3><ul>'+
+  '<li><b>Charla:</b> siempre sale bien. Pequeña recompensa: experiencia, monedas, Vida o Qi.</li>'+
+  '<li><b>Reto:</b> una prueba de dados con el atributo que indica la opción. Si la superas, recompensa; si fallas, pierdes un poco de dinero o de Vida.</li>'+
+  '<li><b>Duelo:</b> un combate (se marca con el símbolo ▲ rojo).</li>'+
+  '<li><b>Enigma:</b> un acertijo que puedes resolver una sola vez.</li></ul>'+
+  '<p>Con cada personaje solo puedes hacerlo <b>una vez al día</b>.</p>'+
+  '<p class="tip">Antes de aceptar un reto, mira el atributo que pide entre paréntesis y comprueba que lo llevas bien.</p>'
+}},
+
+/* 26 · Dao ──────────────────────────────────────────────────────── */
+tablon:{ ver:['tiempo','dados'], t:'El tablón de misiones', h:{
+ dao:'<p>El tablón ofrece encargos de la secta. Se renuevan <b>cada dos días</b>: hay cuatro a la vez.</p>'+
+  '<h3>Qué dice cada línea</h3>'+
+  '<p>Nombre del encargo · horas que tarda · atributo de la prueba · recompensa (experiencia, monedas y a veces un objeto) · «hasta el día N».</p>'+
+  '<h3>Cómo se hace</h3><ol>'+
+  '<li>Pulsa el encargo. Se gastan las horas indicadas.</li>'+
+  '<li>Se hace una prueba de dados con ese atributo.</li>'+
+  '<li>Si la superas, recibes la recompensa. Si fallas, pierdes <b>5 de Vida</b>.</li></ol>'+
+  '<p>Cada encargo se hace <b>una sola vez</b>, salga bien o mal.</p>'+
+  '<p class="tip">Solo puedes empezar uno si te da tiempo de terminarlo <b>antes de medianoche</b>. Si no, aparece bloqueado hasta el día siguiente.</p>'
+}},
+
+/* 27 · Dao ──────────────────────────────────────────────────────── */
+comedor:{ ver:['tiempo','cabecera'], t:'El comedor', h:{
+ dao:'<p>Madre Lin cocina cada día un menú de <b>cinco platos</b> que cambia de un día para otro.</p>'+
+  '<h3>Qué ves en cada plato</h3><ul>'+
+  '<li>Su <b>precio</b> en monedas.</li>'+
+  '<li>Cuánta <b>Vida</b> y cuánto <b>Qi</b> recuperas.</li>'+
+  '<li>Que cuesta <b>1 hora</b>.</li></ul>'+
+  '<p>Pulsa un plato para comerlo. Si no te alcanza el dinero, aparece apagado. Puedes pedir más de uno.</p>'+
+  '<p class="tip">Es una buena forma de curarte sin gastar píldoras. Compara cuánta Vida te da cada plato por moneda.</p>'
+}},
+
+/* 28 · Senda ────────────────────────────────────────────────────── */
+furor:{ ver:['runas','berserker'], t:'El Furor', h:{
+ senda:'<p>El Furor es la <b>barra dorada</b> de la cabecera. Mide tu rabia de guerrero, de 0 a 100, y alimenta tus runas.</p>'+
+  '<h3>Cómo se gana</h3><ul>'+
+  '<li><b>Golpear:</b> +8.</li>'+
+  '<li><b>Cubrirte con la guardia:</b> +6.</li>'+
+  '<li><b>Recibir una herida:</b> +10.</li>'+
+  '<li>Algunas runas, como Wunjo o Ingwaz, y el <b>cuerno de hidromiel</b> (+30).</li></ul>'+
+  '<h3>Cómo se gasta</h3>'+
+  '<p>Cada runa cuesta Furor, por ejemplo «10 Furor». Si no llegas, el botón de esa runa se apaga.</p>'+
+  '<h3>Otros detalles</h3><ul>'+
+  '<li>Empiezas todo combate con <b>al menos 20</b>.</li>'+
+  '<li>Se <b>conserva</b> entre combates.</li>'+
+  '<li><b>Dormir</b> lo vacía por completo.</li>'+
+  '<li>Con <b>100</b> puedes desatar la furia berserker.</li></ul>'+
+  '<p class="tip">Golpe y Guardia son tus fuentes seguras de Furor. Si te quedas sin él, úsalos hasta recuperar.</p>'
+}},
+
+/* 29 · Senda ────────────────────────────────────────────────────── */
+berserker:{ ver:['furor','guardia'], t:'Furia berserker', h:{
+ senda:'<p>Cuando tu Furor llega a <b>100</b>, en el combate aparece el botón <b>«¡Furia berserker!»</b>.</p>'+
+  '<h3>Qué hace</h3><ul>'+
+  '<li>Durante tus <b>3 turnos siguientes</b>, tu Golpe y tus runas de daño hacen <b>el doble</b>.</li>'+
+  '<li>Gasta <b>todo tu Furor</b>: vuelve a 0.</li>'+
+  '<li>Activarla <b>no gasta tu turno</b>: puedes golpear enseguida.</li></ul>'+
+  '<h3>Lo que no puedes hacer mientras dura</h3><ul>'+
+  '<li>Cubrirte con la guardia.</li><li>Huir del combate.</li></ul>'+
+  '<p>Sí puedes seguir usando runas y objetos.</p>'+
+  '<p class="tip">Úsala contra enemigos con mucha Vida o para rematar rápido. Si necesitas protegerte, espera a que termine.</p>'
+}},
+
+/* 30 · Senda ────────────────────────────────────────────────────── */
+runas:{ ver:['furor','berserker'], t:'Las runas', h:{
+ senda:'<p>Las runas son tus <b>poderes especiales</b> en combate. Hay 24, repartidas en tres grupos (ættir): Freyr, Hagal y Tyr. Las vas consiguiendo según avanza la historia.</p>'+
+  '<h3>Aprender una runa</h3>'+
+  '<p>Con piedras rúnicas (en Estado → bolsa → «Aprender») y con otras recompensas de la historia. Si tienes hueco, se prepara sola.</p>'+
+  '<h3>Prepararlas</h3><ol>'+
+  '<li>Abre <b>Estado → «Runas»</b>.</li>'+
+  '<li>Pulsa <b>«Preparar»</b> en las que quieras llevar al combate, o <b>«Quitar»</b> para dejarlas.</li></ol>'+
+  '<p>Puedes llevar <b>hasta 4</b> a la vez, y al menos una. Si ya llevas 4, quita una antes.</p>'+
+  '<h3>En combate</h3>'+
+  '<p>Cada runa gasta <b>Furor</b> y su botón resume su efecto: daño, curación, escudo, aturdir, esquivar, quemar, regenerar… El daño suma tu atributo (×2) y 3 por rango.</p>'+
+  '<h3>Mejorarlas</h3>'+
+  '<p>En el taller de la völva: de +1 a <b>+5</b>, con <b>+12 % de efecto</b> por nivel. Cada mejora cuesta <b>1 hora</b> y plata, más cara cuanto más avanzado es su grupo.</p>'
 }}
 });
 

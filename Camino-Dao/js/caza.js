@@ -24,7 +24,7 @@ const ZONAS=[
  {id:'cumbre',n:'Cumbre del Trueno',v:2,s:'es',d:'Aquí el cielo escribe con rayos y no admite correcciones.',pool:['asesino','guardian','demonio']}];
 function setZona(id){S.zn=id}
 function setPresa(){const z=ZONAS.find(z=>z.id==S.zn);S.fe=z.pool[R(0,z.pool.length-1)]}
-GEN.cazar=()=>({h:'Zonas de caza y entrenamiento',t:['Cuanto más alto tu reino, más peligrosas las tierras que puedes pisar. Elige dónde cazar o entrenar.'],c:[
+GEN.cazar=()=>({h:'Zonas de caza y entrenamiento',t:['Cuanto más alto tu reino, más peligrosas las tierras que puedes pisar. Elige dónde cazar o entrenar.'+I('caza')],c:[
  ...ZONAS.map(z=>({x:`${NIVELES[z.v].n} · ${z.n}`+(S.rn<NIVELES[z.v].rn?` · requiere ${NIVELES[z.v].r}`:''),to:'zona',fn:['setZona',z.id],req:{rn:NIVELES[z.v].rn},k:'hunt'})),
  {x:'Jardines Exteriores (versión clásica)',to:'jardines',k:'hunt'},{x:'Bosque de Bambú (versión clásica)',to:'bosque',k:'hunt'},{x:'Volver al patio',to:'patio'}]});
 GEN.zona=()=>{const z=ZONAS.find(z=>z.id==S.zn),v=z.v,k=`ent_${z.id}_${S.dia}`;return{h:z.n,t:[NIVELES[v].n,z.d],c:[

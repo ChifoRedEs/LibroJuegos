@@ -37,7 +37,7 @@ function apply(f){if(!f)return;
  if(f.mqi){S.mqi+=f.mqi;S.qi+=f.mqi}
  if(f.xp){S.xp+=f.xp;while(S.rn<REINOS.length-1&&S.xp>=REINOS[S.rn+1].xp){S.rn++;S.mhp+=40;S.mqi+=20;S.hp=S.mhp;S.qi=S.mqi;UI.nota='Avanzas al reino «'+REINOS[S.rn].n+'».'}}}
 const bar=(v,m,c,l)=>`<div class=bw><span>${l} ${v}/${m}</span><div class=bar><i class=${c} style="width:${Math.max(0,v/m*100)}%"></i></div></div>`;
-function hud(){const h=S.hora;return `<header class=hud><div class=rw><b class=rn>${REINOS[S.rn].n}</b><span>Día ${S.dia} · ${h<13?'Mañana':h<19?'Tarde':'Noche'} ${h}:00</span><span class=oro>🪙 ${S.oro}</span></div><div class=rw>${bar(S.hp,S.mhp,'hp','Vida')}${bar(S.qi,S.mqi,'qi','Qi')}${I('cabecera')}</div><div class=rw><span>${RANGOS[S.rg]}</span><span><button class=sm onclick="stat()">Estado</button>${I('estado')} <button class=sm onclick="menu()">Menú</button></span></div></header>`}
+function hud(){const h=S.hora;return `<header class=hud><div class=rw><b class=rn>${REINOS[S.rn].n}</b><span>Día ${S.dia} · ${h<13?'Mañana':h<19?'Tarde':'Noche'} ${h}:00</span><span class=oro>🪙 ${S.oro}</span></div><div class=rw>${bar(S.hp,S.mhp,'hp','Vida')}${bar(S.qi,S.mqi,'qi','Qi')}${I('cabecera')}</div><div class=rw><span>${RANGOS[S.rg]}${I('reinos')}</span><span><button class=sm onclick="stat()">Estado</button>${I('estado')} <button class=sm onclick="menu()">Menú</button></span></div></header>`}
 
 /* ---------- flujo ---------- */
 function go(id){let sc=SC[id];if(!sc){app.innerHTML=`<p class=warn>Escena no encontrada: ${id}</p><button onclick="menu()">Menú</button>`;return}

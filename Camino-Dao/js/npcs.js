@@ -17,7 +17,7 @@ const NPCS=[
  N_('ming','Poeta Ming','charla','versos mal rimados',['«¡Oh luna, oh luna! Rima con "fortuna", y poco más.»','«Escribo odas a mi cena. Es mi musa más constante.»'],{rw:{xp:10,oro:10}}),
  N_('dong','Capitán Dong','reto','pulso con la guardia',['«¿Un pulso, discípulo? Prepárate para llorar con dignidad.»','«La guardia no duerme. Yo sí, pero a ratos.»'],{s:'cu',dc:11,rw:{item:'pildora_salud'},pn:{hp:-8}})];
 function setNpc(id){S.npc=id}function setFe(e){S.fe=e}function setRa(id){S.ra=id}
-GEN.socializar=()=>({h:'Socializar',t:['La secta y la ciudad cercana bullen de gente. Hoy, entre todos, te cruzas con algunos rostros. Mañana serán otros.'],c:[
+GEN.socializar=()=>({h:'Socializar',t:['La secta y la ciudad cercana bullen de gente. Hoy, entre todos, te cruzas con algunos rostros. Mañana serán otros.'+I('social')],c:[
  ...shuf(NPCS.map((n,i)=>i),S.dia*977+13).slice(0,5).map(i=>{const n=NPCS[i];return{x:`${n.n} · ${n.e} · 1 h`,to:'npc_tema',fn:['setNpc',n.id],fx:{t:1},k:n.t=='lucha'?'hunt':'social'}}),
  {x:'Barracones (el rincón de Wang)',to:'barracones',k:'social'},{x:'Volver al patio',to:'patio'}]});
 GEN.npc_tema=()=>{const n=NPCS.find(x=>x.id==S.npc),key=`n_${n.id}_${S.dia}`,l=n.d[(S.dia+hs(n.id))%n.d.length],t=[`<b>${n.n}</b> · <span class=tag>${n.e}</span>`,l],c=[];

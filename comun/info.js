@@ -13,7 +13,8 @@
      LJInfo.fila('dormir')              // → icono alineado a la derecha del botón anterior
 
    Los textos viven en comun/info-textos.js (uno por función).
-   Cada texto: LJInfo.registrar({ id:{ t:'Título', h:{ '*':'común', dao:'solo Dao', senda:'solo Senda' } } })
+   Cada texto: LJInfo.registrar({ id:{ t:'Título', ver:['otro_id'], h:{ '*':'común', dao:'solo Dao', senda:'solo Senda' } } })
+   («ver» también puede ser {'*':[…], dao:[…], senda:[…]} para enlazar distinto en cada libro)
    ===================================================================== */
 (function(){
 'use strict';
@@ -26,8 +27,9 @@ function registrar(obj){ for(var k in obj) TEXTOS[k] = obj[k]; }
 function cuerpo(e){
   var h = e.h;
   h = (typeof h === 'string') ? h : (h['*'] || '') + (h[LJInfo.libro] || '');
-  if(e.ver && e.ver.length){
-    var bs = e.ver.filter(function(v){ return TEXTOS[v]; }).map(function(v){
+  var ver = e.ver ? (Array.isArray(e.ver) ? e.ver : (e.ver['*'] || []).concat(e.ver[LJInfo.libro] || [])) : [];
+  if(ver.length){
+    var bs = ver.filter(function(v){ return TEXTOS[v]; }).map(function(v){
       return '<button type="button" data-ver="' + v + '">' + TEXTOS[v].t + '</button>';
     }).join('');
     if(bs) h += '<div class="ver"><h3>Ver también</h3>' + bs + '</div>';
