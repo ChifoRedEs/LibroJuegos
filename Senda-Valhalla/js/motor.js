@@ -66,7 +66,7 @@ function ok(r){if(!r)return true;
 function avanza(h){S.hora+=h;
   while(S.hora>=24){S.hora-=24;S.dia++;S.hp=Math.min(S.mhp,S.hp+25);
     nota(`Amanece el día ${S.dia}. Recuperas 25 de Vida.`);
-    for(const x of SENALES)if(x.o[S.dia]&&x.cond(S))nota(x.o[S.dia]);revisaJur()}}
+    for(const x of SENALES)if(x.o[S.dia]&&x.cond(S))nota(x.o[S.dia]+I('senales'));revisaJur()}}
 function ganaGloria(n){S.gl=Math.max(0,S.gl+n);
   while(S.rg<RANGOS.length-1&&S.gl>=RANGOS[S.rg+1].gl){S.rg++;S.mhp+=25;S.hp=S.mhp;
     nota(`Las valquirias te miran: ahora eres <b>${RANGOS[S.rg].n}</b>. Tu Vida máxima sube a ${S.mhp}.`)}}
@@ -86,10 +86,10 @@ function apply(f){if(!f)return;
   if(f.st)for(const k in f.st)S.st[k]+=f.st[k];
   if(f.mhp){S.mhp+=f.mhp;S.hp+=f.mhp}
   if(f.hilo)S.hilos+=f.hilo;
-  if(f.favor&&!S.fav[f.favor]){S.fav[f.favor]=1;nota(`Obtienes el <b>${FAV[f.favor].n}</b>: ${FAV[f.favor].d}`)}
+  if(f.favor&&!S.fav[f.favor]){S.fav[f.favor]=1;nota(`Obtienes el <b>${FAV[f.favor].n}</b>: ${FAV[f.favor].d}${I('favores')}`)}
   if(f.jura&&!S.jur.some(j=>j.id==f.jura.id)){const j=f.jura;
     S.jur.push({id:j.id,txt:j.txt,hasta:S.dia+j.dias,gl:j.gl,est:'activo'});
-    nota(`Has jurado: «${j.txt}». Tienes hasta el final del día ${S.dia+j.dias}.`)}
+    nota(`Has jurado: «${j.txt}». Tienes hasta el final del día ${S.dia+j.dias}.${I('juramentos')}`)}
   if(f.cumple){const j=S.jur.find(x=>x.id==f.cumple&&x.est=='activo');
     if(j){j.est='cumplido';nota(`Juramento cumplido: «${j.txt}». +${j.gl} de Gloria.`);ganaGloria(j.gl);
       S.saga.push(`Cumplió su juramento: ${j.txt.charAt(0).toLowerCase()+j.txt.slice(1)}.`)}}
@@ -164,7 +164,7 @@ function retry(){if(!S.cp){S=nuevo(S.g);return go(INICIO)}S=JSON.parse(S.cp);S.f
 function tirada(k,re){const a=R(1,6),b=R(1,6),o=S.fav.odin?1:0,t=a+b+S.st[k.s]+o,g=t>=k.dc;UI.tk=k;
   let h=`<div class=dice>🎲 ${a} + ${b} + ${NM[k.s]} ${S.st[k.s]}${o?' + Odín 1':''} = <b>${t}</b> contra ${k.dc}: <b class=${g?'ok':'warn'}>${g?'Éxito':'Fallo'}</b>${I('dados')}${re?'<br><span class=tag>Las Nornas han vuelto a tejer tu destino.</span>':''}</div>`;
   if(g)h+=`<button onclick="finTirada(1)">Continuar</button>`;
-  else{if(S.hilos>0)h+=`<button onclick="hilo()">Tirar de un hilo de las Nornas y repetir (te quedan ${S.hilos})</button>`;
+  else{if(S.hilos>0)h+=`<button onclick="hilo()">Tirar de un hilo de las Nornas y repetir (te quedan ${S.hilos})</button>${IF('hilos')}`;
     h+=`<button onclick="finTirada(0)">Aceptar el destino</button>`}
   UI.res=h;save();show()}
 function hilo(){if(S.hilos<1||!UI.tk)return;S.hilos--;tirada(UI.tk,true)}
@@ -190,7 +190,7 @@ function pFight(){const F=S.f,E=ENEMIGOS[F.id],C=S.cb,fs=cur().f,L={atq:'se prep
   const rb=S.rue.map(k=>{const r=RUNAS[k];return `<button ${S.fu<r.c?'disabled':''} onclick="turno('${k}')"><span class=runa>${r.sym}</span> ${r.n}${S.rn[k]?' +'+S.rn[k]:''}<br><span class=tag>${r.c} Furor · ${resumenRuna(k)}</span></button>`}).join('');
   const cons=Object.keys(S.inv).filter(k=>OBJ[k].tipo=='consumible').map(k=>`<button onclick="turno('${k}')">${OBJ[k].n} ×${has(k)}<br><span class=tag>${OBJ[k].d}</span></button>`).join('');
   return `<div class=fight><b>${E.n}</b> <span class=tag>${E.cat||''}</span>${bar(F.hp,F.mhp,'hp','Vida')}<div class=log>${F.lg}</div>
-<p class=tag>Intención: ${F.at?E.n+' está aturdido y no podrá atacar':E.n+' '+L[F.it]}.${I('combate')}${est?'<br>'+est:''}</p>
+<p class=tag>Intención: ${F.at?E.n+' está aturdido y no podrá atacar':E.n+' '+L[F.it]}.${I('combate')}${est?'<br>'+est+I('estados'):''}</p>
 <p class=tag>Tus acciones${I('guardia')}</p><div class=row><button onclick="turno('_a')">Golpe<br><span class=tag>+8 Furor</span></button>${rb}
 ${S.fu>=100&&!C.ber?`<button class=ber onclick="turno('_b')">¡Furia berserker!<br><span class=tag>Daño doble 3 turnos · gasta todo el Furor</span></button>`:''}
 <button ${C.ber?'disabled':''} onclick="turno('_g')">Guardia<br><span class=tag>Reduce el daño · +6 Furor</span></button>
@@ -285,7 +285,7 @@ function cocinar(i){const a=CALDERO[i],mx=maxCal(a),q=UI.qty||1,n=q=='max'?mx:Ma
 /* ---------- Taller de runas (mejorar con la völva) ---------- */
 const costeRuna=k=>20*((S.rn[k]||0)+1)*(RUNAS[k].a+1);
 function pTaller(){if(!S.ru.length)return '<p class=tag>Aún no conoces ninguna runa.</p>';
-  return `<p class=tag>Cada nivel aumenta un 12 % el efecto de la runa (máximo +5). Cuesta 1 hora.</p>${bolsa()}<div class=lst>`+S.ru.map(k=>{const r=RUNAS[k],l=S.rn[k]||0,c=costeRuna(k);
+  return `<p class=tag>Cada nivel aumenta un 12 % el efecto de la runa (máximo +5). Cuesta 1 hora.${I('taller')}</p>${bolsa()}<div class=lst>`+S.ru.map(k=>{const r=RUNAS[k],l=S.rn[k]||0,c=costeRuna(k);
     return `<button ${l>=5||S.plata<c?'disabled':''} onclick="mejoraRuna('${k}')"><span class=runa>${r.sym}</span> ${r.n} +${l}${l<5?coste(c):' (máx.)'}<br><span class=tag>${resumenRuna(k)}</span></button>`}).join('')+'</div>'}
 function mejoraRuna(k){const c=costeRuna(k);if((S.rn[k]||0)>=5||S.plata<c)return;S.plata-=c;S.rn[k]=(S.rn[k]||0)+1;avanza(1);save();show()}
 
@@ -294,7 +294,7 @@ const COSTE_GRABADO={plata:80,mat:{savia_raiz:2}};
 function pGrabado(){const k=S.eq.arma;if(!k)return '<p class=tag>Necesitas llevar un arma equipada.</p>';
   const gratis=S.fl.grabado_gratis&&!S.fl.grabado_usado,act=S.grab[k],C=COSTE_GRABADO;
   const puede=gratis||(S.plata>=C.plata&&Object.entries(C.mat).every(([m,n])=>has(m)>=n));
-  let h=`<p class=tag>Arma: <b>${nm(k)}</b>. ${act?`Lleva grabada <span class=runa>${RUNAS[act].sym}</span> ${RUNAS[act].n}: ${GRABADO[act].d}`:'Aún no lleva ninguna runa.'}<br>Un arma solo admite una runa: grabar otra borra la anterior. Cuesta 2 horas.</p>`;
+  let h=`<p class=tag>Arma: <b>${nm(k)}</b>. ${act?`Lleva grabada <span class=runa>${RUNAS[act].sym}</span> ${RUNAS[act].n}: ${GRABADO[act].d}`:'Aún no lleva ninguna runa.'}<br>Un arma solo admite una runa: grabar otra borra la anterior. Cuesta 2 horas.${I('grabado')}</p>`;
   h+=gratis?'<p class=ok>Brok te debe un grabado: este no te costará nada.</p>':`<p class=tag>Coste: ${coste(C.plata).replace('class=pr','')} y ${reqs(C.mat)}</p>`;
   return h+'<div class=lst>'+S.ru.map(r=>{const R0=RUNAS[r];return `<button ${!puede||act==r?'disabled':''} onclick="grabar('${r}')"><span class=runa>${R0.sym}</span> ${R0.n}${act==r?' (grabada)':''}<br><span class=tag>${GRABADO[r].d}</span></button>`}).join('')+'</div>'}
 function grabar(r){const k=S.eq.arma;if(!k||S.grab[k]==r)return;const gratis=S.fl.grabado_gratis&&!S.fl.grabado_usado,C=COSTE_GRABADO;
@@ -317,7 +317,7 @@ function pSenna(sc){const id=sc.senna,D=SENNA[id],sal=`<button onclick="go('${sc
   if(S.fl['sn_'+id])return `<p class=tag>Ya te has batido en palabras con ${D.rival}.</p>`+sal;
   if(!UI.sn||UI.sn.id!=id)UI.sn={id,r:0,p:0,lg:''};
   const U=UI.sn,ro=D.rondas[U.r];
-  return `${U.lg?`<p class=tag>${U.lg}</p>`:''}<div class=dice><span class=tag>Asalto ${U.r+1} de ${D.rondas.length} · Aciertos: ${U.p}</span><br><b>${D.rival}:</b> «${ro.i}»</div>`+
+  return `${U.lg?`<p class=tag>${U.lg}</p>`:''}<div class=dice><span class=tag>Asalto ${U.r+1} de ${D.rondas.length} · Aciertos: ${U.p}</span>${I('injurias')}<br><b>${D.rival}:</b> «${ro.i}»</div>`+
     shuf(ro.o.map((o,i)=>i),hs(id)+U.r*7).map(i=>`<button onclick="replica(${i})">«${ro.o[i]}»</button>`).join('')}
 function replica(i){const sc=cur(),id=sc.senna,D=SENNA[id],U=UI.sn;if(!U)return;const ro=D.rondas[U.r],b=i==ro.k;
   if(b)U.p++;U.lg=(b?'✔ ':'✘ ')+(b?ro.bien:ro.mal);U.r++;
@@ -329,7 +329,7 @@ function replica(i){const sc=cur(),id=sc.senna,D=SENNA[id],U=UI.sn;if(!U)return;
 function pFinal(sc){const muerte=sc.end.includes('Muerte');
   return `<p><span class=sello>${/^Cap/.test(sc.end)?'':'Final: '}${sc.end}</span></p>${sc.saga?sagaHTML():''}`+
     (muerte?`<button onclick="retry()">Volver al último punto seguro</button>${IF('guardado')}`:'')+`<button onclick="menu()">Menú principal</button>`}
-const sagaHTML=()=>S.saga.length?`<b class=t>La saga de {N}</b>`+S.saga.map(x=>`<p class=tag>${x}</p>`).join(''):'<p class=tag>Ningún escaldo ha cantado aún tus hazañas.</p>';
+const sagaHTML=()=>S.saga.length?`<b class=t>La saga de {N}${I('saga')}</b>`+S.saga.map(x=>`<p class=tag>${x}</p>`).join(''):'<p class=tag>Ningún escaldo ha cantado aún tus hazañas.'+I('saga')+'</p>';
 
 /* ---------- Estado ---------- */
 function equipar(k){S.eq[SLOT[OBJ[k].tipo]]=k;save();statR()}
@@ -356,10 +356,10 @@ function statR(){UI.stat=true;const T=ST(),sv=UI.sv||'b',inv=Object.keys(S.inv);
       return `<div class=tec><div><span class=runa>${r.sym}</span> ${r.n}${S.rn[k]?' +'+S.rn[k]:''}${e?' <span class=ok>(preparada)</span>':''}<br><span class=tag>${AETT[r.a]} · ${r.c} Furor · ${resumenRuna(k)}<br>${r.d}</span></div><div><button class=sm onclick="eqRuna('${k}')">${e?'Quitar':'Preparar'}</button></div></div>`}).join('')+'</div>':'<p class=tag>Aún no conoces ninguna runa.</p>'}
   else if(sv=='j'){
     const EST={activo:'<span class=oro>en curso</span>',cumplido:'<span class=ok>cumplido</span>',roto:'<span class=warn>roto</span>'};
-    body+='<b class=t>Juramentos</b>'+(S.jur.length?'<div class=lst>'+S.jur.map(j=>`<div class=rw><span>${j.txt}<br><span class=tag>${EST[j.est]}${j.est=='activo'?' · hasta el día '+j.hasta:''} · ${j.gl} de Gloria</span></span></div>`).join('')+'</div>':'<p class=tag>No has jurado nada todavía.</p>');
-    body+='<b class=t>Favores de los dioses</b>'+(Object.keys(S.fav).length?'<div class=lst>'+Object.keys(S.fav).map(f=>`<div class=rw><span>${FAV[f].n}<br><span class=tag>${FAV[f].d}</span></span></div>`).join('')+'</div>':'<p class=tag>Ningún dios te ha favorecido aún.</p>');
+    body+='<b class=t>Juramentos'+I('juramentos')+'</b>'+(S.jur.length?'<div class=lst>'+S.jur.map(j=>`<div class=rw><span>${j.txt}<br><span class=tag>${EST[j.est]}${j.est=='activo'?' · hasta el día '+j.hasta:''} · ${j.gl} de Gloria</span></span></div>`).join('')+'</div>':'<p class=tag>No has jurado nada todavía.</p>');
+    body+='<b class=t>Favores de los dioses'+I('favores')+'</b>'+(Object.keys(S.fav).length?'<div class=lst>'+Object.keys(S.fav).map(f=>`<div class=rw><span>${FAV[f].n}<br><span class=tag>${FAV[f].d}</span></span></div>`).join('')+'</div>':'<p class=tag>Ningún dios te ha favorecido aún.</p>');
     if(S.nid)body+=`<p class=warn>Juramentos rotos: ${S.nid}. Las valquirias no olvidan.</p>`;
-    body+=`<p class=tag>Hilos de las Nornas: ${S.hilos}. Cada hilo permite repetir una tirada fallida.</p>`}
+    body+=`<p class=tag>Hilos de las Nornas: ${S.hilos}. Cada hilo permite repetir una tirada fallida.${I('hilos')}</p>`}
   else body+=sagaHTML()+`<p class=tag>Finales vistos: ${S.fin.join(', ')||'ninguno aún'}</p>`;
   const tab=(k,l)=>`<button class="${sv==k?'on':''}" onclick="UI.sv='${k}';statR()">${l}</button>`;
   pinta(`<div class=stk>${hud()}${mini}</div><div class=sc><div class=row>${tab('b','Equipo')}${tab('r','Runas')}${tab('j','Juramentos')}${tab('s','Saga')}</div>${body}<button onclick="trampa()">+ 5000 <span class=oro>🪙</span></button><p class=tag>Pulsa «Estado» otra vez para volver.</p></div>`)}
@@ -371,7 +371,7 @@ function menu(){window.scrollTo(0,0);const sv=load();
 <button onclick="expo()">Exportar partida</button>${IF('exportar')}<button onclick="impo()">Importar partida</button>
 <p class=tag>Partes cargadas: ${CAPS.length} · Escenas: ${Object.keys(SC).length}</p>`)}
 function elegir(){window.scrollTo(0,0);const sv=load();
-  pinta(`<div class=sc><h2>¿De quién es esta saga?</h2><p>Elige a quién acompañarás en su último invierno. La historia es la misma; cambian la voz, algunos diálogos y sus fuerzas.</p>
+  pinta(`<div class=sc><h2>¿De quién es esta saga?</h2><p>Elige a quién acompañarás en su último invierno. La historia es la misma; cambian la voz, algunos diálogos y sus fuerzas.${I('protagonista')}</p>
 ${Object.entries(PROTAS).map(([g,p])=>`<button class="k-n prota" onclick="S=nuevo('${g}');UI={};go(INICIO)"><b>${p.nom}</b><br><span class=tag>${p.d}<br>${Object.keys(NM).map(k=>NM[k]+' '+p.st[k]).join(' · ')}</span></button>`).join('')}
 ${sv?'<p class=tag>Empezar una partida nueva sustituirá a la guardada.</p>':''}<button onclick="menu()">Volver</button></div>`)}
 function expo(hecho){const s=load();

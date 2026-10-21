@@ -21,6 +21,8 @@
              objetos, acertijos, progreso, alquimia
    TANDA 3 · Dao: qi, tecnicas, reinos, caza, social, tablon, comedor
              Senda: furor, berserker, runas
+   TANDA 4 · Senda: estados, taller, grabado, juramentos, favores, hilos,
+             senales, injurias, saga, protagonista
    ===================================================================== */
 LJInfo.registrar({
 
@@ -145,7 +147,7 @@ bloqueadas:{ ver:['decisiones'], t:'Opciones bloqueadas', h:{
 }},
 
 /* 9 ─────────────────────────────────────────────────────────────── */
-dados:{ ver:['atributos'], t:'Pruebas de dados', h:{
+dados:{ ver:{'*':['atributos'],senda:['hilos','favores']}, t:'Pruebas de dados', h:{
  '*':'<p>Algunas decisiones se resuelven con una <b>tirada de dados</b>. Así funciona:</p><ol>'+
   '<li>Se lanzan <b>dos dados</b> de seis caras.</li>'+
   '<li>Se suma tu <b>atributo</b> relacionado con la acción. Lo indica la propia opción, por ejemplo «(Suerte)».</li>'+
@@ -202,7 +204,7 @@ estadisticas:{ ver:{'*':['equipo','combate'],dao:['qi']}, t:'Estadísticas de co
 }},
 
 /* 12 ────────────────────────────────────────────────────────────── */
-combate:{ ver:{'*':['guardia','estadisticas'],dao:['qi','tecnicas'],senda:['furor','runas']}, t:'El combate por turnos', h:{
+combate:{ ver:{'*':['guardia','estadisticas'],dao:['qi','tecnicas'],senda:['furor','runas','estados']}, t:'El combate por turnos', h:{
  '*':'<p>En un combate, tú y el enemigo os turnáis. <b>Tú actúas primero</b>; después, si sigue en pie, ataca él.</p>'+
   '<h3>Cómo jugar un turno</h3><ol>'+
   '<li><b>Lee la «Intención» del enemigo.</b> Te avisa de lo que hará en su turno. Si dice que <b>carga</b> un golpe, su próximo ataque hará <b>doble daño</b>: es buen momento para cubrirte.</li>'+
@@ -302,7 +304,7 @@ acertijos:{ ver:['tiempo'], t:'Acertijos y enigmas', h:{
 }},
 
 /* 19 ────────────────────────────────────────────────────────────── */
-progreso:{ ver:{'*':['estadisticas'],dao:['reinos']}, t:'Progreso: experiencia y rangos', h:{
+progreso:{ ver:{'*':['estadisticas'],dao:['reinos'],senda:['juramentos']}, t:'Progreso: experiencia y rangos', h:{
  dao:'<p>Tu progreso en el Dao tiene dos vías distintas.</p>'+
   '<h3>Experiencia y Reinos</h3>'+
   '<p>Los combates y algunas misiones te dan <b>experiencia (XP)</b>. En Estado ves cuánta llevas y cuánta necesitas para el siguiente Reino.</p>'+
@@ -456,7 +458,7 @@ berserker:{ ver:['furor','guardia'], t:'Furia berserker', h:{
 }},
 
 /* 30 · Senda ────────────────────────────────────────────────────── */
-runas:{ ver:['furor','berserker'], t:'Las runas', h:{
+runas:{ ver:['furor','berserker','estados','taller','grabado'], t:'Las runas', h:{
  senda:'<p>Las runas son tus <b>poderes especiales</b> en combate. Hay 24, repartidas en tres grupos (ættir): Freyr, Hagal y Tyr. Las vas consiguiendo según avanza la historia.</p>'+
   '<h3>Aprender una runa</h3>'+
   '<p>Con piedras rúnicas (en Estado → bolsa → «Aprender») y con otras recompensas de la historia. Si tienes hueco, se prepara sola.</p>'+
@@ -468,6 +470,131 @@ runas:{ ver:['furor','berserker'], t:'Las runas', h:{
   '<p>Cada runa gasta <b>Furor</b> y su botón resume su efecto: daño, curación, escudo, aturdir, esquivar, quemar, regenerar… El daño suma tu atributo (×2) y 3 por rango.</p>'+
   '<h3>Mejorarlas</h3>'+
   '<p>En el taller de la völva: de +1 a <b>+5</b>, con <b>+12 % de efecto</b> por nivel. Cada mejora cuesta <b>1 hora</b> y plata, más cara cuanto más avanzado es su grupo.</p>'
+}},
+
+
+/* ═══════════════════════ TANDA 4 (solo La Senda) ═══════════════════════ */
+
+/* 31 ────────────────────────────────────────────────────────────── */
+estados:{ ver:['runas','berserker','combate'], t:'Estados de combate', h:{
+ senda:'<p>Bajo la línea de «Intención» aparece, cuando hay alguno, la lista de <b>estados activos</b>, separados por puntos. Se apagan solos cuando se agotan.</p><ul>'+
+  '<li><b>Escudo rúnico ×N:</b> los próximos N golpes que recibas hacen un <b>60 % menos</b> de daño.</li>'+
+  '<li><b>Esquiva ×N:</b> esquivas los próximos N ataques.</li>'+
+  '<li><b>Regeneración ×N:</b> durante N turnos recuperas Vida.</li>'+
+  '<li><b>Próximo golpe crítico:</b> tu siguiente golpe, o tu siguiente runa de daño, será crítico (+60 % de daño).</li>'+
+  '<li><b>Furia berserker: N turnos:</b> tu daño se duplica mientras dure.</li>'+
+  '<li><b>«Enemigo arde (N)»:</b> el enemigo pierde de 3 a 6 de Vida por turno durante N turnos más.</li></ul>'+
+  '<h3>Aturdido</h3>'+
+  '<p>Si un enemigo está aturdido, lo dice la línea de Intención: ese turno <b>no atacará</b>.</p>'
+}},
+
+/* 32 ────────────────────────────────────────────────────────────── */
+taller:{ ver:['runas'], t:'El taller de runas', h:{
+ senda:'<p>En el taller de la völva refuerzas las runas que ya conoces.</p><ol>'+
+  '<li>Elige una runa de la lista. Cada botón muestra su nivel actual y lo que cuesta subirla.</li>'+
+  '<li>Púlsalo: la runa sube <b>un nivel</b> y pasa <b>1 hora</b>.</li></ol>'+
+  '<p>Cada nivel aumenta un <b>12 %</b> el efecto de la runa, hasta <b>+5</b>. Un botón apagado significa que no te alcanza la plata o que la runa ya está al máximo.</p>'+
+  '<h3>Cuánto cuesta</h3>'+
+  '<p>El precio es <b>20 de plata × el nivel al que subes × el grupo de la runa</b> (Freyr cuenta 1, Hagal 2 y Tyr 3).</p>'+
+  '<div class="ej"><p>Subir una runa de Freyr: 20, 40, 60, 80 y 100.</p><p>De Hagal: 40, 80, 120, 160 y 200.</p><p>De Tyr: 60, 120, 180, 240 y 300.</p></div>'+
+  '<p class="tip">Mejora primero las runas que más uses en combate.</p>'
+}},
+
+/* 33 ────────────────────────────────────────────────────────────── */
+grabado:{ ver:['equipo','runas'], t:'Grabar una runa en el arma', h:{
+ senda:'<p>Brok puede <b>grabar una runa en tu arma</b>. Es un poder pasivo: funciona siempre, sin gastar Furor, mientras lleves esa arma.</p>'+
+  '<h3>Cómo se hace</h3><ol>'+
+  '<li><b>Equipa</b> el arma que quieras grabar.</li>'+
+  '<li>Elige la runa en la lista (solo salen las que conoces). Cada botón explica su efecto.</li>'+
+  '<li>Se gasta el coste y pasan <b>2 horas</b>.</li></ol>'+
+  '<h3>Qué debes saber</h3><ul>'+
+  '<li><b>Coste:</b> 80 de plata y 2 de savia de raíz. A veces Brok te hace un grabado gratis.</li>'+
+  '<li>Cada arma admite <b>una sola runa</b>: grabar otra borra la anterior.</li>'+
+  '<li>El efecto va con el arma. Si cambias de arma, dejas de tenerlo.</li></ul>'+
+  '<div class="ej"><p>Algunos efectos: Thurisaz da +5 de ataque; Uruz, 15 de Vida al ganar un combate; Algiz, +8 % de defensa y +2 de armadura; Mannaz, curarte un 25 % del daño de cada golpe.</p></div>'
+}},
+
+/* 34 ────────────────────────────────────────────────────────────── */
+juramentos:{ ver:['favores','progreso','hilos'], t:'Juramentos', h:{
+ senda:'<p>A veces la historia te propone <b>jurar algo</b>: una promesa con plazo. Te avisa con «Has jurado: …» y te dice hasta qué día tienes.</p>'+
+  '<h3>Dónde los ves</h3>'+
+  '<p>En <b>Estado → «Juramentos»</b>. Cada uno muestra si está en curso, cumplido o roto, su plazo y la Gloria que vale.</p>'+
+  '<h3>Si lo cumples</h3>'+
+  '<p>Haces lo prometido antes de que acabe el plazo: ganas esa <b>Gloria</b> y queda anotado en tu saga.</p>'+
+  '<h3>Si lo rompes</h3>'+
+  '<p>Si el plazo termina sin cumplirlo, pierdes <b>la mitad de esa Gloria</b> y tu nombre se mancha. En Estado se cuenta cuántos juramentos has roto.</p>'+
+  '<p class="tip">Antes de jurar, piensa si te dará tiempo: el reloj sigue corriendo.</p>'
+}},
+
+/* 35 ────────────────────────────────────────────────────────────── */
+favores:{ ver:['juramentos','progreso'], t:'Favores de los dioses', h:{
+ senda:'<p>Son <b>bonus permanentes</b> que te concede un dios por tus decisiones en la historia. No se gastan ni hay que activarlos: actúan solos. Los ves en <b>Estado → «Juramentos»</b>.</p>'+
+  '<h3>Los siete favores</h3><ul>'+
+  '<li><b>Tyr:</b> +25 % de Gloria en cada victoria.</li>'+
+  '<li><b>Thor:</b> +5 de ataque.</li>'+
+  '<li><b>Odín:</b> +1 en todas tus tiradas de dados.</li>'+
+  '<li><b>Freya:</b> tus curaciones sanan un 25 % más.</li>'+
+  '<li><b>Heimdal:</b> +10 de velocidad (esquivas más).</li>'+
+  '<li><b>Skadi:</b> el doble de probabilidad de botín.</li>'+
+  '<li><b>Loki:</b> +15 % de crítico, pero las victorias dan un 20 % menos de Gloria.</li></ul>'+
+  '<p class="tip">El favor de Loki es un trato con trampa: más daño a cambio de progresar más despacio en rango.</p>'
+}},
+
+/* 36 ────────────────────────────────────────────────────────────── */
+hilos:{ ver:['dados','favores'], t:'Hilos de las Nornas', h:{
+ senda:'<p>Los hilos son tu segunda oportunidad: cada uno te permite <b>repetir una tirada de dados fallida</b>. Empiezas con <b>3</b>.</p>'+
+  '<h3>Cómo se usan</h3><ol>'+
+  '<li>Haces una prueba de dados y fallas.</li>'+
+  '<li>Aparecen dos botones: <b>«Tirar de un hilo de las Nornas y repetir»</b> (te dice cuántos te quedan) y <b>«Aceptar el destino»</b>.</li>'+
+  '<li>Si tiras del hilo, se lanzan los dados otra vez y esa tirada es la que vale.</li></ol>'+
+  '<p>Si vuelves a fallar y aún te quedan hilos, puedes gastar otro.</p>'+
+  '<h3>Dónde ves los que tienes</h3>'+
+  '<p>En <b>Estado → «Juramentos»</b>, al final, y en la cabecera junto a la Gloria.</p>'+
+  '<p>Algunas recompensas de la historia te dan más.</p>'+
+  '<p class="tip">Guárdalos para las pruebas importantes: un fallo en un momento clave suele costar más que uno cualquiera.</p>'
+}},
+
+/* 37 ────────────────────────────────────────────────────────────── */
+senales:{ ver:['tiempo','decisiones'], t:'Señales del Ragnarok', h:{
+ senda:'<p>Mientras pasan los días del Gran Invierno, algunos días traen <b>avisos del fin del mundo</b>: un aullido enorme, un sol pálido, hielo en pleno verano…</p>'+
+  '<h3>Cómo las ves</h3>'+
+  '<p>Aparecen en el mensaje verde de arriba al empezar el día, junto al «Amanece…».</p>'+
+  '<h3>Para qué sirven</h3><ul>'+
+  '<li>Cuentan cómo avanza la historia y te recuerdan que el tiempo corre.</li>'+
+  '<li>Algunas misiones solo se pueden hacer <b>antes de una señal concreta</b>.</li></ul>'+
+  '<p>No cambian tus estadísticas.</p>'+
+  '<p class="tip">Si una misión menciona un plazo, vigila los días: la caja de «Misión principal» te dice cuál es tu siguiente objetivo.</p>'
+}},
+
+/* 38 ────────────────────────────────────────────────────────────── */
+injurias:{ ver:['dados','progreso'], t:'Duelo de injurias', h:{
+ senda:'<p>Un duelo de ingenio en lugar de espadas: el rival te lanza una provocación y tú contestas.</p><ol>'+
+  '<li><b>Lee la provocación</b> del rival.</li>'+
+  '<li><b>Elige tu réplica.</b> Solo una es la más certera; el orden cambia en cada asalto.</li>'+
+  '<li>Verás ✔ o ✘ y un comentario sobre cómo ha sentado.</li>'+
+  '<li>Así hasta acabar los asaltos. El marcador dice «Asalto 2 de 3 · Aciertos: 1».</li></ol>'+
+  '<p>Ganas si consigues suficientes aciertos: normalmente <b>más de la mitad</b> de los asaltos. Ganar trae una recompensa; perder, una pequeña penalización.</p>'+
+  '<p>Cada duelo se puede disputar <b>una sola vez</b> con ese rival.</p>'+
+  '<p class="tip">Piensa en cómo respondería alguien con humor nórdico: seco, orgulloso y con segundas.</p>'
+}},
+
+/* 39 ────────────────────────────────────────────────────────────── */
+saga:{ ver:['juramentos'], t:'La Saga', h:{
+ senda:'<p>La Saga es el <b>registro de tus hazañas</b>, tal como las contaría un escaldo.</p>'+
+  '<ul><li>Se escribe sola: la historia añade una línea en los grandes momentos, y también cuando <b>cumples un juramento</b>.</li>'+
+  '<li>La encuentras en <b>Estado → «Saga»</b>.</li>'+
+  '<li>Debajo aparecen los <b>finales</b> que has visto.</li></ul>'+
+  '<p>No cambia tus estadísticas: es tu memoria y tu orgullo.</p>'
+}},
+
+/* 40 ────────────────────────────────────────────────────────────── */
+protagonista:{ ver:['atributos','guardado'], t:'Elegir protagonista', h:{
+ senda:'<p>Puedes llevar a <b>Ulf</b> o a <b>Astrid</b>. La historia es la misma: cambian la voz, algunos diálogos y sus fuerzas.</p>'+
+  '<h3>En qué se diferencian</h3><ul>'+
+  '<li><b>Ulf</b> (guerrero): Fuerza 4, Astucia 3, Espíritu 2, Suerte 3. Más fuerte que astuto: pega más fuerte.</li>'+
+  '<li><b>Astrid</b> (escudera): Fuerza 3, Astucia 4, Espíritu 3, Suerte 2. Más astuta que fuerte: esquiva mejor y tiene más Espíritu para las runas.</li></ul>'+
+  '<p>Ninguno es mejor: depende de cómo quieras jugar. Tu elección vale para toda la partida.</p>'+
+  '<p class="tip">Empezar una partida nueva <b>sustituye la guardada</b>. Si quieres conservarla, expórtala antes desde el menú.</p>'
 }}
 });
 

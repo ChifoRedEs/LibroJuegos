@@ -24,12 +24,16 @@ var dlg = null, origen = null;
 
 function registrar(obj){ for(var k in obj) TEXTOS[k] = obj[k]; }
 
+function sinTexto(e){
+  var h = e.h;
+  return !((typeof h === 'string') ? h : (h['*'] || '') + (h[LJInfo.libro] || '')).trim();
+}
 function cuerpo(e){
   var h = e.h;
   h = (typeof h === 'string') ? h : (h['*'] || '') + (h[LJInfo.libro] || '');
   var ver = e.ver ? (Array.isArray(e.ver) ? e.ver : (e.ver['*'] || []).concat(e.ver[LJInfo.libro] || [])) : [];
   if(ver.length){
-    var bs = ver.filter(function(v){ return TEXTOS[v]; }).map(function(v){
+    var bs = ver.filter(function(v){ return TEXTOS[v] && !sinTexto(TEXTOS[v]); }).map(function(v){
       return '<button type="button" data-ver="' + v + '">' + TEXTOS[v].t + '</button>';
     }).join('');
     if(bs) h += '<div class="ver"><h3>Ver también</h3>' + bs + '</div>';
@@ -40,7 +44,7 @@ function cuerpo(e){
 /* Icono «i». Es un <button> aparte (nunca va dentro de otro botón). */
 function icono(id){
   var e = TEXTOS[id];
-  if(!e) return '';
+  if(!e || sinTexto(e)) return '';
   return '<button type="button" class="info" data-info="' + id + '" aria-label="Más información: ' + e.t + '" title="Más información">i</button>';
 }
 /* Icono en su propia fila, pegado a la derecha del botón que le precede (decisiones, menú) */
